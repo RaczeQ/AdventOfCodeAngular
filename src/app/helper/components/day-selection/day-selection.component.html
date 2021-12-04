@@ -1,0 +1,10 @@
+<mat-card
+  *ngFor="let day of availableDays"
+  routerLink="{{ day[0] }}"
+>
+  <mat-card-title class="accent-color">
+    <span>Day</span>
+    <span class="accent-glow" [style.margin-left.rem]="0.5">{{ day[0] }}</span>
+  </mat-card-title>
+  <mat-card-subtitle class="accent-color">{{ day[1] }}</mat-card-subtitle>
+</mat-card>
