@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BaseSolutionService } from '../helper/services/base-solution.service';
 import { ISolutionService } from '../helper/services/isolution.service';
 import { SolutionsCollectorService } from '../helper/services/solutions-collector.service';
-import { parseIntoNumbers } from '../helper/util-functions/parse-into-numbers';
 import { splitIntoLines } from '../helper/util-functions/split-into-lines';
 
 @Injectable({
