@@ -1,0 +1,59 @@
+<div class="flex-row">
+  <mat-card class="day-name">
+    <mat-card-title class="accent-color">
+      <span>Day</span>
+      <span class="accent-glow" [style.margin-left.rem]="0.5">{{ day }}</span>
+    </mat-card-title>
+    <mat-card-subtitle class="accent-color">{{ title }}</mat-card-subtitle>
+  </mat-card>
+  <div [style.flex]="1"></div>
+  <mat-card class="input-link">
+    <mat-card-title class="accent-color">
+      <a
+        href="https://adventofcode.com/{{ year }}/day/{{ day }}/input"
+        target="_blank"
+        ><span class="link accent-color">Input link</span></a
+      >
+    </mat-card-title>
+  </mat-card>
+  <mat-card class="run-button">
+    <button
+      mat-raised-button
+      color="accent"
+      [disabled]="puzzleInput == ''"
+      (click)="runPuzzle()"
+    >
+      Run
+    </button>
+  </mat-card>
+</div>
+<mat-card class="input-card accent-color">
+  <mat-form-field class="textarea-full-width" appearance="fill" color="accent">
+    <mat-label>Paste an input</mat-label>
+    <textarea matInput [(ngModel)]="puzzleInput"></textarea>
+  </mat-form-field>
+</mat-card>
+<div class="flex-row">
+  <mat-card class="results-card" *ngIf="result1" (click)="copyResult1()">
+    <mat-card-title class="accent-color">
+      <span>Part 1 result:</span>
+      <span class="accent-glow" [style.margin-left.rem]="0.5">{{
+        result1
+      }}</span>
+    </mat-card-title>
+    <mat-card-subtitle class="accent-color"
+      >Time elapsed: {{ result1Time | number: "0.1-5" }}ms</mat-card-subtitle
+    >
+  </mat-card>
+  <mat-card class="results-card" *ngIf="result2" (click)="copyResult2()">
+    <mat-card-title class="accent-color">
+      <span>Part 2 result:</span>
+      <span class="accent-glow" [style.margin-left.rem]="0.5">{{
+        result2
+      }}</span>
+    </mat-card-title>
+    <mat-card-subtitle class="accent-color"
+      >Time elapsed: {{ result2Time | number: "0.1-5" }}ms</mat-card-subtitle
+    >
+  </mat-card>
+</div>

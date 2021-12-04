@@ -1,0 +1,67 @@
+.flex-row {
+  display: flex;
+  margin-bottom: 2em;
+}
+
+.input-link {
+  margin-right: 2em;
+  display: flex;
+
+  mat-card-title {
+    margin: auto;
+  }
+
+  .link {
+    text-decoration: none;
+    background-color: none;
+    &:hover{text-decoration:none}
+  }
+}
+
+.run-button {
+  display: flex;
+  button {
+    margin: auto;
+  }
+}
+
+.input-card {
+  width: auto;
+  margin-bottom: 2em;
+}
+
+.textarea-full-width {
+  width: 100%;
+  textarea {
+    height: 20vh;
+  }
+}
+
+::ng-deep {
+  .mat-form-field-wrapper {
+    margin-bottom: -1.25em;
+  }
+  .mat-form-field-label {
+    color: rgba(#fad02c, 0.8);
+  }
+
+  .mat-focused .mat-form-field-label {
+    color: #fad02c !important;
+  }
+
+  .mat-form-field-underline {
+    background-color: #fad02c !important;
+  }
+
+  .mat-form-field-ripple {
+    background-color: #fad02c !important;
+  }
+
+  .mat-form-field.mat-accent .mat-input-element {
+    caret-color: #fad02c;
+  }
+}
+
+.results-card {
+  margin-right: 2em;
+}
