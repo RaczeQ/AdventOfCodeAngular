@@ -1,6 +1,7 @@
 :host {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  column-gap: 2rem;
-  row-gap: 2rem;
+  display: flex;
+  flex-flow: row wrap;
+  mat-card {
+    margin: 2em;
+  }
 }

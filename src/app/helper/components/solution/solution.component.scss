@@ -1,3 +1,8 @@
+:host {
+  margin: 2rem;
+  display: block;
+}
+
 .flex-row {
   display: flex;
   margin-bottom: 2em;
@@ -14,7 +19,9 @@
   .link {
     text-decoration: none;
     background-color: none;
-    &:hover{text-decoration:none}
+    &:hover {
+      text-decoration: none;
+    }
   }
 }
 
