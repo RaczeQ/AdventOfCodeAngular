@@ -1,4 +1,4 @@
-import { ISolutionService } from './isolution.service';
+import { ISolutionService, PuzzleResult } from './isolution.service';
 import { SolutionsCollectorService } from './solutions-collector.service';
 
 export abstract class BaseSolutionService implements ISolutionService {
@@ -10,10 +10,10 @@ export abstract class BaseSolutionService implements ISolutionService {
   ) {
     solutionsCollectorService.registerSolution(year, day, dayName, this);
   }
-  solvePart1(input: string): string | number {
+  solvePart1(input: string): string | number | PuzzleResult {
     throw new Error('Method not implemented.');
   }
-  solvePart2(input: string): string | number {
+  solvePart2(input: string): string | number | PuzzleResult {
     throw new Error('Method not implemented.');
   }
 }

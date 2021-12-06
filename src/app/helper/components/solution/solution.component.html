@@ -45,7 +45,14 @@
       >Time elapsed: {{ result1Time | number: "0.1-5" }}ms</mat-card-subtitle
     >
   </mat-card>
-  <mat-card class="results-card" *ngIf="result2" (click)="copyResult2()">
+</div>
+<div class="flex-row">
+  <mat-card [style.visibility]="result1Component == null ? 'hidden' : 'visible'" [style.flex]="1">
+    <ng-template #viewContainerRefOne></ng-template>
+  </mat-card>
+</div>
+<div class="flex-row">
+  <mat-card *ngIf="result2" (click)="copyResult2()">
     <mat-card-title class="accent-color">
       <span>Part 2 result:</span>
       <span class="accent-glow" [style.margin-left.rem]="0.5">{{
@@ -55,5 +62,10 @@
     <mat-card-subtitle class="accent-color"
       >Time elapsed: {{ result2Time | number: "0.1-5" }}ms</mat-card-subtitle
     >
+  </mat-card>
+</div>
+<div class="flex-row">
+  <mat-card [style.visibility]="result2Component == null ? 'hidden' : 'visible'" [style.flex]="1">
+    <ng-template #viewContainerRefTwo></ng-template>
   </mat-card>
 </div>
