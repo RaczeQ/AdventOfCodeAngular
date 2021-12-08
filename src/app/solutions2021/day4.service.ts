@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BaseSolutionService } from '../helper/services/base-solution.service';
-import { ISolutionService } from '../helper/services/isolution.service';
+import { ISolutionService, PuzzleResult } from '../helper/services/isolution.service';
 import { SolutionsCollectorService } from '../helper/services/solutions-collector.service';
 import { splitIntoLines } from '../helper/util-functions/split-into-lines';
+import { BingoVisualizerComponent } from './components/bingo-visualizer/bingo-visualizer.component';
 
 @Injectable({
   providedIn: 'root',
@@ -58,17 +59,21 @@ export class Day4Service
     );
   }
 
-  override solvePart1(input: string): string | number {
+  override solvePart1(input: string): PuzzleResult {
     var lines = splitIntoLines(input);
     var numbers = lines[0].split(',').map(Number);
     var boards = this.getBoards(lines);
     var wonBoard: [number, boolean][][] | null = null;
+    var wonBoardIdx: number = -1;
+    var lastWonIndex = 0;
     var currentIndex = 0;
     while (wonBoard == null && currentIndex < numbers.length) {
-      boards.forEach((board) => {
+      boards.forEach((board, idx) => {
         this.checkNumber(board, numbers[currentIndex]);
         if (this.isWon(board)) {
           wonBoard = board;
+          wonBoardIdx = idx;
+          lastWonIndex = currentIndex;
         }
       });
       currentIndex++;
@@ -79,24 +84,38 @@ export class Day4Service
       .map((x) => x[0])
       .reduce((pv, cv, idx, arr) => pv + cv);
     var result = leftSum * numbers[currentIndex - 1];
-    return result;
+    // return result;
+    return {
+      result: result,
+      component: BingoVisualizerComponent,
+      componentData: {
+        boards: boards,
+        wonBoards: [wonBoardIdx],
+        numbers: numbers.slice(0, lastWonIndex + 1)
+      }
+    };
   }
-  override solvePart2(input: string): string | number {
+  override solvePart2(input: string): PuzzleResult {
     var lines = splitIntoLines(input);
     var numbers = lines[0].split(',').map(Number);
-    var boards = this.getBoards(lines);
+    var baseBoards = this.getBoards(lines);
+    var boards = baseBoards.map((b,i) => [b,i] as [[number, boolean][][], number]);
     var wonBoards: [number, boolean][][][] = [];
+    var wonBoardsIdxs: number[] = [];
     var wonNumbers: number[] = [];
     var currentIndex = 0;
+    var lastWonIndex = 0;
     while (currentIndex < numbers.length) {
-      boards.forEach((board) => {
+      boards.forEach(([board, idx]) => {
         this.checkNumber(board, numbers[currentIndex]);
         if (this.isWon(board)) {
           wonBoards.push(board);
+          wonBoardsIdxs.push(idx);
           wonNumbers.push(numbers[currentIndex]);
+          lastWonIndex = currentIndex;
         }
       });
-      boards = boards.filter((b) => !this.isWon(b));
+      boards = boards.filter(([b,i]) => !this.isWon(b));
       currentIndex++;
     }
     var leftSum = (wonBoards[wonBoards.length - 1] as unknown as [number, boolean][][])
@@ -105,6 +124,14 @@ export class Day4Service
       .map((x) => x[0])
       .reduce((pv, cv, idx, arr) => pv + cv);
     var result = leftSum * wonNumbers[wonNumbers.length - 1];
-    return result;
+    return {
+      result: result,
+      component: BingoVisualizerComponent,
+      componentData: {
+        boards: baseBoards,
+        wonBoards: [wonBoardsIdxs[wonBoardsIdxs.length - 1]],
+        numbers: numbers.slice(0, lastWonIndex + 1)
+      }
+    };
   }
 }
