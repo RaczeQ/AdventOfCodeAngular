@@ -74,7 +74,6 @@ export class SolutionComponent {
     setTimeout(() => {
       var startTime = performance.now();
       var puzzleResult = this.service.solvePart1(this.puzzleInput);
-      console.log(typeof puzzleResult);
       var resultType = typeof puzzleResult;
       if (resultType === 'string' || resultType === 'number') {
         this.result1 = puzzleResult as string | number;

@@ -17,14 +17,14 @@ export class PlotlyGraphComponentComponent
   ngOnInit(): void {
     this.graphData = this.data.graphData ?? [];
     this.graphLayout = this.data.graphLayout ?? {};
-    (this.graphLayout.margin = {
+    this.graphLayout.margin = {
       l: 64,
       r: 64,
       b: 32,
       t: 32,
       // pad: 0
-    }),
-      (this.graphLayout.paper_bgcolor = 'rgba(0,0,0,0)');
+    };
+    this.graphLayout.paper_bgcolor = 'rgba(0,0,0,0)';
     this.graphLayout.plot_bgcolor = 'rgba(0,0,0,0)';
     this.graphLayout.legend = {
       font: {
@@ -55,6 +55,5 @@ export class PlotlyGraphComponentComponent
       displayModeBar: false,
       staticPlot: true,
     };
-    // console.log('ngOnInit', this.graphLayout, this.graphData);
   }
 }
