@@ -47,11 +47,14 @@ export class Day1Service
             name: 'Increases',
             marker: {
               color: 'rgb(#fad02c)',
-              size: 8,
+              size: 2,
             },
           },
         ],
-        graphLayout: { yaxis: { title: 'Depth', autorange: 'reversed' } },
+        graphLayout: {
+          yaxis: { title: 'Depth', autorange: 'reversed' },
+          xaxis: { title: 'Time' },
+        },
       },
     };
   }
@@ -94,7 +97,7 @@ export class Day1Service
             name: 'Increases',
             marker: {
               color: 'rgb(#fad02c)',
-              size: 8,
+              size: 2,
             },
           },
         ],

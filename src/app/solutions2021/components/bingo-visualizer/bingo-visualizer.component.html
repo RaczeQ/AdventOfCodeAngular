@@ -1,0 +1,39 @@
+<button
+  mat-raised-button
+  color="accent"
+  [style.margin-bottom.em]="0.5"
+  [disabled]="visualizing"
+  (click)="startVisualization()"
+>
+  Run animation
+</button>
+
+<div class="flex-row">
+  <span class="accent-color" [style.margin-right.em]="0.5">Numbers: </span>
+  <div
+    class="number-cell"
+    *ngFor="let number of numbers.slice(0, visualizeCounter)"
+    [style.background]="getNumberStyle(number)"
+  >
+    {{ number }}
+  </div>
+</div>
+
+<div class="flex-row">
+  <div
+    class="board"
+    *ngFor="let board of boards; index as i"
+    [class.won]="wonBoards.includes(i)"
+  >
+    <div
+      class="number-cell"
+      *ngFor="let number of boards[i].flat()"
+      [style.background]="getNumberStyle(number)"
+      [class.accent-color]="
+        !numbers.slice(0, visualizeCounter).includes(number)
+      "
+    >
+      {{ number }}
+    </div>
+  </div>
+</div>
