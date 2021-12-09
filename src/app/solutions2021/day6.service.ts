@@ -6,7 +6,7 @@ import {
   PuzzleResult,
 } from '../helper/services/isolution.service';
 import { SolutionsCollectorService } from '../helper/services/solutions-collector.service';
-import { splitIntoLines } from '../helper/util-functions/split-into-lines';
+import { parseFirstLineIntoNumbers } from '../helper/util-functions/parse-first-line-into-numbers';
 
 @Injectable({
   providedIn: 'root',
@@ -19,17 +19,13 @@ export class Day6Service
     super(solutionsCollectorService, 2021, 6, 'Lanternfish');
   }
   private getInitialState(input: string): { [day: number]: number } {
-    var commands = splitIntoLines(input);
     var result: { [day: number]: number } = {};
-    commands[0]
-      .split(',')
-      .map(Number)
-      .forEach((n) => {
-        if (!(n in result)) {
-          result[n] = 0;
-        }
-        result[n]++;
-      });
+    parseFirstLineIntoNumbers(input).forEach((n) => {
+      if (!(n in result)) {
+        result[n] = 0;
+      }
+      result[n]++;
+    });
     return result;
   }
   private solve(input: string, days: number): PuzzleResult {
