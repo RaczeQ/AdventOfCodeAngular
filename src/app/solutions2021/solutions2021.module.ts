@@ -11,6 +11,7 @@ import { Day2Service } from './day2.service';
 import { Day3Service } from './day3.service';
 import { Day4Service } from './day4.service';
 import { Day5Service } from './day5.service';
+import { Day6Service } from './day6.service';
 
 @NgModule({
   id: '2021',
@@ -20,8 +21,15 @@ import { Day5Service } from './day5.service';
     {
       provide: APP_INITIALIZER,
       multi: true,
-      deps: [Day1Service, Day2Service, Day3Service, Day4Service, Day5Service],
-      useFactory: (day1Service: ISolutionService) => () => null,
+      deps: [
+        Day1Service,
+        Day2Service,
+        Day3Service,
+        Day4Service,
+        Day5Service,
+        Day6Service,
+      ],
+      useFactory: (solutionService: ISolutionService) => () => null,
     },
   ],
 })
