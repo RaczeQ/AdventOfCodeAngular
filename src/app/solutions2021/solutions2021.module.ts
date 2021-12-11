@@ -15,10 +15,14 @@ import { Day5Service } from './day5.service';
 import { Day6Service } from './day6.service';
 import { Day7Service } from './day7.service';
 import { Day8Service } from './day8.service';
+import { Day9Service } from './day9.service';
 
 @NgModule({
   id: '2021',
-  declarations: [BingoVisualizerComponent, SevenSegmentsDisplayVisualizerComponent],
+  declarations: [
+    BingoVisualizerComponent,
+    SevenSegmentsDisplayVisualizerComponent,
+  ],
   imports: [CommonModule, HelperModule, MatButtonModule],
   providers: [
     {
@@ -33,6 +37,7 @@ import { Day8Service } from './day8.service';
         Day6Service,
         Day7Service,
         Day8Service,
+        Day9Service,
       ],
       useFactory: (solutionService: ISolutionService) => () => null,
     },
