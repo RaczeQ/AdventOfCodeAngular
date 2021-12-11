@@ -1,0 +1,10 @@
+<ng-container *ngFor="let result of results; let i = index">
+  <div class="accent-color monospace">{{ lines[i] }}</div>
+  <div class="accent-color accent-glow monospace">{{ result }}</div>
+  <div
+    class="accent-color"
+    [class.accent-glow]="medianScore && scores[i] == medianScore"
+  >
+    {{ scores[i] }}
+  </div>
+</ng-container>
