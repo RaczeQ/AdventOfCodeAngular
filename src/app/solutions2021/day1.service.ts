@@ -46,7 +46,7 @@ export class Day1Service
             mode: 'markers',
             name: 'Increases',
             marker: {
-              color: 'rgb(#fad02c)',
+              color: '#fad02c',
               size: 2,
             },
           },
