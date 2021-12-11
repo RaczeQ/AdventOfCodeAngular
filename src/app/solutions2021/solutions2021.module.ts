@@ -6,6 +6,7 @@ import { ISolutionService } from '../helper/services/isolution.service';
 
 import { BingoVisualizerComponent } from './components/bingo-visualizer/bingo-visualizer.component';
 import { SevenSegmentsDisplayVisualizerComponent } from './components/seven-segments-display-visualizer/seven-segments-display-visualizer.component';
+import { SyntaxErrorLinesVisualizerComponent } from './components/syntax-error-lines-visualizer/syntax-error-lines-visualizer.component';
 
 import { Day1Service } from './day1.service';
 import { Day2Service } from './day2.service';
@@ -16,12 +17,14 @@ import { Day6Service } from './day6.service';
 import { Day7Service } from './day7.service';
 import { Day8Service } from './day8.service';
 import { Day9Service } from './day9.service';
+import { Day10Service } from './day10.service';
 
 @NgModule({
   id: '2021',
   declarations: [
     BingoVisualizerComponent,
     SevenSegmentsDisplayVisualizerComponent,
+    SyntaxErrorLinesVisualizerComponent,
   ],
   imports: [CommonModule, HelperModule, MatButtonModule],
   providers: [
@@ -38,6 +41,7 @@ import { Day9Service } from './day9.service';
         Day7Service,
         Day8Service,
         Day9Service,
+        Day10Service,
       ],
       useFactory: (solutionService: ISolutionService) => () => null,
     },

@@ -1,0 +1,17 @@
+:host {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  width: fit-content;
+  column-gap: 1em;
+}
+.flex-row {
+  display: flex;
+  flex-flow: row;
+}
+
+.monospace {
+  font-family: monospace;
+  display: flex;
+  width: fit-content;
+  align-items: center;
+}
