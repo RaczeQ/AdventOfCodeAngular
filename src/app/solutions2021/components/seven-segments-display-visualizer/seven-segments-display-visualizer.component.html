@@ -1,0 +1,42 @@
+<div class="display-row" *ngFor="let display of inputDisplays; let i = index">
+  <div class="display-block" *ngFor="let signal of display.signals">
+    <div
+      class="display-block-part"
+      [ngClass]="signal"
+      [style.margin-bottom.px]="-2"
+    ></div>
+    <div class="display-block-part" [ngClass]="signal"></div>
+  </div>
+  <div class="divider accent-color">></div>
+  <div class="display-block" *ngFor="let signal of display.output" [class.accented]="accentUniqueLengths && uniqueLenghts.includes(signal.length)">
+    <div
+      class="display-block-part"
+      [ngClass]="signal"
+      [style.margin-bottom.px]="-2"
+    ></div>
+    <div class="display-block-part" [ngClass]="signal"></div>
+  </div>
+  <ng-container *ngIf="decodedDisplays && decodedDisplays.length == inputDisplays.length">
+    <div class="divider accent-color">➔</div>
+    <div
+      class="display-block"
+      *ngFor="let signal of decodedDisplays[i].signals"
+    >
+      <div
+        class="display-block-part"
+        [ngClass]="signal"
+        [style.margin-bottom.px]="-2"
+      ></div>
+      <div class="display-block-part" [ngClass]="signal"></div>
+    </div>
+    <div class="divider accent-color">></div>
+    <div class="display-block" *ngFor="let signal of decodedDisplays[i].output">
+      <div
+        class="display-block-part"
+        [ngClass]="signal"
+        [style.margin-bottom.px]="-2"
+      ></div>
+      <div class="display-block-part" [ngClass]="signal"></div>
+    </div>
+  </ng-container>
+</div>

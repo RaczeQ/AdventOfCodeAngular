@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { BaseResultComponent } from 'src/app/helper/components/base-result.component';
 
 export function normalize(
@@ -26,9 +25,6 @@ export class BingoVisualizerComponent
   visualizeCounter: number = 0;
   wonBoards!: number[];
   visualizing: boolean = false;
-  constructor(private sanitizer: DomSanitizer) {
-    super();
-  }
   ngOnInit(): void {
     var fullBoards = this.data.boards as [number, boolean][][][];
     this.boards = fullBoards.map((board) =>
