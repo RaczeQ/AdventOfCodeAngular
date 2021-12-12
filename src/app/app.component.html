@@ -4,15 +4,19 @@
 <mat-toolbar class="mat-elevation-z8" color="primary" [style.z-index]="2">
   <span class="accent-color accent-glow" routerLink="/">Advent Of Code</span>
   <span
+    *ngIf="selectedYear"
     class="accent-color"
     [style.margin-left.em]="1"
     routerLink="{{ selectedYear }}"
     >{{ selectedYear }}</span
   >
-  <div [style.flex]="1"></div>
-  <span class="accent-color">{{ actionName }}</span>
+  <span
+    class="accent-color"
+    [style.margin-left.em]="1"
+    routerLink="{{ selectedYear }}"
+    >{{ actionName }}</span
+  >
 </mat-toolbar>
 <div class="router-container">
   <router-outlet></router-outlet>
 </div>
-
