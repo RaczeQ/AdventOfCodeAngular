@@ -52,7 +52,7 @@ export class Day11Service
       // Raise neighbours
       var flashed: string[] = [];
       while (
-        octopuses.flatMap((row, y) =>
+        octopuses.some((row, y) =>
           row.some(
             (num, x) =>
               num > 9 && !flashed.includes(x.toString() + '_' + y.toString())
@@ -144,7 +144,7 @@ export class Day11Service
       // Raise neighbours
       var flashed: string[] = [];
       while (
-        octopuses.flatMap((row, y) =>
+        octopuses.some((row, y) =>
           row.some(
             (num, x) =>
               num > 9 && !flashed.includes(x.toString() + '_' + y.toString())
