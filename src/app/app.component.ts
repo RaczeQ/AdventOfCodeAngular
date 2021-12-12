@@ -17,7 +17,7 @@ export class AppComponent {
         this.selectedYear = event.snapshot.params["year"];
         this.selectedDay = event.snapshot.params["day"];
         if (this.selectedDay) {
-          this.actionName = ''
+          this.actionName = 'Go back'
         } else if (this.selectedYear) {
           this.actionName = 'Select day';
         } else {
