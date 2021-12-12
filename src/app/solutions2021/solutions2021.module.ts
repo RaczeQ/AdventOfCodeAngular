@@ -5,6 +5,7 @@ import { HelperModule } from '../helper/helper.module';
 import { ISolutionService } from '../helper/services/isolution.service';
 
 import { BingoVisualizerComponent } from './components/bingo-visualizer/bingo-visualizer.component';
+import { OctopusFlashesVisualizerComponent } from './components/octopus-flashes-visualizer/octopus-flashes-visualizer.component';
 import { SevenSegmentsDisplayVisualizerComponent } from './components/seven-segments-display-visualizer/seven-segments-display-visualizer.component';
 import { SyntaxErrorLinesVisualizerComponent } from './components/syntax-error-lines-visualizer/syntax-error-lines-visualizer.component';
 
@@ -18,11 +19,13 @@ import { Day7Service } from './day7.service';
 import { Day8Service } from './day8.service';
 import { Day9Service } from './day9.service';
 import { Day10Service } from './day10.service';
+import { Day11Service } from './day11.service';
 
 @NgModule({
   id: '2021',
   declarations: [
     BingoVisualizerComponent,
+    OctopusFlashesVisualizerComponent,
     SevenSegmentsDisplayVisualizerComponent,
     SyntaxErrorLinesVisualizerComponent,
   ],
@@ -42,6 +45,7 @@ import { Day10Service } from './day10.service';
         Day8Service,
         Day9Service,
         Day10Service,
+        Day11Service,
       ],
       useFactory: (solutionService: ISolutionService) => () => null,
     },
