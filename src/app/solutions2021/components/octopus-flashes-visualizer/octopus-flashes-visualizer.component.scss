@@ -1,0 +1,20 @@
+.number-cell {
+  height: 1.5em;
+  width: 1.5em;
+  display: flex;
+  justify-content: center;
+  border-radius: 0.25em;
+  margin: 0.1em;
+}
+
+.flex-row {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.grid {
+  margin: 0.75em;
+  display: grid;
+  grid-template-columns: repeat(10, auto);
+  width: fit-content;
+}

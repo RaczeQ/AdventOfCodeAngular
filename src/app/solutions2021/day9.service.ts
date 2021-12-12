@@ -6,7 +6,7 @@ import {
   PuzzleResult,
 } from '../helper/services/isolution.service';
 import { SolutionsCollectorService } from '../helper/services/solutions-collector.service';
-import { splitIntoLines } from '../helper/util-functions/split-into-lines';
+import { parseInto2DNumbersArray } from '../helper/util-functions/parse-into-2d-numbers-array';
 
 @Injectable({
   providedIn: 'root',
@@ -18,11 +18,8 @@ export class Day9Service
   constructor(solutionsCollectorService: SolutionsCollectorService) {
     super(solutionsCollectorService, 2021, 9, 'Smoke Basin');
   }
-  private parseHeightmap(input: string): number[][] {
-    return splitIntoLines(input).map((line) => line.split('').map(Number));
-  }
   override solvePart1(input: string): PuzzleResult {
-    var heightmapArray = this.parseHeightmap(input);
+    var heightmapArray = parseInto2DNumbersArray(input);
     var pointsList = heightmapArray.flatMap((row, y) =>
       row.map((col, x) => {
         return { x: x, y: y, val: col };
@@ -87,7 +84,7 @@ export class Day9Service
     };
   }
   override solvePart2(input: string): PuzzleResult {
-    var heightmapArray = this.parseHeightmap(input);
+    var heightmapArray = parseInto2DNumbersArray(input);
     var pointsList = heightmapArray.flatMap((row, y) =>
       row.map((col, x) => {
         return { x: x, y: y, val: col, basin: -1 };
