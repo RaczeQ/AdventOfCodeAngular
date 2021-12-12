@@ -51,9 +51,7 @@ export class Day11Service
       });
       // Raise neighbours
       var flashed: string[] = [];
-      var tries = 100;
       while (
-        tries > 0 &&
         octopuses.flatMap((row, y) =>
           row.some(
             (num, x) =>
@@ -61,7 +59,6 @@ export class Day11Service
           )
         )
       ) {
-        tries--;
         duplicatedArray = octopuses.map(function (arr) {
           return arr.slice();
         });
@@ -146,9 +143,7 @@ export class Day11Service
       });
       // Raise neighbours
       var flashed: string[] = [];
-      var tries = 100;
       while (
-        tries > 0 &&
         octopuses.flatMap((row, y) =>
           row.some(
             (num, x) =>
@@ -156,7 +151,6 @@ export class Day11Service
           )
         )
       ) {
-        tries--;
         duplicatedArray = octopuses.map(function (arr) {
           return arr.slice();
         });
