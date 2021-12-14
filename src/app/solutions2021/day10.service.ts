@@ -116,7 +116,6 @@ export class Day10Service
         });
       }
       if (!isCorrupted) {
-        console.log(lineCopy);
         calculatedScores.push(
           lineCopy
             .split('')
