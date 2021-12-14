@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import * as PlotlyJS from 'plotly.js-dist-min';
 import { PlotlyModule } from 'angular-plotly.js';
@@ -21,6 +22,7 @@ import { SolutionsCollectorService } from './services/solutions-collector.servic
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CanActivateYear } from './activate-route-guards/can-activate-year';
 import { PlotlyGraphComponentComponent } from './components/plotly-graph-component/plotly-graph-component.component';
+import { ScriptsLoaderService } from './services/scripts-loader.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,13 @@ import { PlotlyGraphComponentComponent } from './components/plotly-graph-compone
     MatInputModule,
     MatFormFieldModule,
     MatSnackBarModule,
+    MatProgressBarModule,
   ],
-  providers: [CanActivateYear, CanActivateDay, SolutionsCollectorService],
+  providers: [
+    CanActivateYear,
+    CanActivateDay,
+    ScriptsLoaderService,
+    SolutionsCollectorService,
+  ],
 })
 export class HelperModule {}
