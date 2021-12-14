@@ -20,7 +20,7 @@
     <button
       mat-raised-button
       color="accent"
-      [disabled]="puzzleInput == ''"
+      [disabled]="puzzleInput == '' || running"
       (click)="runPuzzle()"
     >
       Run
@@ -34,6 +34,11 @@
   </mat-form-field>
 </mat-card>
 <div class="flex-row">
+  <mat-progress-bar
+    mode="indeterminate"
+    *ngIf="!result1 && running"
+    color="accent"
+  ></mat-progress-bar>
   <mat-card class="results-card" *ngIf="result1" (click)="copyResult1()">
     <mat-card-title class="accent-color">
       <span>Part 1 result:</span>
@@ -47,11 +52,19 @@
   </mat-card>
 </div>
 <div class="flex-row">
-  <mat-card [style.visibility]="result1Component == null ? 'hidden' : 'visible'" [style.flex]="1">
+  <mat-card
+    [style.visibility]="result1Component == null ? 'hidden' : 'visible'"
+    [style.flex]="1"
+  >
     <ng-template #viewContainerRefOne></ng-template>
   </mat-card>
 </div>
 <div class="flex-row">
+  <mat-progress-bar
+    mode="indeterminate"
+    *ngIf="!result2 && running"
+    color="accent"
+  ></mat-progress-bar>
   <mat-card *ngIf="result2" (click)="copyResult2()">
     <mat-card-title class="accent-color">
       <span>Part 2 result:</span>
@@ -65,7 +78,10 @@
   </mat-card>
 </div>
 <div class="flex-row">
-  <mat-card [style.visibility]="result2Component == null ? 'hidden' : 'visible'" [style.flex]="1">
+  <mat-card
+    [style.visibility]="result2Component == null ? 'hidden' : 'visible'"
+    [style.flex]="1"
+  >
     <ng-template #viewContainerRefTwo></ng-template>
   </mat-card>
 </div>

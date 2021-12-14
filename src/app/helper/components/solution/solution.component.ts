@@ -39,6 +39,7 @@ export class SolutionComponent {
   result2: string | number = '';
   result2Time: number = 0;
   result2Component: ComponentRef<BaseResultComponent> | null = null;
+  running: boolean = false;
   constructor(
     private solutionsCollectorService: SolutionsCollectorService,
     private route: ActivatedRoute,
@@ -62,6 +63,9 @@ export class SolutionComponent {
   }
 
   runPuzzle(): void {
+    this.running = true;
+    var puzzle1Finished = false;
+    var puzzle2Finished = false;
     if (this.result1Component != null) {
       this.result1Component.destroy();
       this.result1Component = null;
@@ -73,44 +77,53 @@ export class SolutionComponent {
     }
     setTimeout(() => {
       var startTime = performance.now();
-      var puzzleResult = this.service.solvePart1(this.puzzleInput);
-      var resultType = typeof puzzleResult;
-      if (resultType === 'string' || resultType === 'number') {
-        this.result1 = puzzleResult as string | number;
-      } else {
-        puzzleResult = puzzleResult as PuzzleResult;
-        this.result1 = puzzleResult.result;
-        const factory = this.componentFactoryResolver.resolveComponentFactory(
-          puzzleResult.component
-        );
-        this.result1Component = this.viewContainerRef1.createComponent(factory);
-        this.result1Component.instance.data = puzzleResult.componentData;
-        this.result1Component.hostView.detectChanges();
-        this.result1Component.injector.get(ChangeDetectorRef).markForCheck();
-      }
-
-      var endTime = performance.now();
-      this.result1Time = endTime - startTime;
+      var puzzleResultPromise = this.service.solvePart1(this.puzzleInput);
+      Promise.resolve(puzzleResultPromise).then((puzzleResult) => {
+        var resultType = typeof puzzleResult;
+        if (resultType === 'string' || resultType === 'number') {
+          this.result1 = puzzleResult as string | number;
+        } else {
+          puzzleResult = puzzleResult as PuzzleResult;
+          this.result1 = puzzleResult.result;
+          const factory = this.componentFactoryResolver.resolveComponentFactory(
+            puzzleResult.component
+          );
+          this.result1Component =
+            this.viewContainerRef1.createComponent(factory);
+          this.result1Component.instance.data = puzzleResult.componentData;
+          this.result1Component.hostView.detectChanges();
+          this.result1Component.injector.get(ChangeDetectorRef).markForCheck();
+        }
+        var endTime = performance.now();
+        this.result1Time = endTime - startTime;
+        puzzle1Finished = true;
+        this.running = !puzzle1Finished || !puzzle2Finished;
+      });
     });
     setTimeout(() => {
       var startTime = performance.now();
-      var puzzleResult = this.service.solvePart2(this.puzzleInput);
-      var resultType = typeof puzzleResult;
-      if (resultType === 'string' || resultType === 'number') {
-        this.result2 = puzzleResult as string | number;
-      } else {
-        puzzleResult = puzzleResult as PuzzleResult;
-        this.result2 = puzzleResult.result;
-        const factory = this.componentFactoryResolver.resolveComponentFactory(
-          puzzleResult.component
-        );
-        this.result2Component = this.viewContainerRef2.createComponent(factory);
-        this.result2Component.instance.data = puzzleResult.componentData;
-        this.result2Component.hostView.detectChanges();
-        this.result2Component.injector.get(ChangeDetectorRef).markForCheck();
-      }
-      var endTime = performance.now();
-      this.result2Time = endTime - startTime;
+      var puzzleResultPromise = this.service.solvePart2(this.puzzleInput);
+      Promise.resolve(puzzleResultPromise).then((puzzleResult) => {
+        var resultType = typeof puzzleResult;
+        if (resultType === 'string' || resultType === 'number') {
+          this.result2 = puzzleResult as string | number;
+        } else {
+          puzzleResult = puzzleResult as PuzzleResult;
+          this.result2 = puzzleResult.result;
+          const factory = this.componentFactoryResolver.resolveComponentFactory(
+            puzzleResult.component
+          );
+          this.result2Component =
+            this.viewContainerRef2.createComponent(factory);
+          this.result2Component.instance.data = puzzleResult.componentData;
+          this.result2Component.hostView.detectChanges();
+          this.result2Component.injector.get(ChangeDetectorRef).markForCheck();
+        }
+        var endTime = performance.now();
+        this.result2Time = endTime - startTime;
+        puzzle2Finished = true;
+        this.running = !puzzle1Finished || !puzzle2Finished;
+      });
     });
   }
 
