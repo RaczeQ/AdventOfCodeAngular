@@ -155,7 +155,7 @@ export class Day13Service
               y: yValues,
               z: zValues,
               colorscale: [
-                ['0.0', 'rgba(0,0,0,0)'],
+                ['0.0', 'rgba(255,255,255,0)'],
                 [(1 / Math.max(...zValues)).toString(), '#ffffff'],
                 ['1.0', '#fad02c'],
               ],

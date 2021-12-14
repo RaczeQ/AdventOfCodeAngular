@@ -22,6 +22,7 @@ import { Day10Service } from './day10.service';
 import { Day11Service } from './day11.service';
 import { Day12Service } from './day12.service';
 import { Day13Service } from './day13.service';
+import { CavesVisualizerComponent } from './components/caves-visualizer/caves-visualizer.component';
 
 @NgModule({
   id: '2021',
@@ -30,6 +31,7 @@ import { Day13Service } from './day13.service';
     OctopusFlashesVisualizerComponent,
     SevenSegmentsDisplayVisualizerComponent,
     SyntaxErrorLinesVisualizerComponent,
+    CavesVisualizerComponent,
   ],
   imports: [CommonModule, HelperModule, MatButtonModule],
   providers: [
