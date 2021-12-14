@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { PlotlyGraphComponentComponent } from '../helper/components/plotly-graph-component/plotly-graph-component.component';
 import { BaseSolutionService } from '../helper/services/base-solution.service';
 import {
   ISolutionService,
@@ -7,6 +6,7 @@ import {
 } from '../helper/services/isolution.service';
 import { SolutionsCollectorService } from '../helper/services/solutions-collector.service';
 import { splitIntoLines } from '../helper/util-functions/split-into-lines';
+import { CavesVisualizerComponent } from './components/caves-visualizer/caves-visualizer.component';
 
 function isUpperCase(str: string): boolean {
   return str === str.toUpperCase();
@@ -125,35 +125,12 @@ export class Day12Service
     [sources, targets, values, labels] = this.generateSankeyData(paths);
     return {
       result: paths.length,
-      component: PlotlyGraphComponentComponent,
+      component: CavesVisualizerComponent,
       componentData: {
-        graphData: [
-          {
-            type: 'sankey',
-            orientation: 'h',
-            node: {
-              label: labels,
-              pad: 15,
-              thickness: 15,
-              line: {
-                color: 'black',
-                width: 0.5,
-              },
-            },
-            link: {
-              source: sources,
-              target: targets,
-              value: values,
-              color: '#00000080',
-              opacity: 0.5,
-            },
-          },
-        ],
-        graphLayout: {
-          font: {
-            color: '#fad02c',
-          },
-        },
+        sources: sources,
+        targets: targets,
+        values: values,
+        labels: labels,
       },
     };
   }
@@ -167,35 +144,12 @@ export class Day12Service
     [sources, targets, values, labels] = this.generateSankeyData(paths);
     return {
       result: paths.length,
-      component: PlotlyGraphComponentComponent,
+      component: CavesVisualizerComponent,
       componentData: {
-        graphData: [
-          {
-            type: 'sankey',
-            orientation: 'h',
-            node: {
-              label: labels,
-              pad: 15,
-              thickness: 15,
-              line: {
-                color: 'black',
-                width: 0.5,
-              },
-            },
-            link: {
-              source: sources,
-              target: targets,
-              value: values,
-              color: '#00000080',
-              opacity: 0.5,
-            },
-          },
-        ],
-        graphLayout: {
-          font: {
-            color: '#fad02c',
-          },
-        },
+        sources: sources,
+        targets: targets,
+        values: values,
+        labels: labels,
       },
     };
   }

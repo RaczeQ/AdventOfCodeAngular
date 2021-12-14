@@ -66,6 +66,8 @@ export class SolutionComponent {
     this.running = true;
     var puzzle1Finished = false;
     var puzzle2Finished = false;
+    this.result1 = '';
+    this.result2 = '';
     if (this.result1Component != null) {
       this.result1Component.destroy();
       this.result1Component = null;
