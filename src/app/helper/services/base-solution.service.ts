@@ -10,10 +10,26 @@ export abstract class BaseSolutionService implements ISolutionService {
   ) {
     solutionsCollectorService.registerSolution(year, day, dayName, this);
   }
-  solvePart1(input: string): string | number | PuzzleResult {
+  solvePart1(
+    input: string
+  ):
+    | string
+    | number
+    | PuzzleResult
+    | Promise<number>
+    | Promise<string>
+    | Promise<PuzzleResult> {
     throw new Error('Method not implemented.');
   }
-  solvePart2(input: string): string | number | PuzzleResult {
+  solvePart2(
+    input: string
+  ):
+    | string
+    | number
+    | PuzzleResult
+    | Promise<number>
+    | Promise<string>
+    | Promise<PuzzleResult> {
     throw new Error('Method not implemented.');
   }
 }
