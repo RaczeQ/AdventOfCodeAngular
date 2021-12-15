@@ -1,4 +1,5 @@
 import { Clipboard } from '@angular/cdk/clipboard';
+import { HttpClient } from '@angular/common/http';
 import {
   ChangeDetectorRef,
   Component,
@@ -43,6 +44,7 @@ export class SolutionComponent {
   constructor(
     private solutionsCollectorService: SolutionsCollectorService,
     private route: ActivatedRoute,
+    private httpClient: HttpClient,
     private clipboard: Clipboard,
     private snackBar: MatSnackBar,
     private componentFactoryResolver: ComponentFactoryResolver
@@ -52,6 +54,15 @@ export class SolutionComponent {
     solutionsCollectorService
       .getAvailableSolutionsObservable()
       .subscribe((solutions) => (this.availableSolutions = solutions));
+    this.httpClient
+      .get(`assets/inputs/${this.year}_${this.day}.txt`, {
+        responseType: 'text',
+      })
+      .subscribe((data) => {
+        if (this.puzzleInput.length == 0) {
+          this.puzzleInput = data;
+        }
+      });
   }
 
   get title(): string {
