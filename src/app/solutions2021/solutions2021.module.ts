@@ -23,6 +23,7 @@ import { Day11Service } from './day11.service';
 import { Day12Service } from './day12.service';
 import { Day13Service } from './day13.service';
 import { CavesVisualizerComponent } from './components/caves-visualizer/caves-visualizer.component';
+import { Day14Service } from './day14.service';
 
 @NgModule({
   id: '2021',
@@ -52,6 +53,7 @@ import { CavesVisualizerComponent } from './components/caves-visualizer/caves-vi
         Day11Service,
         Day12Service,
         Day13Service,
+        Day14Service,
       ],
       useFactory: (solutionService: ISolutionService) => () => null,
     },
