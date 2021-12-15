@@ -21,6 +21,12 @@
     z-index: 1;
   }
 
+  .navigator {
+    @media screen and (max-width: 600px) {
+      display: none;
+    }
+  }
+
   .snow-background {
     z-index: 0;
     position: absolute;

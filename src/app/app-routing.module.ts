@@ -20,13 +20,17 @@ const routes: Routes = [
   {
     path: '',
     component: YearSelectionComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   { path: '**', redirectTo: '/' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash: true})],
+  imports: [
+    RouterModule.forRoot(routes, {
+      useHash: true,
+    }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
