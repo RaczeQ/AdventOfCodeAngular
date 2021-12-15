@@ -4,18 +4,34 @@
 <mat-toolbar class="mat-elevation-z8" color="primary" [style.z-index]="2">
   <span class="accent-color accent-glow" routerLink="/">Advent Of Code</span>
   <span
-    *ngIf="selectedYear"
+    *ngIf="selectedYear > 0"
     class="accent-color"
     [style.margin-left.em]="1"
-    routerLink="{{ selectedYear }}"
+    routerLink="/{{ selectedYear }}"
     >{{ selectedYear }}</span
   >
   <span
     class="accent-color"
     [style.margin-left.em]="1"
-    routerLink="{{ selectedYear }}"
+    routerLink="/{{ selectedYear }}"
     >{{ actionName }}</span
   >
+  <span
+    *ngIf="selectedYear > 0 && selectedDay > 1"
+    class="navigator accent-color"
+    [style.margin-left.em]="1"
+    routerLink="/{{ selectedYear }}/{{ selectedDay - 1 }}"
+  >
+    Previous day
+  </span>
+  <span
+    *ngIf="selectedYear > 0 && selectedDay > 0 && selectedDay < 24"
+    class="navigator accent-color"
+    [style.margin-left.em]="1"
+    routerLink="/{{ selectedYear }}/{{ selectedDay + 1 }}"
+  >
+    Next day
+  </span>
 </mat-toolbar>
 <div class="router-container">
   <router-outlet></router-outlet>

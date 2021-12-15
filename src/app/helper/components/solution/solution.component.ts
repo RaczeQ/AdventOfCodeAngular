@@ -5,6 +5,7 @@ import {
   Component,
   ComponentFactoryResolver,
   ComponentRef,
+  OnInit,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
@@ -25,7 +26,7 @@ import { BaseResultComponent } from '../base-result.component';
   templateUrl: './solution.component.html',
   styleUrls: ['./solution.component.scss'],
 })
-export class SolutionComponent {
+export class SolutionComponent implements OnInit {
   @ViewChild('viewContainerRefOne', { read: ViewContainerRef })
   viewContainerRef1!: ViewContainerRef;
   @ViewChild('viewContainerRefTwo', { read: ViewContainerRef })
@@ -49,20 +50,36 @@ export class SolutionComponent {
     private snackBar: MatSnackBar,
     private componentFactoryResolver: ComponentFactoryResolver
   ) {
-    this.year = route.snapshot.params['year'];
-    this.day = route.snapshot.params['day'];
     solutionsCollectorService
       .getAvailableSolutionsObservable()
       .subscribe((solutions) => (this.availableSolutions = solutions));
-    this.httpClient
-      .get(`assets/inputs/${this.year}_${this.day}.txt`, {
-        responseType: 'text',
-      })
-      .subscribe((data) => {
-        if (this.puzzleInput.length == 0) {
-          this.puzzleInput = data;
-        }
-      });
+  }
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.result1 = '';
+      this.result2 = '';
+      if (this.result1Component != null) {
+        this.result1Component.destroy();
+        this.result1Component = null;
+      }
+
+      if (this.result2Component != null) {
+        this.result2Component.destroy();
+        this.result2Component = null;
+      }
+      this.puzzleInput = '';
+      this.year = params['year'];
+      this.day = params['day'];
+      this.httpClient
+        .get(`assets/inputs/${this.year}_${this.day}.txt`, {
+          responseType: 'text',
+        })
+        .subscribe((data) => {
+          if (this.puzzleInput.length == 0) {
+            this.puzzleInput = data;
+          }
+        });
+    });
   }
 
   get title(): string {
