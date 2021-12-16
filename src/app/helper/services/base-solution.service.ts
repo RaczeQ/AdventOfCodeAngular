@@ -6,9 +6,10 @@ export abstract class BaseSolutionService implements ISolutionService {
     protected solutionsCollectorService: SolutionsCollectorService,
     protected year: number,
     protected day: number,
-    protected dayName: string
+    protected dayName: string,
+    protected additionalInfo: string = ''
   ) {
-    solutionsCollectorService.registerSolution(year, day, dayName, this);
+    solutionsCollectorService.registerSolution(year, day, dayName, this, additionalInfo);
   }
   solvePart1(
     input: string

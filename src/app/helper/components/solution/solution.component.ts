@@ -90,6 +90,10 @@ export class SolutionComponent implements OnInit {
     return this.availableSolutions[this.year][this.day][1];
   }
 
+  get additionalInfo(): string {
+    return this.availableSolutions[this.year][this.day][2];
+  }
+
   runPuzzle(): void {
     this.running = true;
     var puzzle1Finished = false;
