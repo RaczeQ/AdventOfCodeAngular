@@ -4,7 +4,7 @@ import { ISolutionService } from './isolution.service';
 
 export interface AvailableSolutions {
   [year: number]: {
-    [day: number]: [string, ISolutionService];
+    [day: number]: [string, ISolutionService, string];
   };
 }
 
@@ -46,12 +46,11 @@ export class SolutionsCollectorService {
     year: number,
     day: number,
     dayName: string,
-    service: ISolutionService
+    service: ISolutionService,
+    additionalInfo: string = ''
   ) {
     if (day < 1 || day > 25) {
-      throw new Error(
-        `Cannot register solution for day ${day}!`
-      );
+      throw new Error(`Cannot register solution for day ${day}!`);
     }
     var solutionsObj = this.availableSolutions.value;
     if (!(year in solutionsObj)) {
@@ -62,7 +61,7 @@ export class SolutionsCollectorService {
         `Solutions for Year ${year}, Day ${day} has already been registered!`
       );
     }
-    solutionsObj[year][day] = [dayName, service];
+    solutionsObj[year][day] = [dayName, service, additionalInfo];
     this.availableSolutions.next(solutionsObj);
   }
 }

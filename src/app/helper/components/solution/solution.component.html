@@ -27,6 +27,9 @@
     </button>
   </mat-card>
 </div>
+<mat-card *ngIf="additionalInfo" class="input-card accent-color">
+  {{ additionalInfo }}
+</mat-card>
 <mat-card class="input-card accent-color">
   <mat-form-field class="textarea-full-width" appearance="fill" color="accent">
     <mat-label>Paste an input</mat-label>
