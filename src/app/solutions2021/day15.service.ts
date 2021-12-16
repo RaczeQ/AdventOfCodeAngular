@@ -27,7 +27,13 @@ export class Day15Service
   implements ISolutionService
 {
   constructor(solutionsCollectorService: SolutionsCollectorService) {
-    super(solutionsCollectorService, 2021, 15, 'Chiton', 'Note that the algorithm works long for matrices of larger size (100x100). The page may hang for 3+ minutes during the calculation of part 2 (depending on the processor power).');
+    super(
+      solutionsCollectorService,
+      2021,
+      15,
+      'Chiton',
+      'Note that the algorithm works long for matrices of larger size (100x100). The page may hang for 3+ minutes during the calculation of part 2 (depending on the processor power).'
+    );
   }
   private generatePositions(input: string, multiplier: number = 1): Position[] {
     var chitons = parseInto2DNumbersArray(input);

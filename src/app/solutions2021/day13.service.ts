@@ -22,7 +22,13 @@ export class Day13Service
     solutionsCollectorService: SolutionsCollectorService,
     private scriptsLoaderService: ScriptsLoaderService
   ) {
-    super(solutionsCollectorService, 2021, 13, 'Transparent Origami');
+    super(
+      solutionsCollectorService,
+      2021,
+      13,
+      'Transparent Origami',
+      'Part 2 features automatic OCR using tesseract.js library but it might contain errors (eg. K is detected as E). Please look at the diagram below for correct answer.'
+    );
   }
   private fold(
     input: string,
@@ -146,7 +152,7 @@ export class Day13Service
     );
     return this.OCR(xValues, yValues, zValues).then((txt) => {
       return {
-        result: `${txt} (OCR MIGHT BE WRONG, CHECK VISUALIZATION BELOW)`,
+        result: txt,
         component: PlotlyGraphComponentComponent,
         componentData: {
           graphData: [
