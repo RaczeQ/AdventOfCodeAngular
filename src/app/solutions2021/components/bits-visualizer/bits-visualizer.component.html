@@ -1,0 +1,87 @@
+<div *ngIf="packet" [style.margin-left.em]="0" class="accent-color">
+  <span>
+    <span *ngIf="separators.length > 0" [style.margin-right.em]="0.1">
+      <ng-container *ngFor="let separator of separators.slice(1)">{{
+        separator == 0 ? "&#10240;" : "&#9474;"
+      }}</ng-container>
+      <ng-container *ngIf="isChild && !isLast">&#9500;</ng-container>
+      <ng-container *ngIf="isChild && isLast">&#9492;</ng-container>
+    </span>
+    <ng-container *ngIf="!showValues">
+      <span class="bits-row"
+        >Version:
+        <span [style.font-weight]="!showValues ? 'bold' : 'normal'">{{
+          packet.packetBits?.slice(0, 3)
+        }}</span>
+        (<span [class.accent-glow]="!showValues">{{ packet.version }}</span
+        >)</span
+      >
+      <span class="bits-row"
+        >Type ID: <span>{{ packet.packetBits?.slice(3, 6) }}</span> ({{
+          packet.typeId
+        }})</span
+      >
+      <ng-container *ngIf="packet.typeId != 4">
+        <span class="bits-row"
+          >Length type ID: <span>{{ packet.lengthId }}</span></span
+        >
+        <ng-container *ngIf="packet.lengthId == 0">
+          <span class="bits-row"
+            >Subpackets total length:
+            <span>{{ packet.packetBits?.slice(7, 23) }}</span> ({{
+              packet.lengthNumber
+            }})</span
+          >
+        </ng-container>
+        <ng-container *ngIf="packet.lengthId == 1">
+          <span class="bits-row"
+            >Number of subpackets:
+            <span>{{ packet.packetBits?.slice(7, 18) }}</span> ({{
+              packet.lengthNumber
+            }})</span
+          >
+        </ng-container>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="showValues">
+      <ng-container *ngIf="packet.typeId != 4">
+        <span class="bits-row"
+          >Operator: <span>{{ packet.packetBits?.slice(3, 6) }}</span> (<span
+            class="accent-glow"
+            >{{ getOperator(packet.typeId) }}</span
+          >)</span
+        >
+        <span class="bits-row"
+          >Final value:
+          <span class="accent-glow">{{ packet.value }}</span></span
+        >
+      </ng-container>
+      <ng-container *ngIf="packet.typeId == 4">
+        <span class="bits-row"
+          >Literal value:
+          <span
+            *ngFor="
+              let c of packet.packetBits!.slice(6).split('');
+              let i = index
+            "
+            [style.font-weight]="showValues && i % 5 != 0 ? 'bold' : 'normal'"
+            >{{ c }}</span
+          >
+          (<span class="accent-glow">{{ packet.value }}</span
+          >)</span
+        >
+      </ng-container>
+    </ng-container>
+  </span>
+
+  <ng-container *ngFor="let subPacket of packet.subPackets; let i = index">
+    <aoc-bits-visualizer
+      [packet]="subPacket"
+      [depth]="depth + 1"
+      [separators]="separators.concat(isLast ? [0] : [1])"
+      [isChild]="true"
+      [isLast]="i == packet.subPackets.length - 1"
+      [showValues]="showValues"
+    ></aoc-bits-visualizer>
+  </ng-container>
+</div>
