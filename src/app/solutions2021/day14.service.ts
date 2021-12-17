@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PlotlyGraphComponentComponent } from '../helper/components/plotly-graph-component/plotly-graph-component.component';
+import { PlotlyGraphComponent } from '../helper/components/plotly-graph/plotly-graph.component';
 import { BaseSolutionService } from '../helper/services/base-solution.service';
 import {
   ISolutionService,
@@ -99,7 +99,7 @@ export class Day14Service
       result:
         Math.max(...Object.values(lastResult)) -
         Math.min(...Object.values(lastResult)),
-      component: PlotlyGraphComponentComponent,
+      component: PlotlyGraphComponent,
       componentData: {
         graphData: uniqueLetters.map((l) => {
           return {
@@ -136,7 +136,7 @@ export class Day14Service
       result:
         Math.max(...Object.values(lastResult)) -
         Math.min(...Object.values(lastResult)),
-      component: PlotlyGraphComponentComponent,
+      component: PlotlyGraphComponent,
       componentData: {
         graphData: uniqueLetters.map((l) => {
           return {

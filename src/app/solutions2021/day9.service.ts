@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PlotlyGraphComponentComponent } from '../helper/components/plotly-graph-component/plotly-graph-component.component';
+import { PlotlyGraphComponent } from '../helper/components/plotly-graph/plotly-graph.component';
 import { BaseSolutionService } from '../helper/services/base-solution.service';
 import {
   ISolutionService,
@@ -42,7 +42,7 @@ export class Day9Service
     var maxX = pointsList[pointsList.length - 1].x;
     return {
       result: riskLevels,
-      component: PlotlyGraphComponentComponent,
+      component: PlotlyGraphComponent,
       componentData: {
         graphData: [
           {
@@ -129,7 +129,7 @@ export class Day9Service
     var maxX = pointsList[pointsList.length - 1].x;
     return {
       result: basinTuples[0].size * basinTuples[1].size * basinTuples[2].size,
-      component: PlotlyGraphComponentComponent,
+      component: PlotlyGraphComponent,
       componentData: {
         graphData: [
           {

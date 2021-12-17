@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PlotlyGraphComponentComponent } from '../helper/components/plotly-graph-component/plotly-graph-component.component';
+import { PlotlyGraphComponent } from '../helper/components/plotly-graph/plotly-graph.component';
 import { BaseSolutionService } from '../helper/services/base-solution.service';
 import {
   ISolutionService,
@@ -81,7 +81,7 @@ export class Day5Service
       result: Object.values(takenPositions)
         .map(Number)
         .filter((n) => n > 1).length,
-      component: PlotlyGraphComponentComponent,
+      component: PlotlyGraphComponent,
       componentData: {
         graphData: [
           {
@@ -129,7 +129,7 @@ export class Day5Service
       result: Object.values(takenPositions)
         .map(Number)
         .filter((n) => n > 1).length,
-      component: PlotlyGraphComponentComponent,
+      component: PlotlyGraphComponent,
       componentData: {
         graphData: [
           {

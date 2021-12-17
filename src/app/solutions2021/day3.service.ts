@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PlotlyGraphComponentComponent } from '../helper/components/plotly-graph-component/plotly-graph-component.component';
+import { PlotlyGraphComponent } from '../helper/components/plotly-graph/plotly-graph.component';
 import { BaseSolutionService } from '../helper/services/base-solution.service';
 import {
   ISolutionService,
@@ -41,7 +41,7 @@ export class Day3Service
 
     return {
       result: gamma * epsilon,
-      component: PlotlyGraphComponentComponent,
+      component: PlotlyGraphComponent,
       componentData: {
         graphData: [
           {
@@ -180,7 +180,7 @@ export class Day3Service
     values = oxygenLinesLengths.slice(1).concat(carbonLinesLengths.slice(1));
     return {
       result: oxygenValue * carbonValue,
-      component: PlotlyGraphComponentComponent,
+      component: PlotlyGraphComponent,
       componentData: {
         graphData: [
           {
