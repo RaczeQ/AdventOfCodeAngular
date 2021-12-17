@@ -5,6 +5,8 @@ import { HelperModule } from '../helper/helper.module';
 import { ISolutionService } from '../helper/services/isolution.service';
 
 import { BingoVisualizerComponent } from './components/bingo-visualizer/bingo-visualizer.component';
+import { BitsVisualizerComponent } from './components/bits-visualizer/bits-visualizer.component';
+import { CavesVisualizerComponent } from './components/caves-visualizer/caves-visualizer.component';
 import { OctopusFlashesVisualizerComponent } from './components/octopus-flashes-visualizer/octopus-flashes-visualizer.component';
 import { SevenSegmentsDisplayVisualizerComponent } from './components/seven-segments-display-visualizer/seven-segments-display-visualizer.component';
 import { SyntaxErrorLinesVisualizerComponent } from './components/syntax-error-lines-visualizer/syntax-error-lines-visualizer.component';
@@ -22,18 +24,19 @@ import { Day10Service } from './day10.service';
 import { Day11Service } from './day11.service';
 import { Day12Service } from './day12.service';
 import { Day13Service } from './day13.service';
-import { CavesVisualizerComponent } from './components/caves-visualizer/caves-visualizer.component';
 import { Day14Service } from './day14.service';
 import { Day15Service } from './day15.service';
+import { Day16Service } from './day16.service';
 
 @NgModule({
   id: '2021',
   declarations: [
     BingoVisualizerComponent,
+    BitsVisualizerComponent,
+    CavesVisualizerComponent,
     OctopusFlashesVisualizerComponent,
     SevenSegmentsDisplayVisualizerComponent,
     SyntaxErrorLinesVisualizerComponent,
-    CavesVisualizerComponent,
   ],
   imports: [CommonModule, HelperModule, MatButtonModule],
   providers: [
@@ -56,6 +59,7 @@ import { Day15Service } from './day15.service';
         Day13Service,
         Day14Service,
         Day15Service,
+        Day16Service,
       ],
       useFactory: (solutionService: ISolutionService) => () => null,
     },
