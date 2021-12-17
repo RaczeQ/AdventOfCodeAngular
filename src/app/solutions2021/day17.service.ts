@@ -194,16 +194,30 @@ export class Day17Service
       result: this.calculateMaxDistance(maxY),
       component: PlotlyGraphComponent,
       componentData: {
-        graphData: paths.map((p) => {
-          return {
-            x: p.map((c) => c.x),
-            y: p.map((c) => c.y),
-            mode: 'lines',
-            type: 'scattergl',
-            showlegend: false,
-            legendgroup: 'path',
-          };
-        }),
+        graphData: paths
+          .map((p) => {
+            return {
+              x: p.map((c) => c.x),
+              y: p.map((c) => c.y),
+              mode: 'lines',
+              opacity: 0.5,
+              type: 'scattergl',
+              showlegend: false,
+              legendgroup: 'pathL',
+            } as any;
+          })
+          .concat(
+            paths.map((p) => {
+              return {
+                x: p.map((c) => c.x),
+                y: p.map((c) => c.y),
+                mode: 'markers',
+                type: 'scattergl',
+                showlegend: false,
+                legendgroup: 'pathL',
+              } as any;
+            })
+          ),
         graphLayout: {
           shapes: [
             {
@@ -215,7 +229,7 @@ export class Day17Service
               x1: x1,
               y1: y1,
               fillcolor: '#000000',
-              opacity: 0.5,
+              opacity: 0.25,
               line: {
                 width: 0,
               },
@@ -255,16 +269,30 @@ export class Day17Service
       result: velocities.length,
       component: PlotlyGraphComponent,
       componentData: {
-        graphData: paths.map((p) => {
-          return {
-            x: p.map((c) => c.x),
-            y: p.map((c) => c.y),
-            mode: 'lines',
-            type: 'scattergl',
-            showlegend: false,
-            legendgroup: 'path',
-          };
-        }),
+        graphData: paths
+          .map((p) => {
+            return {
+              x: p.map((c) => c.x),
+              y: p.map((c) => c.y),
+              mode: 'lines',
+              opacity: 0.5,
+              type: 'scattergl',
+              showlegend: false,
+              legendgroup: 'pathL',
+            } as any;
+          })
+          .concat(
+            paths.map((p) => {
+              return {
+                x: p.map((c) => c.x),
+                y: p.map((c) => c.y),
+                mode: 'markers',
+                type: 'scattergl',
+                showlegend: false,
+                legendgroup: 'pathL',
+              } as any;
+            })
+          ),
         graphLayout: {
           shapes: [
             {
@@ -276,7 +304,7 @@ export class Day17Service
               x1: x1,
               y1: y1,
               fillcolor: '#000000',
-              opacity: 0.5,
+              opacity: 0.25,
               line: {
                 width: 0,
               },
