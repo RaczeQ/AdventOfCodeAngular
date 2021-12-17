@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { BaseResultComponent } from '../base-result.component';
 
 @Component({
-  selector: 'aoc-plotly-graph-component',
-  templateUrl: './plotly-graph-component.component.html',
-  styleUrls: ['./plotly-graph-component.component.scss'],
+  selector: 'aoc-plotly-graph',
+  templateUrl: './plotly-graph.component.html',
+  styleUrls: ['./plotly-graph.component.scss'],
 })
-export class PlotlyGraphComponentComponent
+export class PlotlyGraphComponent
   extends BaseResultComponent
   implements OnInit
 {

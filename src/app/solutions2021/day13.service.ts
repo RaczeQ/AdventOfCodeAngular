@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PlotlyGraphComponentComponent } from '../helper/components/plotly-graph-component/plotly-graph-component.component';
+import { PlotlyGraphComponent } from '../helper/components/plotly-graph/plotly-graph.component';
 import { BaseSolutionService } from '../helper/services/base-solution.service';
 import {
   ISolutionService,
@@ -101,7 +101,7 @@ export class Day13Service
     );
     return {
       result: uniqueDots.length,
-      component: PlotlyGraphComponentComponent,
+      component: PlotlyGraphComponent,
       componentData: {
         graphData: [
           {
@@ -153,7 +153,7 @@ export class Day13Service
     return this.OCR(xValues, yValues, zValues).then((txt) => {
       return {
         result: txt,
-        component: PlotlyGraphComponentComponent,
+        component: PlotlyGraphComponent,
         componentData: {
           graphData: [
             {

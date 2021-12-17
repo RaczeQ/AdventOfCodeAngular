@@ -22,7 +22,7 @@ import { RouterModule } from '@angular/router';
 import { SolutionsCollectorService } from './services/solutions-collector.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CanActivateYear } from './activate-route-guards/can-activate-year';
-import { PlotlyGraphComponentComponent } from './components/plotly-graph-component/plotly-graph-component.component';
+import { PlotlyGraphComponent } from './components/plotly-graph/plotly-graph.component';
 import { ScriptsLoaderService } from './services/scripts-loader.service';
 
 @NgModule({
@@ -30,7 +30,7 @@ import { ScriptsLoaderService } from './services/scripts-loader.service';
     SolutionComponent,
     DaySelectionComponent,
     YearSelectionComponent,
-    PlotlyGraphComponentComponent,
+    PlotlyGraphComponent,
   ],
   imports: [
     CommonModule,
