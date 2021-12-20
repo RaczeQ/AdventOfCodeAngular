@@ -1,0 +1,113 @@
+<div *ngIf="snapshots.length > 0; else snailfish" class="accent-color">
+  <div>
+    <button
+      mat-raised-button
+      color="accent"
+      [style.margin-right.em]="0.5"
+      [disabled]="visualizing"
+      (click)="startVisualization()"
+    >
+      Run animation
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      [style.margin-right.em]="0.5"
+      [disabled]="!visualizing"
+      (click)="pauseVisualization()"
+    >
+      Pause animation
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      [style.margin-right.em]="0.5"
+      [disabled]="visualizing || iterations == 0"
+      (click)="prevStep()"
+    >
+      <
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      [style.margin-right.em]="0.5"
+      [disabled]="
+        visualizing ||
+        (currentSnapshotIdx == snapshots.length - 1 &&
+          currentSnailfishIdx == snapshots[currentSnapshotIdx].length - 1)
+      "
+      (click)="nextStep()"
+    >
+      >
+    </button>
+  </div>
+  <div>
+    Animation speed: {{ interval }}ms
+    <span [style.margin-right.em]="1"></span>
+    <mat-slider
+      [max]="1000"
+      [min]="50"
+      [step]="50"
+      [thumbLabel]="true"
+      [tickInterval]="'auto'"
+      [(ngModel)]="interval"
+      aria-labelledby="example-name-label"
+    >
+    </mat-slider>
+  </div>
+
+  <div>
+    Adding numbers:
+    <aoc-snailfish-number-visualizer
+      [snailfish]="asSnailfish(snapshots[currentSnapshotIdx][0][0].x)"
+      [depth]="0"
+    ></aoc-snailfish-number-visualizer>
+    +
+    <aoc-snailfish-number-visualizer
+      [snailfish]="asSnailfish(snapshots[currentSnapshotIdx][0][0].y)"
+      [depth]="0"
+    ></aoc-snailfish-number-visualizer
+    ><br />
+    Iterations: {{ iterations }} ({{ currentSnapshotIdx + 1 }}:
+    {{ currentSnailfishIdx + 1 }})
+  </div>
+
+  <div [style.height.em]="2">
+    <aoc-snailfish-number-visualizer
+      [snailfish]="currentSnailfish"
+      [markedSnailfish]="currentMarkedSnailfish"
+      [depth]="0"
+    ></aoc-snailfish-number-visualizer>
+  </div>
+</div>
+
+<ng-template #snailfish>
+  <div
+    [style.margin-top.em]="depth > 0 ? 0.25 : 0"
+    class="accent-color"
+    [class.accent-glow]="isMarked"
+    [class.non-glow]="!isMarked"
+  >
+    [
+    <ng-container *ngIf="isNumber(currentSnailfish.x)"
+      >{{ currentSnailfish.x }} </ng-container
+    ><ng-container *ngIf="!isNumber(currentSnailfish.x)">
+      <aoc-snailfish-number-visualizer
+        [snailfish]="asSnailfish(currentSnailfish.x)"
+        [markedSnailfish]="markedSnailfish"
+        [depth]="depth + 1"
+      ></aoc-snailfish-number-visualizer
+    ></ng-container>
+    ,
+    <ng-container *ngIf="isNumber(currentSnailfish.y)"
+      >{{ currentSnailfish.y }} </ng-container
+    ><ng-container *ngIf="!isNumber(currentSnailfish.y)"
+      ><aoc-snailfish-number-visualizer
+        [snailfish]="asSnailfish(currentSnailfish.y)"
+        [markedSnailfish]="markedSnailfish"
+        [depth]="depth + 1"
+      ></aoc-snailfish-number-visualizer
+    ></ng-container>
+    ]
+  </div>
+</ng-template>

@@ -1,6 +1,8 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSliderModule } from '@angular/material/slider';
 import { HelperModule } from '../helper/helper.module';
 import { ISolutionService } from '../helper/services/isolution.service';
 
@@ -9,6 +11,7 @@ import { BitsVisualizerComponent } from './components/bits-visualizer/bits-visua
 import { CavesVisualizerComponent } from './components/caves-visualizer/caves-visualizer.component';
 import { OctopusFlashesVisualizerComponent } from './components/octopus-flashes-visualizer/octopus-flashes-visualizer.component';
 import { SevenSegmentsDisplayVisualizerComponent } from './components/seven-segments-display-visualizer/seven-segments-display-visualizer.component';
+import { SnailfishNumberVisualizerComponent } from './components/snailfish-number-visualizer/snailfish-number-visualizer.component';
 import { SyntaxErrorLinesVisualizerComponent } from './components/syntax-error-lines-visualizer/syntax-error-lines-visualizer.component';
 
 import { Day1Service } from './day1.service';
@@ -28,6 +31,7 @@ import { Day14Service } from './day14.service';
 import { Day15Service } from './day15.service';
 import { Day16Service } from './day16.service';
 import { Day17Service } from './day17.service';
+import { Day18Service } from './day18.service';
 
 @NgModule({
   id: '2021',
@@ -37,9 +41,16 @@ import { Day17Service } from './day17.service';
     CavesVisualizerComponent,
     OctopusFlashesVisualizerComponent,
     SevenSegmentsDisplayVisualizerComponent,
+    SnailfishNumberVisualizerComponent,
     SyntaxErrorLinesVisualizerComponent,
   ],
-  imports: [CommonModule, HelperModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    HelperModule,
+    FormsModule,
+    MatButtonModule,
+    MatSliderModule,
+  ],
   providers: [
     {
       provide: APP_INITIALIZER,
@@ -62,6 +73,7 @@ import { Day17Service } from './day17.service';
         Day15Service,
         Day16Service,
         Day17Service,
+        Day18Service,
       ],
       useFactory: (solutionService: ISolutionService) => () => null,
     },
