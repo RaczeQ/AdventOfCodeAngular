@@ -10,9 +10,13 @@ export class PlotlyGraphComponent
   extends BaseResultComponent
   implements OnInit
 {
-  graphData: Plotly.Data[] = [];
-  graphLayout: Partial<Plotly.Layout> = {};
-  graphConfig: Partial<Plotly.Config> = {};
+  // graphData: Plotly.Data[] = [];
+  // graphLayout: Partial<Plotly.Layout> = {};
+  // graphConfig: Partial<Plotly.Config> = {};
+
+  graphData: any[] = [];
+  graphLayout: any = {};
+  graphConfig: any = {};
 
   ngOnInit(): void {
     this.graphData = this.data.graphData ?? [];

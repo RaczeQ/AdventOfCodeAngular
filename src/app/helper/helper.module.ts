@@ -9,10 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
-import * as PlotlyJS from 'plotly.js-dist-min';
-import { PlotlyModule } from 'angular-plotly.js';
-
-PlotlyModule.plotlyjs = PlotlyJS;
+import { PlotlyViaWindowModule } from 'angular-plotly.js';
 
 import { CanActivateDay } from './activate-route-guards/can-activate-day';
 import { DaySelectionComponent } from './components/day-selection/day-selection.component';
@@ -38,7 +35,7 @@ import { ScriptsLoaderService } from './services/scripts-loader.service';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    PlotlyModule,
+    PlotlyViaWindowModule,
     ClipboardModule,
     MatButtonModule,
     MatCardModule,

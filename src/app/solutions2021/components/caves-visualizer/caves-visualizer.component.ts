@@ -32,7 +32,6 @@ export class CavesVisualizerComponent
         'https://unpkg.com/vis-network/standalone/umd/vis-network.min.js'
       )
       .then(() => {
-        // console.log(vis);
         var nodes = new vis.DataSet(
           labels.map((l, idx) => {
             return { id: idx, label: l };
@@ -45,7 +44,7 @@ export class CavesVisualizerComponent
               to: targets[idx],
               value: values[idx] / maxValue,
               arrows: 'to',
-              color: '#fad02c'
+              color: '#fad02c',
             };
           })
         );
