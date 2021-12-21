@@ -205,7 +205,6 @@ export class Day19Service
     scannerRotations: { [key: number]: ['x' | 'y' | 'z', 1 | -1][] };
     scannerPositions: { [key: number]: Point3D };
   } {
-    console.log(scanners);
     var scannerRotations: { [key: number]: ['x' | 'y' | 'z', 1 | -1][] } = {
       0: this.rotations[0],
     };
