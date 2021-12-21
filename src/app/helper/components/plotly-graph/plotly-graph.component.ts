@@ -51,6 +51,23 @@ export class PlotlyGraphComponent
     this.graphLayout.xaxis.tickfont = {
       color: '#ffffff',
     };
+    if (!this.graphLayout.scene) {
+      this.graphLayout.scene = {};
+      (['xaxis', 'yaxis', 'zaxis'] as ('xaxis' | 'yaxis' | 'zaxis')[]).forEach(
+        (ax) => {
+          this.graphLayout.scene![ax] = {
+            showgrid: true,
+            zeroline: true,
+            showline: true,
+            color: '#ffffff',
+            tickfont: {
+              color: '#ffffff',
+            },
+          };
+        }
+      );
+    }
+
     this.graphConfig = this.data.graphConfig ?? {
       displayModeBar: false,
       staticPlot: true,

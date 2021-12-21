@@ -6,12 +6,8 @@ import {
   PuzzleResult,
 } from '../helper/services/isolution.service';
 import { SolutionsCollectorService } from '../helper/services/solutions-collector.service';
+import { Point2D } from '../helper/util-functions/point';
 import { splitIntoLines } from '../helper/util-functions/split-into-lines';
-
-export interface Point {
-  x: number;
-  y: number;
-}
 
 export interface Line {
   x1: number;
@@ -43,7 +39,7 @@ export class Day5Service
     });
   }
 
-  private calculatePositions(line: Line): Point[] {
+  private calculatePositions(line: Line): Point2D[] {
     var steps = Math.max(
       Math.abs(line.x1 - line.x2),
       Math.abs(line.y1 - line.y2)
