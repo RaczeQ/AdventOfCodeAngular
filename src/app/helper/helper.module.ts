@@ -9,8 +9,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
-import { PlotlyViaWindowModule } from 'angular-plotly.js';
-
 import { CanActivateDay } from './activate-route-guards/can-activate-day';
 import { DaySelectionComponent } from './components/day-selection/day-selection.component';
 import { YearSelectionComponent } from './components/year-selection/year-selection.component';
@@ -21,6 +19,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CanActivateYear } from './activate-route-guards/can-activate-year';
 import { PlotlyGraphComponent } from './components/plotly-graph/plotly-graph.component';
 import { ScriptsLoaderService } from './services/scripts-loader.service';
+
+import { PlotlyViaCDNModule } from 'angular-plotly.js';
+
+PlotlyViaCDNModule.setPlotlyVersion('2.8.3');
+PlotlyViaCDNModule.setPlotlyBundle(null);
 
 @NgModule({
   declarations: [
@@ -35,7 +38,7 @@ import { ScriptsLoaderService } from './services/scripts-loader.service';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    PlotlyViaWindowModule,
+    PlotlyViaCDNModule,
     ClipboardModule,
     MatButtonModule,
     MatCardModule,
