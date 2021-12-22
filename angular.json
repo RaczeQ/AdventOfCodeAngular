@@ -47,7 +47,7 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.scss"],
-            "scripts": ["node_modules/plotly.js-dist-min/plotly.min.js"]
+            "scripts": []
           },
           "configurations": {
             "production": {
