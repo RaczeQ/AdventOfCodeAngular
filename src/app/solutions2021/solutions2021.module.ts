@@ -9,6 +9,7 @@ import { ISolutionService } from '../helper/services/isolution.service';
 import { BingoVisualizerComponent } from './components/bingo-visualizer/bingo-visualizer.component';
 import { BitsVisualizerComponent } from './components/bits-visualizer/bits-visualizer.component';
 import { CavesVisualizerComponent } from './components/caves-visualizer/caves-visualizer.component';
+import { OceanTrenchVisualizerComponent } from './components/ocean-trench-visualizer/ocean-trench-visualizer.component';
 import { OctopusFlashesVisualizerComponent } from './components/octopus-flashes-visualizer/octopus-flashes-visualizer.component';
 import { SevenSegmentsDisplayVisualizerComponent } from './components/seven-segments-display-visualizer/seven-segments-display-visualizer.component';
 import { SnailfishNumberVisualizerComponent } from './components/snailfish-number-visualizer/snailfish-number-visualizer.component';
@@ -33,6 +34,7 @@ import { Day16Service } from './day16.service';
 import { Day17Service } from './day17.service';
 import { Day18Service } from './day18.service';
 import { Day19Service } from './day19.service';
+import { Day20Service } from './day20.service';
 
 @NgModule({
   id: '2021',
@@ -40,6 +42,7 @@ import { Day19Service } from './day19.service';
     BingoVisualizerComponent,
     BitsVisualizerComponent,
     CavesVisualizerComponent,
+    OceanTrenchVisualizerComponent,
     OctopusFlashesVisualizerComponent,
     SevenSegmentsDisplayVisualizerComponent,
     SnailfishNumberVisualizerComponent,
@@ -76,6 +79,7 @@ import { Day19Service } from './day19.service';
         Day17Service,
         Day18Service,
         Day19Service,
+        Day20Service,
       ],
       useFactory: (solutionService: ISolutionService) => () => null,
     },
