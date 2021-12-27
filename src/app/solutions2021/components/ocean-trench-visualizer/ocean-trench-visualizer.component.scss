@@ -1,0 +1,16 @@
+.number-cell {
+  height: .5em;
+  width: .5em;
+  display: flex;
+  justify-content: center;
+}
+
+.flex-row {
+  display: flex;
+  flex-flow: row wrap;
+}
+.grid-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

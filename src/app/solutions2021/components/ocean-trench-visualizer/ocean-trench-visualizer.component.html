@@ -1,0 +1,16 @@
+<button
+  mat-raised-button
+  color="accent"
+  [style.margin-bottom.em]="0.5"
+  [disabled]="visualizing"
+  (click)="startVisualization()"
+>
+  Run animation
+</button>
+
+<div class="flex-row accent-color">Current step: {{ currentIdx }}</div>
+<div class="flex-row accent-color">Lit pizels: {{ litPixels }}</div>
+
+<div class="grid-wrapper" [style.height.px]="5 * finalWidth">
+  <img [src]="imageCanvas" />
+</div>
