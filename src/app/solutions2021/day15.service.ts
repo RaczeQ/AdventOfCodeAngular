@@ -6,17 +6,13 @@ import {
   PuzzleResult,
 } from '../helper/services/isolution.service';
 import { SolutionsCollectorService } from '../helper/services/solutions-collector.service';
+import { euclidean2D } from '../helper/util-functions/distances';
 import { parseInto2DNumbersArray } from '../helper/util-functions/parse-into-2d-numbers-array';
+import { Point2D } from '../helper/util-functions/point';
 
-interface Position {
-  x: number;
-  y: number;
+interface Position extends Point2D {
   value: number;
   neighbours: Position[];
-}
-
-function euclidean(a: Position, b: Position): number {
-  return Math.sqrt(Math.pow(b.x - a.x, 2) + Math.pow(b.y - a.y, 2));
 }
 
 @Injectable({
@@ -114,7 +110,7 @@ export class Day15Service
     //The distance from the start node to itself is of course 0
     distances[start] = 0;
     //start node has a priority equal to straight line distance to goal. It will be the first to be expanded.
-    priorities[start] = euclidean(positions[start], positions[goal]);
+    priorities[start] = euclidean2D(positions[start], positions[goal]);
 
     //While there are nodes left to visit...
     while (true) {
@@ -157,7 +153,7 @@ export class Day15Service
             //...and set the priority with which we should continue with this node
             priorities[neighbourIdx] =
               distances[neighbourIdx] +
-              euclidean(positions[neighbourIdx], positions[goal]);
+              euclidean2D(positions[neighbourIdx], positions[goal]);
             parents[neighbourIdx] = lowestPriorityIndex;
           }
         }
