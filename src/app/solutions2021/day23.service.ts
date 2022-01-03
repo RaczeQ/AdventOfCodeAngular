@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
 import { PlotlyGraphComponent } from '../helper/components/plotly-graph/plotly-graph.component';
 import { BaseSolutionService } from '../helper/services/base-solution.service';
 import {
@@ -9,11 +8,13 @@ import {
 import { SolutionsCollectorService } from '../helper/services/solutions-collector.service';
 import { Point2D } from '../helper/util-functions/point';
 import { splitIntoLines } from '../helper/util-functions/split-into-lines';
+import { AmphipodsRoomVisualizerComponent } from './components/amphipods-room-visualizer/amphipods-room-visualizer.component';
 
-interface Field {
+export interface AmphipodRoomField {
   allowedStop: boolean;
   allowedFinish?: string;
   occupant?: string;
+  position: Point2D;
 }
 
 @Injectable({
@@ -41,229 +42,180 @@ export class Day23Service
     ['D', 9],
   ];
 
-  private calculatedCosts: { [idx: number]: { [char: string]: number } } = {};
-
-  private calculatedDistances: {
+  private calculatedPaths: {
     [startIdx: number]: { [destIdx: number]: number[] };
   } = {};
 
-  private parseInput(lines: string[]): [Field[], Point2D[]] {
-    var fields: Field[] = [];
-    var positions: Point2D[] = [];
+  private parseInput(lines: string[]): [AmphipodRoomField[], Point2D[]] {
+    var fields: AmphipodRoomField[] = [];
+    var border: Point2D[] = [];
     lines.forEach((line, y) => {
       line.split('').forEach((char, x) => {
-        if (char.trim() != '' && char != '#') {
-          positions.push({ x, y });
-          var field: Field = {
-            allowedStop: !(y > 1 || [3, 5, 7, 9].includes(x)),
-          };
-          if (char != '.') {
-            field.occupant = char;
+        if (char.trim() != '') {
+          if (char == '#') {
+            border.push({ x, y });
+          } else {
+            var field: AmphipodRoomField = {
+              position: { x, y },
+              allowedStop: !(y > 1 || [3, 5, 7, 9].includes(x)),
+            };
+            if (char != '.') {
+              field.occupant = char;
+            }
+            if (y > 1) {
+              field.allowedFinish = this.positions.find(
+                (pos) => pos[1] == x
+              )![0];
+            }
+            fields.push(field);
           }
-          if (y > 1) {
-            field.allowedFinish = this.positions.find((pos) => pos[1] == x)![0];
-          }
-          fields.push(field);
         }
       });
     });
-    return [fields, positions];
+    return [fields, border];
   }
 
-  private getNeighbourhoods(fields: Point2D[]): { [id: number]: number[] } {
+  private getNeighbourhoods(fields: AmphipodRoomField[]): {
+    [id: number]: number[];
+  } {
     var result: { [id: number]: number[] } = {};
     fields.forEach((field, idx) => {
-      var up = fields.findIndex((f) => f.x == field.x && f.y == field.y - 1);
-      var left = fields.findIndex((f) => f.x == field.x - 1 && f.y == field.y);
-      var right = fields.findIndex((f) => f.x == field.x + 1 && f.y == field.y);
-      var down = fields.findIndex((f) => f.x == field.x && f.y == field.y + 1);
+      var up = fields.findIndex(
+        (f) =>
+          f.position.x == field.position.x &&
+          f.position.y == field.position.y - 1
+      );
+      var left = fields.findIndex(
+        (f) =>
+          f.position.x == field.position.x - 1 &&
+          f.position.y == field.position.y
+      );
+      var right = fields.findIndex(
+        (f) =>
+          f.position.x == field.position.x + 1 &&
+          f.position.y == field.position.y
+      );
+      var down = fields.findIndex(
+        (f) =>
+          f.position.x == field.position.x &&
+          f.position.y == field.position.y + 1
+      );
       result[idx] = [up, left, right, down].filter((f) => f > -1);
     });
     return result;
   }
 
-  private copyFields(fields: Field[]): Field[] {
-    return JSON.parse(JSON.stringify(fields)) as Field[];
+  private copyFields(fields: AmphipodRoomField[]): AmphipodRoomField[] {
+    var result = fields.map((f) => Object.assign({}, f));
+    return result;
   }
 
   private swapPositions(
-    fields: Field[],
+    fields: AmphipodRoomField[],
     startIdx: number,
     endIdx: number
-  ): Field[] {
+  ): AmphipodRoomField[] {
     var result = this.copyFields(fields);
     result[startIdx].occupant = fields[endIdx].occupant;
     result[endIdx].occupant = fields[startIdx].occupant;
     return result;
   }
 
-  private checkIfLaneIsValid(
+  private checkIfIsSettled(
     fieldIdx: number,
-    fields: Field[],
-    neighbours: { [id: number]: number[] }
+    fields: AmphipodRoomField[],
+    neighbours: { [id: number]: number[] },
+    withStart: boolean = true
   ): boolean {
     var currentIdx = fieldIdx;
     var laneFields = [];
+    if (withStart) {
+      laneFields.push(fields[currentIdx]);
+    }
     while (Math.max(...neighbours[currentIdx]) > currentIdx) {
       currentIdx = Math.max(...neighbours[currentIdx]);
       laneFields.push(fields[currentIdx]);
     }
-    return laneFields.every(
-      (f) => f.allowedFinish && (!f.occupant || f.occupant == f.allowedFinish)
-    );
+    var result =
+      laneFields.length == 0 ||
+      laneFields.every((f) => f.allowedFinish && f.occupant == f.allowedFinish);
+    return result;
   }
-
-  // private pathsCache: { [key: string]: [number, number][] } = {};
 
   private generateAllPaths(
     fieldIdx: number,
-    fields: Field[],
-    neighbours: { [id: number]: number[] },
-    previousFieldIdx: number | undefined = undefined
-  ): [number, number][] {
-    var result: [number, number][] = [];
+    fields: AmphipodRoomField[],
+    neighbours: { [id: number]: number[] }
+  ): { destIdx: number; dist: number }[] {
+    var result: { destIdx: number; dist: number }[] = [];
     var currentField = fields[fieldIdx];
+    // Paths from room to corridor
     if (
-      previousFieldIdx ||
-      !(
-        currentField.allowedFinish &&
-        currentField.allowedFinish == currentField.occupant &&
-        neighbours[fieldIdx].length == 1
-      )
+      currentField.allowedFinish &&
+      !this.checkIfIsSettled(fieldIdx, fields, neighbours, true)
     ) {
-      // if (!previousFieldIdx) {
-      //   console.log(fieldIdx, currentField.occupant, currentField);
-      // }
-      neighbours[fieldIdx]
-        .filter((nIdx) => nIdx != previousFieldIdx && !fields[nIdx].occupant)
-        .forEach((nIdx) => {
-          result.push([nIdx, 1]);
-          this.generateAllPaths(nIdx, fields, neighbours, fieldIdx).forEach(
-            (t) => {
-              t[1] += 1;
-              result.push(t);
-            }
-          );
-        });
-      if (!previousFieldIdx && result.length > 0) {
-        result = result.filter((r) => {
-          var canMoveToTheEnd =
-            Math.max(...neighbours[r[0]]) < r[0] &&
-            fields[r[0]].allowedFinish == currentField.occupant;
-          var canFillRoom =
-            fields[r[0]].allowedFinish == currentField.occupant &&
-            this.checkIfLaneIsValid(r[0], fields, neighbours);
-          return (
-            canMoveToTheEnd ||
-            canFillRoom ||
-            (currentField.allowedFinish && fields[r[0]].allowedStop)
-          );
-        });
-      }
+      fields.forEach((f, destIdx) => {
+        if (fieldIdx != destIdx && !f.occupant) {
+          var path = this.calculatedPaths[fieldIdx][destIdx];
+          if (f.allowedStop && path.every((pIdx) => !fields[pIdx].occupant)) {
+            result.push({ destIdx, dist: path.length });
+          }
+        }
+      });
+      // Paths from corridor to room
+    } else if (!currentField.allowedFinish) {
+      fields.forEach((f, destIdx) => {
+        if (fieldIdx != destIdx && !f.occupant) {
+          var path = this.calculatedPaths[fieldIdx][destIdx];
+          if (
+            f.allowedFinish &&
+            f.allowedFinish == currentField.occupant &&
+            this.checkIfIsSettled(destIdx, fields, neighbours, false) &&
+            path.every((pIdx) => !fields[pIdx].occupant)
+          ) {
+            result.push({ destIdx, dist: path.length });
+          }
+        }
+      });
     }
     return result;
   }
 
-  private movesCache: { [key: string]: [string, number][] } = {};
-
   private validMoves(
-    fields: Field[],
+    fields: AmphipodRoomField[],
     neighbours: { [id: number]: number[] }
-  ): [Field[], number][] {
-    var result: [Field[], number][] = [];
+  ): [AmphipodRoomField[], number][] {
+    var result: [AmphipodRoomField[], number][] = [];
     fields.forEach((field, fieldIdx) => {
       if (field.occupant) {
-        var subResult: [Field[], number][] = [];
-        // var key = this.generateHash(fieldIdx, fields, neighbours);
-        // if (key in this.movesCache) {
-        //   this.movesCache[key].forEach(([state, cost]) =>
-        //     result.push([JSON.parse(state) as Field[], cost])
-        //   );
-        // } else {
+        var subResult: [AmphipodRoomField[], number][] = [];
         var paths = this.generateAllPaths(fieldIdx, fields, neighbours);
-        paths.forEach(([nIdx, cost]) => {
+        paths.forEach(({ destIdx, dist }) => {
           subResult.push([
-            this.swapPositions(fields, fieldIdx, nIdx),
-            cost * this.costs[field.occupant!],
+            this.swapPositions(fields, fieldIdx, destIdx),
+            dist * this.costs[field.occupant!],
           ]);
         });
-        // this.movesCache[key] = subResult.map(([state, cost]) => [
-        //   JSON.stringify(state),
-        //   cost,
-        // ]);
         result.push(...subResult);
-        // }
       }
     });
-
     return result;
   }
 
-  private isFinished(fields: Field[]): boolean {
-    return fields.every(
+  private isFinished(fields: AmphipodRoomField[]): boolean {
+    var result = fields.every(
       (f) => !f.allowedFinish || f.allowedFinish == f.occupant
     );
+    return result;
   }
 
   private heuristicCache: { [key: string]: number } = {};
 
-  private heuristic(
-    fields: Field[],
-    neighbours: { [id: number]: number[] }
-  ): number {
+  private heuristic(fields: AmphipodRoomField[]): number {
     var key = this.printState(fields);
     if (key in this.heuristicCache) {
       return this.heuristicCache[key];
     }
-    // var costs = fields
-    //   .map((f, idx) => {
-    //     return { f, idx };
-    //   })
-    //   .filter((t) => t.f.occupant && t.f.occupant != t.f.allowedFinish)
-    //   .map((t) => this.calculatedCosts[t.idx][t.f.occupant!]);
-
-    var gapsCost = fields
-      .map((f, idx) => {
-        return { f, idx };
-      })
-      .filter(
-        (t) =>
-          t.f.allowedFinish &&
-          !t.f.occupant &&
-          fields[Math.min(...neighbours[t.idx])].allowedFinish &&
-          fields[Math.min(...neighbours[t.idx])].occupant ==
-            fields[Math.min(...neighbours[t.idx])].allowedFinish
-      )
-      .map((t) => this.costs[t.f.allowedFinish!]);
-
-    // var corridors = fields.filter((f) => !f.allowedFinish).length;
-    var corridorsCost =
-      fields.filter((f) => !f.allowedFinish && f.occupant).length * 10000;
-    var wrongFinishesCost = fields
-      .map((f, idx) => {
-        return { f, idx };
-      })
-      .filter(
-        (t) =>
-          t.f.allowedFinish && t.f.occupant && t.f.occupant != t.f.allowedFinish
-      )
-      .map((t) => this.costs[t.f.allowedFinish!]);
-
-    // var blockedFinishesCost = fields
-    //   .map((f, idx) => {
-    //     return { f, idx };
-    //   })
-    //   .filter(
-    //     (t) =>
-    //       t.f.allowedFinish &&
-    //       t.f.occupant &&
-    //       // t.f.occupant == t.f.allowedFinish &&
-    //       !this.checkIfLaneIsValid(t.idx, fields, neighbours)
-    //   )
-    //   .map((t) => {
-    //     return { f: t.f, d: Math.floor((t.idx - corridors) / 4) + 2 };
-    //   })
-    //   .map((t) => this.costs[t.f.allowedFinish!] * t.d);
 
     var paths = fields
       .map((f, idx) => {
@@ -280,7 +232,7 @@ export class Day23Service
       .map((t) => {
         return {
           f: t.f,
-          path: this.calculatedDistances[t.idx][
+          path: this.calculatedPaths[t.idx][
             Math.max(
               ...fields
                 .map((f, idx) => {
@@ -301,37 +253,7 @@ export class Day23Service
       return this.costs[f.occupant!] * path.length;
     });
 
-    var occupiedCosts = paths
-      .map(({ f, path }) => {
-        return path
-          .filter(
-            (idx) => fields[idx].occupant && fields[idx].occupant != f.occupant
-          )
-          .map((idx) => this.costs[fields[idx].allowedFinish ?? f.occupant!]);
-      })
-      .flat();
-
-    // var blockedPathsCosts =
-
-    // console.log(this.printState(fields), paths, baseCosts, occupiedCosts);
-    // var result = costs.length > 0 ? costs.reduce((a, b) => a + b) : 0;
-    // var result = baseCosts.length > 0 ? baseCosts.reduce((a, b) => a + b) : 0;
-    // + (occupiedCosts.length > 0 ? occupiedCosts.reduce((a, b) => a + b) : 0);
-
-    var result =
-      (baseCosts.length > 0 ? baseCosts.reduce((a, b) => a + b) : 0) +
-      (gapsCost.length > 0 ? gapsCost.reduce((a, b) => a + b) : 0) +
-      (occupiedCosts.length > 0 ? occupiedCosts.reduce((a, b) => a + b) : 0) +
-      (wrongFinishesCost.length > 0
-        ? wrongFinishesCost.reduce((a, b) => a + b)
-        : 0) +
-      corridorsCost;
-    //   (wrongFinishesCost.length > 0
-    //     ? wrongFinishesCost.reduce((a, b) => a + b)
-    //     : 0) +
-    //   (blockedFinishesCost.length > 0
-    //     ? blockedFinishesCost.reduce((a, b) => a + b)
-    //     : 0);
+    var result = baseCosts.length > 0 ? baseCosts.reduce((a, b) => a + b) : 0;
     this.heuristicCache[key] = result;
     return result;
   }
@@ -339,129 +261,153 @@ export class Day23Service
   // Modified from day 15
   // https://www.algorithms-and-technologies.com/a_star/javascript
   aStar(
-    fields: Field[],
+    fields: AmphipodRoomField[],
     neighbours: { [id: number]: number[] },
     printProgress: number = -1
   ): {
     dist: number[];
     parents: (number | undefined)[];
-    states: Field[][];
+    states: AmphipodRoomField[][];
     finalStateIdx: number;
+    bestDistances: number[];
+    bestPriorities: number[];
+    totalStates: number[];
+    totalStatesVisited: number[];
   } {
-    var states = [this.copyFields(fields)];
-    var statesCache = [JSON.stringify(fields)];
-    //This contains the distances from the start node to all other nodes
-    var distances = [Number.MAX_VALUE];
-    //This contains the priorities with which to visit the nodes, calculated using the heuristic.
-    var priorities = [Number.MAX_VALUE];
-    //This contains whether a node was already visited
-    var visited = [false];
+    var states = new Map<number, AmphipodRoomField[]>();
+    var statesCache = new Map<string, number>();
+    var distances = new Map<number, number>();
+    var priorities = new Map<number, number>();
+    var nonVisitedIdxsSortedByPriorities = new Array<number>();
+    var parents = new Map<number, number | undefined>();
+    var nonVisited = new Set<number>();
+
+    function sortedIndex(array: number[], value: number) {
+      var low = 0,
+        high = array.length;
+
+      while (low < high) {
+        var mid = (low + high) >>> 1;
+        if (priorities.get(array[mid])! <= value) low = mid + 1;
+        else high = mid;
+      }
+      return low;
+    }
+
+    states.set(0, this.copyFields(fields));
+    statesCache.set(this.printState(fields), 0);
+    distances.set(0, 0);
+    priorities.set(0, this.heuristic(states.get(0)!));
+    nonVisitedIdxsSortedByPriorities.push(0);
+    parents.set(0, undefined);
+    nonVisited.add(0);
+    var bestDistances: number[] = [];
+    var bestPriorities: number[] = [];
+    var totalStates: number[] = [];
+    var totalStatesVisited: number[] = [];
     var totalVisited = 0;
-    //This contains parents a node was already visited
-    var parents: (number | undefined)[] = [undefined];
 
-    //The distance from the start node to itself is of course 0
-    distances[0] = 0;
-    //start node has a priority equal to straight line distance to goal. It will be the first to be expanded.
-    priorities[0] = this.heuristic(states[0], neighbours);
-
-    var counter = 0;
-    //While there are nodes left to visit...
+    var nextIdx = 1;
+    // While there are nodes left to visit...
     while (true) {
       // ... find the node with the currently lowest priority...
-      var lowestPriority = Number.MAX_VALUE;
       var lowestPriorityIndex = -1;
-      for (var i = 0; i < priorities.length; i++) {
-        //... by going through all nodes that haven't been visited yet
-        if (priorities[i] < lowestPriority && !visited[i]) {
-          lowestPriority = priorities[i];
-          lowestPriorityIndex = i;
-        }
+      if (nonVisited.size > 0) {
+        lowestPriorityIndex = nonVisitedIdxsSortedByPriorities[0];
       }
+
+      bestDistances.push(distances.get(lowestPriorityIndex)!);
+      bestPriorities.push(priorities.get(lowestPriorityIndex)!);
+      totalStates.push(states.size);
+      totalStatesVisited.push(totalVisited);
 
       if (lowestPriorityIndex === -1) {
         // There was no node not yet visited --> Node not found
-        return { dist: [-1], parents: [-1], states, finalStateIdx: -1 };
-      } else if (this.isFinished(states[lowestPriorityIndex])) {
+        return {
+          dist: [-1],
+          parents: [-1],
+          states: [...states.keys()].map((k) => states.get(k)!),
+          finalStateIdx: -1,
+          bestDistances,
+          bestPriorities,
+          totalStates,
+          totalStatesVisited,
+        };
+      } else if (this.isFinished(states.get(lowestPriorityIndex)!)) {
         // Goal node found
         return {
-          dist: distances,
-          parents,
-          states,
+          dist: [...distances.keys()].map((k) => distances.get(k)!),
+          parents: [...parents.keys()].map((k) => parents.get(k)!),
+          states: [...states.keys()].map((k) => states.get(k)!),
           finalStateIdx: lowestPriorityIndex,
+          bestDistances,
+          bestPriorities,
+          totalStates,
+          totalStatesVisited,
         };
       }
 
       //...then, for all neighboring nodes that haven't been visited yet....
-      this.validMoves(states[lowestPriorityIndex], neighbours).forEach(
+      this.validMoves(states.get(lowestPriorityIndex)!, neighbours).forEach(
         ([nextState, moveCost]) => {
-          var nextStateKey = JSON.stringify(nextState);
-          if (!statesCache.includes(nextStateKey)) {
-            statesCache.push(nextStateKey);
-            states.push(this.copyFields(nextState));
-            distances.push(Number.MAX_VALUE);
-            priorities.push(Number.MAX_VALUE);
-            visited.push(false);
-            parents.push(undefined);
+          var nextStateKey = this.printState(nextState);
+          if (!statesCache.has(nextStateKey)) {
+            statesCache.set(nextStateKey, nextIdx);
+            states.set(nextIdx, this.copyFields(nextState));
+            distances.set(nextIdx, Number.MAX_VALUE);
+            priorities.set(nextIdx, Number.MAX_VALUE);
+            nonVisitedIdxsSortedByPriorities.push(nextIdx);
+            nonVisited.add(nextIdx);
+            parents.set(nextIdx, undefined);
+            nextIdx++;
           }
 
-          var neighbourIdx = statesCache.indexOf(nextStateKey);
-          if (!visited[neighbourIdx]) {
+          var neighbourIdx = statesCache.get(nextStateKey)!;
+          // if (!visited.get(neighbourIdx)) {
+          if (nonVisited.has(neighbourIdx)) {
             //...if the path over this edge is shorter...
             if (
-              distances[lowestPriorityIndex] + moveCost <
-              distances[neighbourIdx]
+              distances.get(lowestPriorityIndex)! + moveCost <
+              distances.get(neighbourIdx)!
             ) {
               //...save this path as new shortest path
-              distances[neighbourIdx] =
-                distances[lowestPriorityIndex] + moveCost;
+              distances.set(
+                neighbourIdx,
+                distances.get(lowestPriorityIndex)! + moveCost
+              );
               //...and set the priority with which we should continue with this node
-              priorities[neighbourIdx] =
-                distances[neighbourIdx] + this.heuristic(nextState, neighbours);
-              parents[neighbourIdx] = lowestPriorityIndex;
+              priorities.set(
+                neighbourIdx,
+                distances.get(neighbourIdx)! + this.heuristic(nextState)
+              );
+              nonVisitedIdxsSortedByPriorities.splice(
+                nonVisitedIdxsSortedByPriorities.indexOf(neighbourIdx),
+                1
+              );
+              nonVisitedIdxsSortedByPriorities.splice(
+                sortedIndex(
+                  nonVisitedIdxsSortedByPriorities,
+                  priorities.get(neighbourIdx)!
+                ),
+                0,
+                neighbourIdx
+              );
+              parents.set(neighbourIdx, lowestPriorityIndex);
             }
           }
         }
       );
-      // Lastly, note that we are finished with this node.
-      visited[lowestPriorityIndex] = true;
+      nonVisited.delete(lowestPriorityIndex);
+      nonVisitedIdxsSortedByPriorities.splice(
+        nonVisitedIdxsSortedByPriorities.indexOf(lowestPriorityIndex),
+        1
+      );
       totalVisited++;
-
-      if (counter % printProgress == 0) {
-        console.log(
-          counter,
-          'states:',
-          states.length,
-          'idx:',
-          lowestPriorityIndex,
-          'prio:',
-          priorities[lowestPriorityIndex],
-          'dist:',
-          distances[lowestPriorityIndex],
-          'vis%:',
-          Math.round((totalVisited * 100) / states.length),
-          this.printState(states[lowestPriorityIndex])
-        );
-      }
-      counter++;
     }
   }
 
-  private calculateCosts(positions: Point2D[]) {
-    positions.forEach((pos, posIdx) => {
-      this.calculatedCosts[posIdx] = {};
-      this.positions.forEach(([char, finalX]) => {
-        var xDiff = Math.abs(pos.x - finalX);
-        this.calculatedCosts[posIdx][char] =
-          xDiff > 0 || pos.y == 1
-            ? (xDiff + (pos.y - 1) + 2) * this.costs[char]
-            : 0;
-      });
-    });
-  }
-
-  private calculateDistances(
-    fields: Field[],
+  private calculatePaths(
+    fields: AmphipodRoomField[],
     neighbours: { [id: number]: number[] }
   ) {
     function explorePaths(
@@ -478,97 +424,28 @@ export class Day23Service
             result.push(path.concat(deepPath));
           });
         });
-      // console.log(result);
       return result;
     }
     fields.forEach((field, fieldIdx) => {
-      this.calculatedDistances[fieldIdx] = {};
+      this.calculatedPaths[fieldIdx] = {};
       explorePaths(fieldIdx, -1).forEach((path) => {
-        // console.log(fieldIdx, path);
         var endIdx = path.slice(-1)[0];
         var cutPath = path.slice(0, path.length - 1);
-        // console.log(fieldIdx, cutPath, endIdx);
-        if (!(fieldIdx in this.calculatedDistances)) {
-          this.calculatedDistances[fieldIdx] = {};
+        if (!(fieldIdx in this.calculatedPaths)) {
+          this.calculatedPaths[fieldIdx] = {};
         }
-        if (!(endIdx in this.calculatedDistances)) {
-          this.calculatedDistances[endIdx] = {};
+        if (!(endIdx in this.calculatedPaths)) {
+          this.calculatedPaths[endIdx] = {};
         }
-        this.calculatedDistances[fieldIdx][endIdx] = [...cutPath].concat([
-          endIdx,
-        ]);
-        this.calculatedDistances[endIdx][fieldIdx] = cutPath
+        this.calculatedPaths[fieldIdx][endIdx] = [...cutPath].concat([endIdx]);
+        this.calculatedPaths[endIdx][fieldIdx] = cutPath
           .reverse()
           .concat([fieldIdx]);
       });
     });
   }
 
-  private generateHash(
-    fieldIdx: number,
-    fields: Field[],
-    neighbours: { [id: number]: number[] }
-  ): string {
-    var field = fields[fieldIdx];
-    var freeIdxs: number[] = [];
-    var nextNeighbours = [...neighbours[fieldIdx]];
-    while (nextNeighbours.length > 0) {
-      var tempNextNeighbours: number[] = [];
-      nextNeighbours.forEach((nIdx) => {
-        if (
-          !fields[nIdx].occupant
-          // &&
-          // (!fields[nIdx].allowedFinish ||
-          //   fields[nIdx].allowedFinish == field.occupant)
-        ) {
-          freeIdxs.push(nIdx);
-          neighbours[nIdx]
-            .filter((nPrim) => !freeIdxs.includes(nPrim))
-            .forEach((nPrim) => {
-              tempNextNeighbours.push(nPrim);
-            });
-        }
-      });
-      nextNeighbours = tempNextNeighbours;
-    }
-    var alteredFields = fields.map((f, idx) => {
-      return {
-        f,
-        letter:
-          idx == fieldIdx
-            ? f.occupant!
-            : freeIdxs.includes(idx)
-            ? ' '
-            : fields[idx].occupant == field.occupant
-            ? f.occupant!.toLowerCase()
-            : 'X',
-      };
-    });
-    // return alteredFields.map(({ f, letter }) => letter).join('');
-    var lane = alteredFields
-      .filter(({ f, letter }) => !f.allowedFinish)
-      .map(({ f, letter }) => letter)
-      .join('');
-    var roomA = alteredFields
-      .filter(({ f, letter }) => f.allowedFinish == 'A')
-      .map(({ f, letter }) => letter)
-      .join('');
-    var roomB = alteredFields
-      .filter(({ f, letter }) => f.allowedFinish == 'B')
-      .map(({ f, letter }) => letter)
-      .join('');
-    var roomC = alteredFields
-      .filter(({ f, letter }) => f.allowedFinish == 'C')
-      .map(({ f, letter }) => letter)
-      .join('');
-    var roomD = alteredFields
-      .filter(({ f, letter }) => f.allowedFinish == 'D')
-      .map(({ f, letter }) => letter)
-      .join('');
-    return `(${lane})[${roomA}][${roomB}][${roomC}][${roomD}]`;
-  }
-
-  private printState(fields: Field[]): string {
+  private printState(fields: AmphipodRoomField[]): string {
     var lane = fields
       .filter((f) => !f.allowedFinish)
       .map((f) => f.occupant ?? (f.allowedStop ? ' ' : '.'))
@@ -589,84 +466,111 @@ export class Day23Service
       .filter((f) => f.allowedFinish == 'D')
       .map((f) => f.occupant ?? ' ')
       .join('');
-    return `(${lane})[${roomA}][${roomB}][${roomC}][${roomD}]`;
+    var result = `(${lane})[${roomA}][${roomB}][${roomC}][${roomD}]`;
+    return result;
   }
 
   override solvePart1(input: string): PuzzleResult {
     var lines = splitIntoLines(input);
-    var [fields, positions] = this.parseInput(lines);
-    var neighbours = this.getNeighbourhoods(positions);
-    this.calculateCosts(positions);
-    this.calculateDistances(fields, neighbours);
-    // console.log(this.calculatedDistances);
-    // console.log(this.calculatedCosts);
-    // console.log(this.printState(fields), this.heuristic(fields, neighbours));
-    // console.log(fields, neighbours);
-    // console.log(this.printState(fields));
-    // console.log(this.calculatedDistances);
-    // console.log(this.heuristic(fields));
-    // console.log(this.validMoves(fields, neighbours));
-    // console.log(this.movesCache);
-
-    var { dist, parents, states, finalStateIdx } = this.aStar(
-      fields,
-      neighbours,
-      1
-    );
-    var path = [finalStateIdx];
-    while (path[path.length - 1] !== undefined && path[path.length - 1] != 0) {
-      path.push(parents[path[path.length - 1]]!);
-    }
-    path.reverse();
-    console.log(finalStateIdx, path);
-    path.forEach((p) => {
-      console.log(this.printState(states[p]), dist[p]);
-    });
+    var [fields, border] = this.parseInput(lines);
+    var neighbours = this.getNeighbourhoods(fields);
+    this.calculatePaths(fields, neighbours);
+    var {
+      dist,
+      parents,
+      states,
+      finalStateIdx,
+      bestDistances,
+      bestPriorities,
+      totalStates,
+      totalStatesVisited,
+    } = this.aStar(fields, neighbours);
     return {
       result: dist[finalStateIdx],
-      // result: 0,
       component: PlotlyGraphComponent,
-      componentData: {},
+      componentData: {
+        graphData: [
+          {
+            x: bestDistances.map((v, i) => i),
+            y: bestDistances.map((v, i) => v),
+            name: 'Current best energy',
+          },
+          {
+            x: bestPriorities.map((v, i) => i),
+            y: bestPriorities.map((v, i) => v),
+            name: 'Current best heuristic energy',
+          },
+          {
+            x: totalStates.map((v, i) => i),
+            y: totalStates.map((v, i) => v),
+            name: 'Total states generated',
+            yaxis: 'y2',
+          },
+          {
+            x: totalStatesVisited.map((v, i) => i),
+            y: totalStatesVisited.map((v, i) => v),
+            name: 'Total states visited',
+            yaxis: 'y2',
+          },
+        ],
+        graphLayout: {
+          yaxis: { title: 'Energy' },
+          xaxis: { title: 'Step' },
+          yaxis2: {
+            title: 'States',
+            titlefont: { color: '#ffffff' },
+            tickfont: { color: '#ffffff' },
+            overlaying: 'y',
+            side: 'right',
+          },
+          shapes: [
+            {
+              type: 'line',
+              x0: 0,
+              y0: dist[finalStateIdx],
+              x1: bestDistances.length - 1,
+              y1: dist[finalStateIdx],
+              line: {
+                color: '#fad02c',
+              },
+            },
+          ],
+        },
+      },
     };
   }
   override solvePart2(input: string): PuzzleResult {
     var lines = splitIntoLines(input);
     lines.splice(3, 0, '  #D#C#B#A#');
     lines.splice(4, 0, '  #D#B#A#C#');
-    var [fields, positions] = this.parseInput(lines);
-    var neighbours = this.getNeighbourhoods(positions);
-    // console.log(this.printState(fields));
-    this.calculateCosts(positions);
-    this.calculateDistances(fields, neighbours);
-    // console.log(this.calculatedDistances);
-    // console.log(this.calculatedCosts);
-    // console.log(fields, neighbours);
-    // console.log(this.printState(fields));
-    // console.log(this.printState(fields), this.heuristic(fields, neighbours));
-    // console.log(this.validMoves(fields, neighbours));
-    // console.log(this.movesCache);
-    // this.validMoves(fields, neighbours).forEach((t) => {
-    //   console.log(this.printState(t[0]), this.heuristic(t[0], neighbours));
-    // });
-
-    var { dist, parents, states, finalStateIdx } = this.aStar(
-      fields,
-      neighbours,
-      100
-    );
-    console.log(dist, parents, states, finalStateIdx);
+    var [fields, border] = this.parseInput(lines);
+    var neighbours = this.getNeighbourhoods(fields);
+    this.calculatePaths(fields, neighbours);
+    var {
+      dist,
+      parents,
+      states,
+      finalStateIdx,
+      bestDistances,
+      bestPriorities,
+      totalStates,
+      totalStatesVisited,
+    } = this.aStar(fields, neighbours);
     var path = [finalStateIdx];
     while (path[path.length - 1] !== undefined && path[path.length - 1] != 0) {
       path.push(parents[path[path.length - 1]]!);
     }
     path.reverse();
-    console.log(path);
-    path.forEach((p) => console.log(this.printState(states[p])));
+    var pathStates = path.map((stateIdx) => states[stateIdx]);
+    var costs = path.map((stateIdx) => dist[stateIdx] ?? 0);
     return {
       result: dist[finalStateIdx],
-      // result: 0,
-      component: PlotlyGraphComponent,
-      componentData: {},
+      component: AmphipodsRoomVisualizerComponent,
+      componentData: {
+        states: pathStates,
+        costs: costs,
+        border: border,
+      },
     };
   }
 }

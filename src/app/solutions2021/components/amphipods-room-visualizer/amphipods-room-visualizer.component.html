@@ -1,0 +1,41 @@
+<div>
+  <button
+    mat-raised-button
+    color="accent"
+    [style.margin-right.em]="0.5"
+    [disabled]="currentStateIdx == 0"
+    (click)="prevStep()"
+  >
+    <
+  </button>
+  <button
+    mat-raised-button
+    color="accent"
+    [style.margin-right.em]="0.5"
+    [disabled]="currentStateIdx == states.length - 1"
+    (click)="nextStep()"
+  >
+    >
+  </button>
+</div>
+
+<div class="flex-row accent-color">Current step: {{ currentStateIdx }}</div>
+<div class="flex-row accent-color">Total cost: {{ currentCost }}</div>
+
+<div class="room-grid">
+  <div
+    class="cell border-cell"
+    *ngFor="let b of border"
+    [style.grid-column-start]="b.x - minX + 1"
+    [style.grid-row-start]="b.y - minY + 1"
+  ></div>
+  <div
+    class="cell accent-color"
+    *ngFor="let room of currentState; index as i"
+    [class.accent-glow]="i == currentMoving"
+    [style.grid-column-start]="room.position.x - minX + 1"
+    [style.grid-row-start]="room.position.y - minY + 1"
+  >
+    {{ room.occupant }}
+  </div>
+</div>
