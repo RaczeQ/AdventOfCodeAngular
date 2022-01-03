@@ -6,6 +6,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { HelperModule } from '../helper/helper.module';
 import { ISolutionService } from '../helper/services/isolution.service';
 
+import { AmphipodsRoomVisualizerComponent } from './components/amphipods-room-visualizer/amphipods-room-visualizer.component';
 import { BingoVisualizerComponent } from './components/bingo-visualizer/bingo-visualizer.component';
 import { BitsVisualizerComponent } from './components/bits-visualizer/bits-visualizer.component';
 import { CavesVisualizerComponent } from './components/caves-visualizer/caves-visualizer.component';
@@ -37,10 +38,12 @@ import { Day19Service } from './day19.service';
 import { Day20Service } from './day20.service';
 import { Day21Service } from './day21.service';
 import { Day22Service } from './day22.service';
+import { Day23Service } from './day23.service';
 
 @NgModule({
   id: '2021',
   declarations: [
+    AmphipodsRoomVisualizerComponent,
     BingoVisualizerComponent,
     BitsVisualizerComponent,
     CavesVisualizerComponent,
@@ -83,7 +86,8 @@ import { Day22Service } from './day22.service';
         Day19Service,
         Day20Service,
         Day21Service,
-        Day22Service
+        Day22Service,
+        Day23Service,
       ],
       useFactory: (solutionService: ISolutionService) => () => null,
     },

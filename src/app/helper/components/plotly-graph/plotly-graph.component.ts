@@ -52,7 +52,17 @@ export class PlotlyGraphComponent
     this.graphLayout.yaxis.showline = true;
     this.graphLayout.yaxis.zeroline = false;
     this.graphLayout.yaxis.color = '#ffffff';
-    this.graphLayout.xaxis.tickfont = {
+    this.graphLayout.yaxis.tickfont = {
+      color: '#ffffff',
+    };
+    if (!this.graphLayout.yaxis2) {
+      this.graphLayout.yaxis2 = {};
+    }
+    this.graphLayout.yaxis2.showgrid = false;
+    this.graphLayout.yaxis2.showline = true;
+    this.graphLayout.yaxis2.zeroline = false;
+    this.graphLayout.yaxis2.color = '#ffffff';
+    this.graphLayout.yaxis2.tickfont = {
       color: '#ffffff',
     };
     if (!this.graphLayout.scene) {
