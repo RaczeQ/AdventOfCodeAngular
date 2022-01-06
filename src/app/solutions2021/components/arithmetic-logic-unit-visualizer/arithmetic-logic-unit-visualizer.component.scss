@@ -1,0 +1,11 @@
+.nomad-number {
+  font-size: 1.5rem;
+  margin-bottom: 0.5em;
+}
+
+.nomad-instructions {
+  display: grid;
+  width: fit-content;
+  grid-template-columns: auto auto;
+  grid-column-gap: 0.5em;
+}

@@ -1,0 +1,38 @@
+<div>
+  <button
+    mat-raised-button
+    color="accent"
+    [style.margin-right.em]="0.5"
+    [disabled]="currentDigitIdx == 0"
+    (click)="prevStep()"
+  >
+    <
+  </button>
+  <button
+    mat-raised-button
+    color="accent"
+    [style.margin-right.em]="0.5"
+    [disabled]="currentDigitIdx == 13"
+    (click)="nextStep()"
+  >
+    >
+  </button>
+</div>
+
+<div class="nomad-number accent-color">
+  NOMAD version:
+  <span
+    *ngFor="let digit of number.split(''); index as i"
+    [class.accent-glow]="i == currentDigitIdx"
+    >{{ digit }}</span
+  >
+</div>
+<div class="nomad-instructions accent-color">
+  <ng-container *ngFor="let instruction of instructions[currentDigitIdx]">
+    <div>{{ instruction[0] }}</div>
+    <div>
+      [w: {{ instruction[1].get("w") }}, x: {{ instruction[1].get("x") }}, y:
+      {{ instruction[1].get("y") }}, z: {{ instruction[1].get("z") }}]
+    </div>
+  </ng-container>
+</div>
