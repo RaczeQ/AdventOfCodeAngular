@@ -9,8 +9,7 @@
 </button>
 
 <div class="flex-row accent-color">Current step: {{ currentIdx }}</div>
-<div class="flex-row accent-color">Lit pixels: {{ litPixels }}</div>
 
-<div class="grid-wrapper" [style.height.px]="squareWidth * finalWidth">
+<div class="grid-wrapper" [style.height.px]="this.squareWidth * imageWidth">
   <img [src]="imageCanvas" />
 </div>

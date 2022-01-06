@@ -13,6 +13,7 @@ import { BitsVisualizerComponent } from './components/bits-visualizer/bits-visua
 import { CavesVisualizerComponent } from './components/caves-visualizer/caves-visualizer.component';
 import { OceanTrenchVisualizerComponent } from './components/ocean-trench-visualizer/ocean-trench-visualizer.component';
 import { OctopusFlashesVisualizerComponent } from './components/octopus-flashes-visualizer/octopus-flashes-visualizer.component';
+import { SeaCucumbersVisualizerComponent } from './components/sea-cucumbers-visualizer/sea-cucumbers-visualizer.component';
 import { SevenSegmentsDisplayVisualizerComponent } from './components/seven-segments-display-visualizer/seven-segments-display-visualizer.component';
 import { SnailfishNumberVisualizerComponent } from './components/snailfish-number-visualizer/snailfish-number-visualizer.component';
 import { SyntaxErrorLinesVisualizerComponent } from './components/syntax-error-lines-visualizer/syntax-error-lines-visualizer.component';
@@ -41,6 +42,7 @@ import { Day21Service } from './day21.service';
 import { Day22Service } from './day22.service';
 import { Day23Service } from './day23.service';
 import { Day24Service } from './day24.service';
+import { Day25Service } from './day25.service';
 
 @NgModule({
   id: '2021',
@@ -52,6 +54,7 @@ import { Day24Service } from './day24.service';
     CavesVisualizerComponent,
     OceanTrenchVisualizerComponent,
     OctopusFlashesVisualizerComponent,
+    SeaCucumbersVisualizerComponent,
     SevenSegmentsDisplayVisualizerComponent,
     SnailfishNumberVisualizerComponent,
     SyntaxErrorLinesVisualizerComponent,
@@ -92,6 +95,7 @@ import { Day24Service } from './day24.service';
         Day22Service,
         Day23Service,
         Day24Service,
+        Day25Service,
       ],
       useFactory: (solutionService: ISolutionService) => () => null,
     },

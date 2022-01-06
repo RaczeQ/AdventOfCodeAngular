@@ -2,15 +2,15 @@ import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import { BaseResultComponent } from 'src/app/helper/components/base-result.component';
 
 @Component({
-  selector: 'aoc-ocean-trench-visualizer',
-  templateUrl: './ocean-trench-visualizer.component.html',
-  styleUrls: ['./ocean-trench-visualizer.component.scss'],
+  selector: 'aoc-sea-cucumbers-visualizer',
+  templateUrl: './sea-cucumbers-visualizer.component.html',
+  styleUrls: ['./sea-cucumbers-visualizer.component.scss'],
 })
-export class OceanTrenchVisualizerComponent
+export class SeaCucumbersVisualizerComponent
   extends BaseResultComponent
   implements OnInit, AfterViewInit
 {
-  images: number[][][] = [];
+  areas: string[][][] = [];
   currentIdx: number = 0;
   visualizing: boolean = false;
   squareWidth: number = 5;
@@ -19,24 +19,16 @@ export class OceanTrenchVisualizerComponent
     super();
   }
 
-  get image(): number[][] {
-    return this.images[this.currentIdx];
-  }
-
-  get litPixels(): number {
-    return this.image.flat().filter((d) => d == 1).length;
+  get area(): string[][] {
+    return this.areas[this.currentIdx];
   }
 
   get imageWidth(): number {
-    return this.image.length;
-  }
-
-  get finalWidth(): number {
-    return this.images.slice(-1)[0].length;
+    return this.area.length;
   }
 
   get imageCanvas(): string {
-    var imageArray = this.image;
+    var imageArray = this.area;
 
     var canvas = document.createElement('canvas');
     let ctx = canvas.getContext('2d');
@@ -46,7 +38,8 @@ export class OceanTrenchVisualizerComponent
     ctx!.fillStyle = '#fad02c';
     imageArray.forEach((row, y) => {
       row.forEach((val, x) => {
-        if (val) {
+        if (val == '>' || val == 'v') {
+          ctx!.fillStyle = val == '>' ? '#fad02c' : '#ffffff';
           ctx!.fillRect(x * magnifier, y * magnifier, magnifier, magnifier);
         }
       });
@@ -56,14 +49,13 @@ export class OceanTrenchVisualizerComponent
   }
 
   ngOnInit(): void {
-    this.images = this.data.images as number[][][];
-    this.currentIdx = this.images.length - 1;
+    this.areas = this.data.areas as string[][][];
     this.currentIdx = 0;
   }
 
   ngAfterViewInit(): void {
     this.squareWidth =
-      this.el.nativeElement.offsetWidth / (3 * this.finalWidth);
+      this.el.nativeElement.offsetWidth / (3 * this.imageWidth);
   }
 
   startVisualization() {
@@ -75,7 +67,7 @@ export class OceanTrenchVisualizerComponent
   private loop() {
     setTimeout(() => {
       this.currentIdx++;
-      if (this.currentIdx < this.images.length - 1) {
+      if (this.currentIdx < this.areas.length - 1) {
         this.loop();
       } else {
         this.visualizing = false;
