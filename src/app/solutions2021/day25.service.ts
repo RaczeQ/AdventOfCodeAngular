@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { PlotlyGraphComponent } from '../helper/components/plotly-graph/plotly-graph.component';
 import { BaseSolutionService } from '../helper/services/base-solution.service';
 import {
   ISolutionService,

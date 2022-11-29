@@ -150,7 +150,6 @@ export class Day21Service
         results.push([p1, p2, wonGames[0] / (wonGames[0] + wonGames[1])]);
       });
     });
-    console.log(results);
     return {
       result: result,
       component: PlotlyGraphComponent,
