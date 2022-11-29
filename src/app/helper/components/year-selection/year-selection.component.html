@@ -1,4 +1,12 @@
-<mat-card *ngFor="let year of availableYears" color="primary" routerLink="{{year}}">
-  <mat-card-title class="accent-color accent-glow">{{ year }}</mat-card-title>
-  <mat-card-subtitle class="accent-color">Days: {{ getDays(year) }} / 25</mat-card-subtitle>
+<mat-card
+  *ngFor="let year of availableYears"
+  color="primary"
+  routerLink="{{ year }}"
+>
+  <mat-card-content>
+    <mat-card-title class="accent-color accent-glow">{{ year }}</mat-card-title>
+    <mat-card-subtitle class="accent-color"
+      >Days: {{ getDays(year) }} / 25</mat-card-subtitle
+    >
+  </mat-card-content>
 </mat-card>
