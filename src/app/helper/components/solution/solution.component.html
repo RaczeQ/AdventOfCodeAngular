@@ -1,5 +1,5 @@
 <div class="flex-row">
-  <mat-card class="day-name">
+  <mat-card class="day-name frosted-background">
     <mat-card-content>
       <mat-card-title class="accent-color">
         <span>Day</span>
@@ -9,7 +9,7 @@
     </mat-card-content>
   </mat-card>
   <div [style.flex]="1"></div>
-  <mat-card class="input-link">
+  <mat-card class="input-link frosted-background">
     <mat-card-content>
       <mat-card-title class="accent-color">
         <a
@@ -20,7 +20,7 @@
       </mat-card-title>
     </mat-card-content>
   </mat-card>
-  <mat-card class="run-button">
+  <mat-card class="run-button frosted-background">
     <mat-card-content>
       <button
         mat-raised-button
@@ -33,12 +33,15 @@
     </mat-card-content>
   </mat-card>
 </div>
-<mat-card *ngIf="additionalInfo" class="input-card accent-color">
+<mat-card
+  *ngIf="additionalInfo"
+  class="input-card accent-color frosted-background"
+>
   <mat-card-content>
     {{ additionalInfo }}
   </mat-card-content>
 </mat-card>
-<mat-card class="input-card accent-color">
+<mat-card class="input-card accent-color frosted-background">
   <mat-card-content>
     <mat-form-field
       class="textarea-full-width"
@@ -46,7 +49,13 @@
       color="accent"
     >
       <mat-label>Paste an input</mat-label>
-      <textarea class="monospace" matInput spellcheck="false" [(ngModel)]="puzzleInput"></textarea>
+      <textarea
+        class="monospace"
+        matInput
+        spellcheck="false"
+        data-gramm="false"
+        [(ngModel)]="puzzleInput"
+      ></textarea>
     </mat-form-field>
   </mat-card-content>
 </mat-card>
@@ -56,7 +65,11 @@
     *ngIf="!result1 && running"
     color="accent"
   ></mat-progress-bar>
-  <mat-card class="results-card" *ngIf="result1" (click)="copyResult1()">
+  <mat-card
+    class="results-card frosted-background"
+    *ngIf="result1"
+    (click)="copyResult1()"
+  >
     <mat-card-content>
       <mat-card-title class="accent-color">
         <span>Part 1 result:</span>
@@ -74,6 +87,7 @@
   <mat-card
     [style.visibility]="result1Component == null ? 'hidden' : 'visible'"
     [style.flex]="1"
+    class="frosted-background"
   >
     <mat-card-content>
       <ng-template #viewContainerRefOne></ng-template>
@@ -86,7 +100,7 @@
     *ngIf="!result2 && running"
     color="accent"
   ></mat-progress-bar>
-  <mat-card *ngIf="result2" (click)="copyResult2()">
+  <mat-card *ngIf="result2" class="frosted-background" (click)="copyResult2()">
     <mat-card-content>
       <mat-card-title class="accent-color">
         <span>Part 2 result:</span>
@@ -104,6 +118,7 @@
   <mat-card
     [style.visibility]="result2Component == null ? 'hidden' : 'visible'"
     [style.flex]="1"
+    class="frosted-background"
   >
     <mat-card-content>
       <ng-template #viewContainerRefTwo></ng-template>

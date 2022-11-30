@@ -1,4 +1,8 @@
-<mat-card *ngFor="let day of availableDays" routerLink="{{ day[0] }}">
+<mat-card
+  *ngFor="let day of availableDays"
+  class="frosted-background"
+  routerLink="{{ day[0] }}"
+>
   <mat-card-content>
     <mat-card-title class="accent-color">
       <span>Day</span>

@@ -1,4 +1,4 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 @use "sass:math";
 
 @function random_range($min, $max) {
@@ -13,9 +13,10 @@
   width: 100vw;
   display: flex;
   flex-direction: column;
-  background-color: #000814;
+  background: linear-gradient(#000428, #0f0f23);
 
   .router-container {
+    padding-top: 64px;
     flex: 1;
     overflow: auto;
     z-index: 1;
@@ -49,7 +50,7 @@
         $random-x: random(1000000) * 0.0001vw;
         $random-offset: random_range(-100000, 100000) * 0.0001vw;
         $random-x-end: $random-x + $random-offset;
-        $random-x-end-yoyo: $random-x +  math.div($random-offset, 2);
+        $random-x-end-yoyo: $random-x + math.div($random-offset, 2);
         $random-yoyo-time: math.div(random_range(30000, 80000), 100000);
         $random-yoyo-y: $random-yoyo-time * 100vh;
         $random-scale: random(10000) * 0.0001;
