@@ -115,3 +115,7 @@ body {
 
   width: fit-content;
 }
+
+*[ng-reflect-router-link] {
+  cursor: pointer;
+}
