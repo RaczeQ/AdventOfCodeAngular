@@ -71,7 +71,7 @@ export class SolutionComponent implements OnInit {
       this.year = params['year'];
       this.day = params['day'];
       this.httpClient
-        .get(`assets/inputs/${this.year}_${this.day}.txt`, {
+        .get(`assets/inputs/${this.year}/${this.day}.txt`, {
           responseType: 'text',
         })
         .subscribe((data) => {
