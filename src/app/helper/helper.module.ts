@@ -22,7 +22,7 @@ import { ScriptsLoaderService } from './services/scripts-loader.service';
 
 import { PlotlyViaCDNModule } from 'angular-plotly.js';
 
-PlotlyViaCDNModule.setPlotlyVersion('2.8.3');
+PlotlyViaCDNModule.setPlotlyVersion('2.16.1');
 PlotlyViaCDNModule.setPlotlyBundle(null);
 
 @NgModule({
