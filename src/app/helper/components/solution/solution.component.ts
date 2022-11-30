@@ -83,15 +83,15 @@ export class SolutionComponent implements OnInit {
   }
 
   get title(): string {
-    return this.availableSolutions[this.year][this.day][0];
+    return this.availableSolutions[this.year][this.day].dayName;
   }
 
   get service(): ISolutionService {
-    return this.availableSolutions[this.year][this.day][1];
+    return this.availableSolutions[this.year][this.day].service;
   }
 
   get additionalInfo(): string {
-    return this.availableSolutions[this.year][this.day][2];
+    return this.availableSolutions[this.year][this.day].additionalInfo;
   }
 
   runPuzzle(): void {

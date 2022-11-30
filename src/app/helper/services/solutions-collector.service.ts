@@ -1,10 +1,16 @@
-import { getNgModuleById, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { ISolutionService } from './isolution.service';
 
+export interface SolutionObject {
+  dayName: string;
+  additionalInfo: string;
+  service: ISolutionService;
+}
+
 export interface AvailableSolutions {
   [year: number]: {
-    [day: number]: [string, ISolutionService, string];
+    [day: number]: SolutionObject;
   };
 }
 
@@ -33,7 +39,7 @@ export class SolutionsCollectorService {
           year in solutions
             ? Object.keys(solutions[year]).map((k) => [
                 Number(k),
-                solutions[year][Number(k)][0],
+                solutions[year][Number(k)].dayName,
               ])
             : []
         )
@@ -61,7 +67,7 @@ export class SolutionsCollectorService {
         `Solutions for Year ${year}, Day ${day} has already been registered!`
       );
     }
-    solutionsObj[year][day] = [dayName, service, additionalInfo];
+    solutionsObj[year][day] = { dayName, additionalInfo, service };
     this.availableSolutions.next(solutionsObj);
   }
 }
