@@ -9,7 +9,7 @@
     </mat-card-content>
   </mat-card>
   <div [style.flex]="1"></div>
-  <mat-card class="input-link frosted-background">
+  <mat-card class="input-link frosted-background frosted-background-hover">
     <mat-card-content>
       <mat-card-title class="accent-color">
         <a
@@ -20,7 +20,7 @@
       </mat-card-title>
     </mat-card-content>
   </mat-card>
-  <mat-card class="run-button frosted-background">
+  <mat-card class="run-button frosted-background frosted-background-hover">
     <mat-card-content>
       <button
         mat-raised-button
@@ -66,7 +66,7 @@
     color="accent"
   ></mat-progress-bar>
   <mat-card
-    class="results-card frosted-background"
+    class="results-card frosted-background frosted-background-hover"
     *ngIf="result1"
     (click)="copyResult1()"
   >
@@ -100,7 +100,11 @@
     *ngIf="!result2 && running"
     color="accent"
   ></mat-progress-bar>
-  <mat-card *ngIf="result2" class="frosted-background" (click)="copyResult2()">
+  <mat-card
+    *ngIf="result2"
+    class="results-card frosted-background frosted-background-hover"
+    (click)="copyResult2()"
+  >
     <mat-card-content>
       <mat-card-title class="accent-color">
         <span>Part 2 result:</span>
