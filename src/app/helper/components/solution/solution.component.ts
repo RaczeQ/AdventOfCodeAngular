@@ -94,6 +94,18 @@ export class SolutionComponent implements OnInit {
     return this.availableSolutions[this.year][this.day].additionalInfo;
   }
 
+  get aocPuzzleUrl(): string {
+    return `https://adventofcode.com/${this.year}/day/${this.day}`
+  }
+
+  get aocPuzzleInputUrl(): string {
+    return `${this.aocPuzzleUrl}/input`
+  }
+
+  openPuzzlePage(): void {
+    window.open(this.aocPuzzleUrl, '_blank');
+  }
+
   runPuzzle(): void {
     this.running = true;
     var puzzle1Finished = false;

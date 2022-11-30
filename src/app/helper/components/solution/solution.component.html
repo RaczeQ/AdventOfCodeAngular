@@ -1,5 +1,8 @@
 <div class="flex-row">
-  <mat-card class="day-name frosted-background">
+  <mat-card
+    class="day-name frosted-background frosted-background-hover"
+    (click)="openPuzzlePage()"
+  >
     <mat-card-content>
       <mat-card-title class="accent-color">
         <span>Day</span>
@@ -12,9 +15,7 @@
   <mat-card class="input-link frosted-background frosted-background-hover">
     <mat-card-content>
       <mat-card-title class="accent-color">
-        <a
-          href="https://adventofcode.com/{{ year }}/day/{{ day }}/input"
-          target="_blank"
+        <a [href]="aocPuzzleInputUrl" target="_blank"
           ><span class="link accent-color">Input link</span></a
         >
       </mat-card-title>
