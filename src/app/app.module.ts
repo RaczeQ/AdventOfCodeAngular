@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { Solutions2021Module } from './solutions2021/solutions2021.module';
+import { Solutions2022Module } from './solutions2022/solutions2022.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { Solutions2021Module } from './solutions2021/solutions2021.module';
     BrowserAnimationsModule,
     RouterModule,
     MatToolbarModule,
-    Solutions2021Module
+    Solutions2021Module,
+    Solutions2022Module,
   ],
   providers: [],
   bootstrap: [AppComponent]
