@@ -22,7 +22,7 @@
     >{{ actionName }}</span
   >
   <span
-    *ngIf="selectedYear > 0 && selectedDay > 1"
+    *ngIf="selectedYear > 0 && selectedDay > 0 && canGoToPreviousDay"
     class="navigator accent-color"
     [style.margin-left.em]="1"
     routerLink="/{{ selectedYear }}/{{ selectedDay - 1 }}"
@@ -30,10 +30,24 @@
     Previous day
   </span>
   <span
-    *ngIf="selectedYear > 0 && selectedDay > 0 && selectedDay < 25"
+    *ngIf="selectedYear > 0 && selectedDay > 0 && !canGoToPreviousDay"
+    class="navigator disabled-navigator"
+    [style.margin-left.em]="1"
+  >
+    Previous day
+  </span>
+  <span
+    *ngIf="selectedYear > 0 && selectedDay > 0 && canGoToNextDay"
     class="navigator accent-color"
     [style.margin-left.em]="1"
     routerLink="/{{ selectedYear }}/{{ selectedDay + 1 }}"
+  >
+    Next day
+  </span>
+  <span
+    *ngIf="selectedYear > 0 && selectedDay > 0 && !canGoToNextDay"
+    class="navigator disabled-navigator"
+    [style.margin-left.em]="1"
   >
     Next day
   </span>

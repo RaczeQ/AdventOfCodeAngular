@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivationEnd, Router } from '@angular/router';
+import {
+  AvailableSolutions,
+  SolutionsCollectorService,
+} from './helper/services/solutions-collector.service';
 
 @Component({
   selector: 'aoc-root',
@@ -11,13 +15,17 @@ export class AppComponent {
   selectedYear: number = 0;
   selectedDay: number = 0;
   actionName: string = '';
-  constructor(private router: Router) {
+  availableSolutions: AvailableSolutions = {};
+  constructor(
+    private router: Router,
+    private solutionsCollectorService: SolutionsCollectorService
+  ) {
     router.events.subscribe((event) => {
       if (event instanceof ActivationEnd) {
-        this.selectedYear = Number(event.snapshot.params["year"]);
-        this.selectedDay = Number(event.snapshot.params["day"]);
+        this.selectedYear = Number(event.snapshot.params['year']);
+        this.selectedDay = Number(event.snapshot.params['day']);
         if (this.selectedDay) {
-          this.actionName = 'Go back'
+          this.actionName = 'Go back';
         } else if (this.selectedYear) {
           this.actionName = 'Select day';
         } else {
@@ -25,5 +33,17 @@ export class AppComponent {
         }
       }
     });
+
+    solutionsCollectorService
+      .getAvailableSolutionsObservable()
+      .subscribe((solutions) => (this.availableSolutions = solutions));
+  }
+
+  get canGoToPreviousDay(): boolean {
+    return this.selectedDay - 1 in this.availableSolutions[this.selectedYear];
+  }
+
+  get canGoToNextDay(): boolean {
+    return this.selectedDay + 1 in this.availableSolutions[this.selectedYear];
   }
 }
