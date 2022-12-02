@@ -51,6 +51,11 @@
   >
     Next day
   </span>
+  <div [style.flex]="1"></div>
+  <span class="accent-color navigator" (click)="goToRepo()">
+    <mat-icon class="code-icon">code</mat-icon>
+    Github repository
+  </span>
 </mat-toolbar>
 <div class="router-container">
   <router-outlet></router-outlet>

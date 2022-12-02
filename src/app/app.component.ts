@@ -46,4 +46,8 @@ export class AppComponent {
   get canGoToNextDay(): boolean {
     return this.selectedDay + 1 in this.availableSolutions[this.selectedYear];
   }
+
+  goToRepo(): void {
+    window.open('https://github.com/RaczeQ/AdventOfCodeAngular', '_blank');
+  }
 }

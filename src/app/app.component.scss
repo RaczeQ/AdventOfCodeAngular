@@ -23,6 +23,7 @@
   }
 
   .navigator {
+    cursor: pointer;
     @media screen and (max-width: 600px) {
       display: none;
     }
@@ -30,6 +31,11 @@
 
   .disabled-navigator {
     color: rgba(255, 255, 255, 0.2);
+  }
+
+  .code-icon {
+    vertical-align: middle;
+    padding-bottom: 2px;
   }
 
   .snow-background {
