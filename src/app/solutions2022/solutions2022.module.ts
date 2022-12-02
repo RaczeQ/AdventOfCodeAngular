@@ -7,6 +7,7 @@ import { HelperModule } from '../helper/helper.module';
 import { ISolutionService } from '../helper/services/isolution.service';
 
 import { Day1Service } from './day1.service';
+import { Day2Service } from './day2.service';
 
 @NgModule({
   id: '2022',
@@ -25,6 +26,7 @@ import { Day1Service } from './day1.service';
       multi: true,
       deps: [
         Day1Service,
+        Day2Service,
       ],
       useFactory: (solutionService: ISolutionService) => () => null,
     },

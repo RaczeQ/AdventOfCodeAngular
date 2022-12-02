@@ -7,6 +7,7 @@ import {
 } from '../helper/services/isolution.service';
 import { SolutionsCollectorService } from '../helper/services/solutions-collector.service';
 import { parseIntoNumbers } from '../helper/util-functions/parse-into-numbers';
+import { sumNumbers } from '../helper/util-functions/sum';
 
 @Injectable({
   providedIn: 'root',
@@ -20,11 +21,7 @@ export class Day1Service
   }
   override solvePart1(input: string): PuzzleResult {
     var groups = input.split('\n\n').map(parseIntoNumbers);
-    var intakes = groups.map((group) =>
-      group.reduce((acc, cur) => {
-        return acc + cur;
-      }, 0)
-    );
+    var intakes = groups.map(sumNumbers);
     var result = Math.max(...intakes);
     return {
       result: result,
@@ -40,7 +37,7 @@ export class Day1Service
         ],
         graphLayout: {
           yaxis: { title: 'Calories sum' },
-          xaxis: { title: 'Elf' },
+          xaxis: { title: 'Elf', automargin: true },
         },
       },
     };
@@ -48,11 +45,7 @@ export class Day1Service
   override solvePart2(input: string): PuzzleResult {
     var groups = input.split('\n\n').map(parseIntoNumbers);
     var intakes = groups
-      .map((group) =>
-        group.reduce((acc, cur) => {
-          return acc + cur;
-        }, 0)
-      )
+      .map(sumNumbers)
       .map((val, idx) => [val, idx + 1])
       .sort((a, b) => (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0));
 
