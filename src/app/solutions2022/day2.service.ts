@@ -6,9 +6,7 @@ import {
   PuzzleResult,
 } from '../helper/services/isolution.service';
 import { SolutionsCollectorService } from '../helper/services/solutions-collector.service';
-import { parseIntoNumbers } from '../helper/util-functions/parse-into-numbers';
 import { splitIntoLines } from '../helper/util-functions/split-into-lines';
-import '../helper/util-functions/sum';
 
 const player1moves: { [move: string]: number } = {
   A: 1,
