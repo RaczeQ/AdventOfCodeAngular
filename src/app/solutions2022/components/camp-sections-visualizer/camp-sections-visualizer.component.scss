@@ -1,0 +1,39 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.flex-row {
+  display: flex;
+  flex-flow: row wrap;
+
+  &>div {
+    margin-right: 8px;
+  }
+}
+
+.block {
+  width: 32px;
+  height: 32px;
+}
+
+.block-1 {
+  background-color: #fad02c;
+  opacity: 0.6;
+}
+
+.block-2 {
+  background-color: #fff;
+  opacity: 0.6;
+}
+
+.block-3 {
+  background-color: #fad02c;
+  opacity: 1.0;
+}
+
+.grid-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

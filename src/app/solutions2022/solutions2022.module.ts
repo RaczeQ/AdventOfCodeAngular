@@ -9,10 +9,14 @@ import { ISolutionService } from '../helper/services/isolution.service';
 import { Day1Service } from './day1.service';
 import { Day2Service } from './day2.service';
 import { Day3Service } from './day3.service';
+import { Day4Service } from './day4.service';
+import { CampSectionsVisualizerComponent } from './components/camp-sections-visualizer/camp-sections-visualizer.component';
 
 @NgModule({
   id: '2022',
   declarations: [
+  
+    CampSectionsVisualizerComponent
   ],
   imports: [
     CommonModule,
@@ -29,6 +33,7 @@ import { Day3Service } from './day3.service';
         Day1Service,
         Day2Service,
         Day3Service,
+        Day4Service,
       ],
       useFactory: (solutionService: ISolutionService) => () => null,
     },
