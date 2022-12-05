@@ -1,5 +1,5 @@
 export class Queue<T> {
-  _store: T[] = [];
+  protected _store: T[] = [];
   isEmpty(): boolean {
     return this._store.length == 0;
   }

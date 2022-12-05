@@ -6,17 +6,22 @@ import { MatSliderModule } from '@angular/material/slider';
 import { HelperModule } from '../helper/helper.module';
 import { ISolutionService } from '../helper/services/isolution.service';
 
+import { CampSectionsVisualizerComponent } from './components/camp-sections-visualizer/camp-sections-visualizer.component';
+import { CargoVisualizerComponent } from './components/cargo-visualizer/cargo-visualizer.component';
+import { CargoStepVisualizerComponent } from './components/cargo-visualizer/cargo-step-visualizer/cargo-step-visualizer.component';
+
 import { Day1Service } from './day1.service';
 import { Day2Service } from './day2.service';
 import { Day3Service } from './day3.service';
 import { Day4Service } from './day4.service';
-import { CampSectionsVisualizerComponent } from './components/camp-sections-visualizer/camp-sections-visualizer.component';
+import { Day5Service } from './day5.service';
 
 @NgModule({
   id: '2022',
   declarations: [
-  
-    CampSectionsVisualizerComponent
+    CampSectionsVisualizerComponent,
+    CargoVisualizerComponent,
+    CargoStepVisualizerComponent,
   ],
   imports: [
     CommonModule,
@@ -29,12 +34,7 @@ import { CampSectionsVisualizerComponent } from './components/camp-sections-visu
     {
       provide: APP_INITIALIZER,
       multi: true,
-      deps: [
-        Day1Service,
-        Day2Service,
-        Day3Service,
-        Day4Service,
-      ],
+      deps: [Day1Service, Day2Service, Day3Service, Day4Service, Day5Service],
       useFactory: (solutionService: ISolutionService) => () => null,
     },
   ],

@@ -1,0 +1,105 @@
+<div *ngIf="snapshots.length > 0" class="accent-color">
+  <div>
+    <button
+      mat-raised-button
+      color="accent"
+      [style.margin-right.em]="0.5"
+      [disabled]="visualizing"
+      (click)="startVisualization()"
+    >
+      Run animation
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      [style.margin-right.em]="0.5"
+      [disabled]="!visualizing"
+      (click)="pauseVisualization()"
+    >
+      Pause animation
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      [style.margin-right.em]="0.5"
+      [disabled]="
+        visualizing ||
+        (currentSnapshotIdx == 0 &&
+          currentStepIdx == 0 &&
+          currentStepStateIdx == 0)
+      "
+      (click)="prevStep()"
+    >
+      <
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      [style.margin-right.em]="0.5"
+      [disabled]="
+        visualizing ||
+        (currentSnapshotIdx == snapshots.length - 1 &&
+          currentStepIdx == snapshot.steps.length - 1 &&
+          currentStepStateIdx == 2)
+      "
+      (click)="nextStep()"
+    >
+      >
+    </button>
+  </div>
+  <div>
+    Animation speed: {{ interval }}ms
+    <span [style.margin-right.em]="1"></span>
+    <mat-slider
+      [max]="1000"
+      [min]="5"
+      [step]="10"
+      [discrete]="true"
+      aria-labelledby="example-name-label"
+      ><input matSliderThumb [(ngModel)]="interval" />
+    </mat-slider>
+  </div>
+  <div class="flex-box">
+    <div class="move">
+      <span class="monospace">
+        move <span class="accent-glow">{{ move.amount }}</span> from
+        <span class="accent-glow">{{ move.from }}</span> to
+        <span class="accent-glow">{{ move.to }}</span></span
+      ><br />
+      Iterations: {{ iterations }} / {{ totalIterations }} ({{
+        (100 * iterations) / totalIterations | number : "1.0-2"
+      }}%)
+    </div>
+    <div style="display: flex">
+      <div class="stacks">
+        <ng-container *ngIf="currentStepStateIdx == 0">
+          <aoc-cargo-step-visualizer
+            [stacks]="step.before"
+            [glowColumn]="move.from"
+          ></aoc-cargo-step-visualizer>
+        </ng-container>
+
+        <ng-container *ngIf="currentStepStateIdx == 1">
+          <aoc-cargo-step-visualizer
+            [stacks]="step.during"
+          ></aoc-cargo-step-visualizer>
+        </ng-container>
+
+        <ng-container *ngIf="currentStepStateIdx == 2">
+          <aoc-cargo-step-visualizer
+            [stacks]="step.after"
+            [glowColumn]="move.to"
+          ></aoc-cargo-step-visualizer>
+        </ng-container>
+      </div>
+      <div class="cargo accent-glow">
+        <ng-container *ngIf="currentStepStateIdx == 1">
+          <aoc-cargo-step-visualizer
+            [stacks]="[step.movedCargo]"
+            [showColumns]="false"
+          ></aoc-cargo-step-visualizer>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

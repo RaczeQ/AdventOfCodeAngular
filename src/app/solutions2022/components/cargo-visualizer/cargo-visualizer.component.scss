@@ -1,0 +1,16 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.flex-box {
+  margin: 0.75em;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+
+  .cargo {
+    justify-content: center;
+    display: flex;
+  }
+}

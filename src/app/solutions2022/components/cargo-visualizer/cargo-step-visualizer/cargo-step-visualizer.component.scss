@@ -1,0 +1,17 @@
+:host {
+  display: block;
+  width: fit-content;
+}
+
+.grid {
+  margin: 0.75em;
+  display: grid;
+  width: fit-content;
+  column-gap: 8px;
+}
+
+.cargo-cell {
+  justify-self: center;
+  min-width: 3ch;
+  text-align: center;
+}

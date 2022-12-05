@@ -1,0 +1,23 @@
+<div class="grid">
+  <div
+    class="cargo-cell accent-color monospace"
+    *ngFor="let element of cargoElements"
+    [style.grid-column]="element.col + 1"
+    [style.grid-row]="-1 * (element.row + 2)"
+  >
+    [{{ element.value }}]
+  </div>
+
+  <ng-container *ngIf="showColumns">
+    <div
+      class="cargo-cell accent-color monospace"
+      [ngClass]="{ 'accent-glow': column + 1 === glowColumn }"
+      *ngFor="let column of columns"
+      [style.grid-column]="column + 1"
+      [style.grid-row]="-1"
+      [style.margin-top.px]="8"
+    >
+      {{ column + 1 }}
+    </div>
+  </ng-container>
+</div>
