@@ -100,7 +100,7 @@ export class Day5Service
     });
 
     return {
-      result: stacks.map((s) => s.peek()!).join('');,
+      result: stacks.map((s) => s.peek()!).join(''),
       component: CargoVisualizerComponent,
       componentData: {
         snapshots,
