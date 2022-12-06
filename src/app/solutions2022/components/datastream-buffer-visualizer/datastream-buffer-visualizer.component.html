@@ -1,0 +1,6 @@
+<span
+  *ngFor="let char of message; let i = index"
+  class="accent-color monospace"
+  [ngClass]="{ 'accent-glow packet-character': isInPacket(i + 1) }"
+  >{{ char }}</span
+>

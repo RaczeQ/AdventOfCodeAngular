@@ -1,0 +1,9 @@
+:host {
+  display: block;
+  width: 100%;
+  word-break: break-all;
+
+  .packet-character {
+    padding: 0 4px;
+  }
+}
