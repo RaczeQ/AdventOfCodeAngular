@@ -1,0 +1,36 @@
+<div *ngIf="file" [style.margin-left.em]="0" class="accent-color">
+  <span>
+    <span *ngIf="separators.length > 0" class="monospace">
+      <ng-container *ngFor="let separator of separators.slice(1)">{{
+        separator == 0 ? "&#10240;&#10240;" : "&#9474;&#10240;"
+      }}</ng-container>
+      <ng-container *ngIf="isChild && !isLast">&#9500;</ng-container>
+      <ng-container *ngIf="isChild && isLast">&#9492;</ng-container>
+    </span>
+    <span class="file-row">
+      <span *ngIf="separators.length > 0">&#10240;</span>
+      <span
+        [style.font-weight]="'bold'"
+        [class.accent-glow]="matchDeviceFile(file)"
+        >{{ file.fileName }}</span
+      >
+      (<span
+        >{{ file.isDirectory ? "dir, " : "file, " }}size=<span
+          [class.accent-glow]="matchDeviceFile(file)"
+          >{{ file.fileSize }}</span
+        ></span
+      >)
+    </span>
+  </span>
+
+  <ng-container *ngFor="let subFile of file.subFiles; let i = index">
+    <aoc-device-file-visualizer
+      [file]="subFile"
+      [depth]="depth + 1"
+      [separators]="separators.concat(isLast ? [0] : [1])"
+      [isChild]="true"
+      [isLast]="i == file.subFiles.length - 1"
+      [selectedDirectories]="selectedDirectories"
+    ></aoc-device-file-visualizer>
+  </ng-container>
+</div>

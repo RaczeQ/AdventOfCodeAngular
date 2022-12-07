@@ -10,6 +10,7 @@ import { CampSectionsVisualizerComponent } from './components/camp-sections-visu
 import { CargoVisualizerComponent } from './components/cargo-visualizer/cargo-visualizer.component';
 import { CargoStepVisualizerComponent } from './components/cargo-visualizer/cargo-step-visualizer/cargo-step-visualizer.component';
 import { DatastreamBufferVisualizerComponent } from './components/datastream-buffer-visualizer/datastream-buffer-visualizer.component';
+import { DeviceFileVisualizerComponent } from './components/device-file-visualizer/device-file-visualizer.component';
 
 import { Day1Service } from './day1.service';
 import { Day2Service } from './day2.service';
@@ -17,6 +18,7 @@ import { Day3Service } from './day3.service';
 import { Day4Service } from './day4.service';
 import { Day5Service } from './day5.service';
 import { Day6Service } from './day6.service';
+import { Day7Service } from './day7.service';
 
 @NgModule({
   id: '2022',
@@ -25,6 +27,7 @@ import { Day6Service } from './day6.service';
     CargoVisualizerComponent,
     CargoStepVisualizerComponent,
     DatastreamBufferVisualizerComponent,
+    DeviceFileVisualizerComponent,
   ],
   imports: [
     CommonModule,
@@ -44,6 +47,7 @@ import { Day6Service } from './day6.service';
         Day4Service,
         Day5Service,
         Day6Service,
+        Day7Service,
       ],
       useFactory: (solutionService: ISolutionService) => () => null,
     },

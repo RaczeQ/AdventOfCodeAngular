@@ -1,0 +1,14 @@
+:host {
+  width: 100%;
+  display: block;
+  margin-top: -0.4em;
+
+  span {
+    display: inline-block;
+    line-height: 1em;
+  }
+
+  .file-row {
+    margin-right: 0.5em;
+  }
+}
