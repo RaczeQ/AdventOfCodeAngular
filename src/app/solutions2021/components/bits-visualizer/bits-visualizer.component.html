@@ -1,12 +1,13 @@
 <div *ngIf="packet" [style.margin-left.em]="0" class="accent-color">
   <span>
-    <span *ngIf="separators.length > 0" [style.margin-right.em]="0.1">
+    <span *ngIf="separators.length > 0" class="monospace">
       <ng-container *ngFor="let separator of separators.slice(1)">{{
-        separator == 0 ? "&#10240;" : "&#9474;"
+        separator == 0 ? "&#10240;&#10240;" : "&#9474;&#10240;"
       }}</ng-container>
       <ng-container *ngIf="isChild && !isLast">&#9500;</ng-container>
       <ng-container *ngIf="isChild && isLast">&#9492;</ng-container>
     </span>
+    <span *ngIf="separators.length > 0">&#10240;</span>
     <ng-container *ngIf="!showValues">
       <span class="bits-row"
         >Version:

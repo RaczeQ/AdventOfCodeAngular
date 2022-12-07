@@ -9,7 +9,7 @@ import { CargoMove, CargoSnapshot, CargoStep } from '../../day5.service';
 })
 export class CargoVisualizerComponent
   extends BaseResultComponent
-  implements OnInit, AfterViewInit
+  implements OnInit
 {
   snapshots: CargoSnapshot[] = [];
 
@@ -38,7 +38,6 @@ export class CargoVisualizerComponent
     this.totalIterations =
       this.snapshots.flatMap((s) => s.steps.map((x) => 3)).sum() - 1;
   }
-  ngAfterViewInit(): void {}
 
   pauseVisualization() {
     this.visualizing = false;
