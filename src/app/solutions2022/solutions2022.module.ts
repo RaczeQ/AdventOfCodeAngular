@@ -19,6 +19,7 @@ import { Day4Service } from './day4.service';
 import { Day5Service } from './day5.service';
 import { Day6Service } from './day6.service';
 import { Day7Service } from './day7.service';
+import { Day8Service } from './day8.service';
 
 @NgModule({
   id: '2022',
@@ -48,6 +49,7 @@ import { Day7Service } from './day7.service';
         Day5Service,
         Day6Service,
         Day7Service,
+        Day8Service,
       ],
       useFactory: (solutionService: ISolutionService) => () => null,
     },
