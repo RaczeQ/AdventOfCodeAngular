@@ -1,0 +1,129 @@
+<div class="accent-color">
+  <div>
+    <button
+      mat-raised-button
+      color="accent"
+      [style.margin-right.em]="0.5"
+      [disabled]="visualizing"
+      (click)="startVisualization()"
+    >
+      Run animation
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      [style.margin-right.em]="0.5"
+      [disabled]="!visualizing"
+      (click)="pauseVisualization()"
+    >
+      Pause animation
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      [style.margin-right.em]="0.5"
+      [disabled]="visualizing || currentIdx == 0"
+      (click)="resetVisualization()"
+    >
+      Reset
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      [style.margin-right.em]="0.5"
+      [disabled]="visualizing || currentIdx == headMoves.length - 1"
+      (click)="goToEnd()"
+    >
+      Jump to end
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      [style.margin-right.em]="0.5"
+      [disabled]="visualizing || currentIdx == 0"
+      (click)="prevStep()"
+    >
+      <
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      [style.margin-right.em]="0.5"
+      [disabled]="visualizing || currentIdx == headMoves.length - 1"
+      (click)="nextStep()"
+    >
+      >
+    </button>
+  </div>
+  <div>
+    Animation speed: {{ interval }}ms
+    <span [style.margin-right.em]="1"></span>
+    <mat-slider
+      [max]="1000"
+      [min]="1"
+      [step]="10"
+      [discrete]="true"
+      aria-labelledby="example-name-label"
+      ><input matSliderThumb [(ngModel)]="interval" />
+    </mat-slider>
+  </div>
+  <div class="move">
+    <span class="monospace">
+      Direction <span class="accent-glow">{{ move.direction }}</span> <br />
+      Steps <span class="accent-glow">{{ move.distance }}</span></span
+    ><br />
+    Iterations: {{ currentIdx + 1 }} / {{ headMoves.length }} ({{
+      (100 * currentIdx) / (headMoves.length - 1) | number : "1.0-2"
+    }}%)
+  </div>
+  <div class="grid-wrapper">
+    <div class="grid" [ngStyle]="gridRepeatStyle">
+      <div
+        class="rope-cell accent-glow monospace"
+        [style.grid-column-start]="1 + head.x + minX"
+        [style.grid-row-start]="maxY + 1 - head.y"
+      >
+        <span>H</span>
+      </div>
+      <div
+        class="rope-cell accent-glow monospace"
+        [style.grid-column-start]="1 + tail.x + minX"
+        [style.grid-row-start]="maxY + 1 - tail.y"
+      >
+        <ng-container *ngIf="tail.x != head.x || tail.y != head.y">
+          <span>T</span>
+        </ng-container>
+      </div>
+      <div
+        class="rope-cell monospace"
+        *ngFor="let component of body; let i = index"
+        [style.grid-column-start]="1 + component.x + minX"
+        [style.grid-row-start]="maxY + 1 - component.y"
+      >
+        <ng-container
+          *ngIf="
+            (head.x != component.x || head.y != component.y) &&
+            (tail.x != component.x || tail.y != component.y)
+          "
+        >
+          <span>.</span>
+        </ng-container>
+      </div>
+      <div
+        class="rope-cell monospace"
+        [style.grid-column-start]="1 + minX"
+        [style.grid-row-start]="1 + maxY"
+        *ngIf="(head.x != 0 || head.y != 0) && (tail.x != 0 || tail.y != 0)"
+      >
+        <span>s</span>
+      </div>
+      <div
+        class="rope-cell"
+        *ngFor="let trail of tailTrail; let i = index"
+        [style.grid-column-start]="1 + trail.x + minX"
+        [style.grid-row-start]="maxY + 1 - trail.y"
+        [style.background-color]="'rgba(250, 208, 44, 0.1)'"
+      ></div>
+    </div>
+  </div>
+</div>

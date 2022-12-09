@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.grid-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid {
+  margin: 0.75em;
+  display: grid;
+  width: fit-content;
+}
+
+.rope-cell {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  & > span {
+    margin: auto;
+  }
+}
