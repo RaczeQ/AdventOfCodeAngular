@@ -20,7 +20,7 @@ function parseInstructions(input: string): number[] {
     registerValues.push(registerValue);
     if (instruction != 'noop') {
       registerValues.push(registerValue);
-      registerValue += Number(instruction.split(' ')[1]);
+      registerValue += Number(instruction.trim().split(' ')[1]);
     }
   });
 
