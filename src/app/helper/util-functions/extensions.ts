@@ -1,14 +1,20 @@
 import { chunk } from './chunk';
+import { multiplyNumbers } from './product';
 import { sumNumbers } from './sum';
 
 declare global {
   interface Array<T> {
     sum(): number;
+    product(): number;
   }
 }
 
 Array.prototype.sum = function (): number {
   return sumNumbers(this);
+};
+
+Array.prototype.product = function (): number {
+  return multiplyNumbers(this);
 };
 
 declare global {
