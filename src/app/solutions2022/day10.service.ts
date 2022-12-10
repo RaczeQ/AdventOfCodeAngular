@@ -12,7 +12,7 @@ import { splitIntoLines } from '../helper/util-functions/split-into-lines';
 
 function parseInstructions(input: string): number[] {
   var registerValue = 1;
-  var instructions = splitIntoLines(input);
+  var instructions = splitIntoLines(input, true);
 
   var registerValues: number[] = [];
 
@@ -20,7 +20,7 @@ function parseInstructions(input: string): number[] {
     registerValues.push(registerValue);
     if (instruction != 'noop') {
       registerValues.push(registerValue);
-      registerValue += Number(instruction.trim().split(' ')[1]);
+      registerValue += Number(instruction.split(' ')[1]);
     }
   });
 
