@@ -9,6 +9,7 @@ import {
 import { SolutionsCollectorService } from '../helper/services/solutions-collector.service';
 import { BigStringInteger } from '../helper/util-functions/big-number';
 import { splitIntoLines } from '../helper/util-functions/split-into-lines';
+import { MonkeysInspectionsVisualizerComponent } from './components/monkeys-inspections-visualizer/monkeys-inspections-visualizer.component';
 
 export interface Monkey {
   items: BigStringInteger[];
@@ -52,8 +53,8 @@ function parseMonkey(input: string): Monkey {
   };
 }
 
-function executeRound(monkeys: Monkey[], isPart1: boolean): Monkey[] {
-  var newMonkeys: Monkey[] = monkeys.map((monkey) => {
+function copyMonkeys(monkeys: Monkey[]): Monkey[] {
+  return monkeys.map((monkey) => {
     return {
       items: monkey.items.map((item) => item),
       operation: monkey.operation,
@@ -63,6 +64,10 @@ function executeRound(monkeys: Monkey[], isPart1: boolean): Monkey[] {
       inspections: monkey.inspections,
     };
   });
+}
+
+function executeRound(monkeys: Monkey[], isPart1: boolean): Monkey[] {
+  var newMonkeys = copyMonkeys(monkeys);
   newMonkeys.forEach((monkey) => {
     while (monkey.items.length > 0) {
       var item = monkey.items.shift()!;
@@ -95,26 +100,15 @@ function executeRound(monkeys: Monkey[], isPart1: boolean): Monkey[] {
   return newMonkeys;
 }
 
-function executeRoundsPart1(input: string, numberOfRounds: number): Monkey[][] {
+function executeRounds(
+  input: string,
+  numberOfRounds: number,
+  isPart1: boolean
+): Monkey[][] {
   var monkeys = input.split('\n\n').map(parseMonkey);
   var monkeysSnapshots = [monkeys];
   Array.range(0, numberOfRounds).forEach((idx) => {
-    if ((idx + 1) % 100 == 0) {
-      console.log(idx + 1);
-    }
-    monkeysSnapshots.push(executeRound(monkeysSnapshots[idx], true));
-  });
-  return monkeysSnapshots;
-}
-
-function executeRoundsPart2(input: string, numberOfRounds: number): Monkey[][] {
-  var monkeys = input.split('\n\n').map(parseMonkey);
-  var monkeysSnapshots = [monkeys];
-  Array.range(0, numberOfRounds).forEach((idx) => {
-    if ((idx + 1) % 100 == 0) {
-      console.log(idx + 1);
-    }
-    monkeysSnapshots.push(executeRound(monkeysSnapshots[idx], false));
+    monkeysSnapshots.push(executeRound(monkeysSnapshots[idx], isPart1));
   });
   return monkeysSnapshots;
 }
@@ -131,7 +125,7 @@ export class Day11Service
   }
   override solvePart1(input: string): PuzzleResult {
     var numberOfRounds = 20;
-    var monkeysSnapshots = executeRoundsPart1(input, numberOfRounds);
+    var monkeysSnapshots = executeRounds(input, numberOfRounds, true);
     var result = monkeysSnapshots[numberOfRounds]
       .map((monkey) => monkey.inspections)
       .sort((a, b) => b - a)
@@ -139,17 +133,15 @@ export class Day11Service
       .product();
     return {
       result: result,
-      component: PlotlyGraphComponent,
+      component: MonkeysInspectionsVisualizerComponent,
       componentData: {
-        graphData: [],
-        graphLayout: {},
+        monkeysSnapshots,
       },
     };
   }
   override solvePart2(input: string): PuzzleResult {
     var numberOfRounds = 10000;
-    var monkeysSnapshots = executeRoundsPart2(input, numberOfRounds);
-    console.log(monkeysSnapshots[numberOfRounds]);
+    var monkeysSnapshots = executeRounds(input, numberOfRounds, false);
     var result = monkeysSnapshots[numberOfRounds]
       .map((monkey) => monkey.inspections)
       .sort((a, b) => b - a)

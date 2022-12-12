@@ -12,6 +12,7 @@ import { CargoStepVisualizerComponent } from './components/cargo-visualizer/carg
 import { DatastreamBufferVisualizerComponent } from './components/datastream-buffer-visualizer/datastream-buffer-visualizer.component';
 import { DeviceFileVisualizerComponent } from './components/device-file-visualizer/device-file-visualizer.component';
 import { RopeBridgeVisualizerComponent } from './components/rope-bridge-visualizer/rope-bridge-visualizer.component';
+import { MonkeysInspectionsVisualizerComponent } from './components/monkeys-inspections-visualizer/monkeys-inspections-visualizer.component';
 
 import { Day1Service } from './day1.service';
 import { Day2Service } from './day2.service';
@@ -34,6 +35,7 @@ import { Day11Service } from './day11.service';
     DatastreamBufferVisualizerComponent,
     DeviceFileVisualizerComponent,
     RopeBridgeVisualizerComponent,
+    MonkeysInspectionsVisualizerComponent,
   ],
   imports: [
     CommonModule,
