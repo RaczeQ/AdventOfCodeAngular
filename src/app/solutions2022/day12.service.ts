@@ -78,49 +78,61 @@ export class Day12Service
     var endIdx = end.y * width + end.x;
     var { dist, parents } = aStar(positions, startIdx, endIdx);
     var path = [endIdx];
-    while (path[path.length - 1] !== undefined && path[path.length - 1] != 0) {
+    while (
+      path[path.length - 1] !== undefined &&
+      path[path.length - 1] != startIdx
+    ) {
       path.push(parents[path[path.length - 1]]!);
     }
+
     return {
       result: dist[endIdx],
       component: PlotlyGraphComponent,
       componentData: {
         graphData: [
           {
-            x: xValues,
-            y: yValues,
-            z: zValues,
-            colorscale: 'Portland',
-            type: 'heatmap',
-            colorbar: {
-              title: 'Elevation',
-              titlefont: {
-                color: '#ffffff',
-              },
-              tickfont: {
-                color: '#ffffff',
+            z: heightmap,
+            type: 'surface',
+            contours: {
+              z: {
+                show: true,
+                usecolormap: true,
+                highlightcolor: '#42f462',
+                project: { z: true },
               },
             },
+            name: 'Hill',
           },
           {
             x: path.map((p) => p % width),
             y: path.map((p) => Math.floor(p / width)),
-            mode: 'markers',
-            marker: {
-              size: path.map((p) => 5),
+            z: path.map(
+              (p) => heightmap[Math.floor(p / width)][p % width] + 0.01
+            ),
+            type: 'scatter3d',
+            mode: 'lines',
+            name: 'Path',
+            opacity: 1,
+            line: {
+              width: 6,
               color: '#ffffff',
             },
           },
         ],
         graphLayout: {
-          yaxis: {
-            title: 'Y',
-            range: [height - 1 + 0.5, 0 - 0.5],
+          autosize: false,
+          scene: {
+            camera: {
+              eye: { x: 0, y: 0, z: 2 },
+              up: { x: 1, y: 0, z: 1 },
+            },
+            yaxis: { autorange: 'reversed' },
+            aspectmode: 'data',
           },
-          xaxis: {
-            title: 'X',
-            range: [0 - 0.5, width - 1 + 0.5],
-          },
+        },
+        graphConfig: {
+          displayModeBar: false,
+          staticPlot: false,
         },
       },
     };
@@ -154,6 +166,7 @@ export class Day12Service
 
     var bestDist = Number.MAX_VALUE;
     var bestParents: (number | undefined)[] = [];
+    var bestStartIdx: number;
 
     var endIdx = end.y * width + end.x;
 
@@ -162,53 +175,66 @@ export class Day12Service
       if (dist[endIdx] < bestDist) {
         bestDist = dist[endIdx];
         bestParents = parents;
+        bestStartIdx = startIdx;
       }
     });
 
     var path = [endIdx];
-    while (path[path.length - 1] !== undefined && path[path.length - 1] != 0) {
+    while (
+      path[path.length - 1] !== undefined &&
+      path[path.length - 1] != bestStartIdx!
+    ) {
       path.push(bestParents[path[path.length - 1]]!);
     }
+
     return {
       result: bestDist,
       component: PlotlyGraphComponent,
       componentData: {
         graphData: [
           {
-            x: xValues,
-            y: yValues,
-            z: zValues,
-            colorscale: 'Portland',
-            type: 'heatmap',
-            colorbar: {
-              title: 'Elevation',
-              titlefont: {
-                color: '#ffffff',
-              },
-              tickfont: {
-                color: '#ffffff',
+            z: heightmap,
+            type: 'surface',
+            contours: {
+              z: {
+                show: true,
+                usecolormap: true,
+                highlightcolor: '#42f462',
+                project: { z: true },
               },
             },
+            name: 'Hill',
           },
           {
             x: path.map((p) => p % width),
             y: path.map((p) => Math.floor(p / width)),
-            mode: 'markers',
-            marker: {
-              size: path.map((p) => 5),
+            z: path.map(
+              (p) => heightmap[Math.floor(p / width)][p % width] + 0.01
+            ),
+            type: 'scatter3d',
+            mode: 'lines',
+            name: 'Path',
+            opacity: 1,
+            line: {
+              width: 6,
               color: '#ffffff',
             },
           },
         ],
         graphLayout: {
-          yaxis: {
-            title: 'Y',
-            range: [height - 1 + 0.5, 0 - 0.5],
+          autosize: false,
+          scene: {
+            camera: {
+              eye: { x: 0, y: 0, z: 2 },
+              up: { x: 1, y: 0, z: 1 },
+            },
+            yaxis: { autorange: 'reversed' },
+            aspectmode: 'data',
           },
-          xaxis: {
-            title: 'X',
-            range: [0 - 0.5, width - 1 + 0.5],
-          },
+        },
+        graphConfig: {
+          displayModeBar: false,
+          staticPlot: false,
         },
       },
     };
