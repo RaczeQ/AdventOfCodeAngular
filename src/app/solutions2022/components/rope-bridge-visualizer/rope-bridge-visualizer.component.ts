@@ -13,8 +13,6 @@ export class RopeBridgeVisualizerComponent
   implements OnInit, AfterViewInit
 {
   currentIdx: number = 0;
-  visualizing: boolean = false;
-  interval = 100;
 
   headMoves!: { move: RopeMove; position: Point2D }[];
   knotsMoves!: Point2D[][];
@@ -78,46 +76,5 @@ export class RopeBridgeVisualizerComponent
   ngAfterViewInit(): void {
     this.squareWidth =
       this.el.nativeElement.offsetWidth / ((this.minX + this.maxX + 1) * 2);
-  }
-
-  resetVisualization() {
-    this.currentIdx = 0;
-  }
-
-  goToEnd() {
-    this.currentIdx = this.headMoves.length - 1;
-  }
-
-  pauseVisualization() {
-    this.visualizing = false;
-  }
-
-  startVisualization() {
-    this.visualizing = true;
-    if (this.currentIdx == this.headMoves.length - 1) {
-      this.resetVisualization();
-    }
-    this.loop();
-  }
-
-  nextStep() {
-    this.currentIdx++;
-  }
-
-  prevStep() {
-    this.currentIdx--;
-  }
-
-  private loop() {
-    if (this.visualizing) {
-      setTimeout(() => {
-        this.nextStep();
-        if (this.currentIdx < this.headMoves.length - 1) {
-          this.loop();
-        } else {
-          this.visualizing = false;
-        }
-      }, this.interval);
-    }
   }
 }
