@@ -21,6 +21,8 @@ import { PlotlyGraphComponent } from './components/plotly-graph/plotly-graph.com
 import { ScriptsLoaderService } from './services/scripts-loader.service';
 
 import { PlotlyViaCDNModule } from 'angular-plotly.js';
+import { AnimatorComponent } from './components/animator/animator.component';
+import { MatSliderModule } from '@angular/material/slider';
 
 PlotlyViaCDNModule.setPlotlyVersion('2.16.1');
 PlotlyViaCDNModule.setPlotlyBundle(null);
@@ -31,6 +33,7 @@ PlotlyViaCDNModule.setPlotlyBundle(null);
     DaySelectionComponent,
     YearSelectionComponent,
     PlotlyGraphComponent,
+    AnimatorComponent,
   ],
   imports: [
     CommonModule,
@@ -46,6 +49,7 @@ PlotlyViaCDNModule.setPlotlyBundle(null);
     MatFormFieldModule,
     MatSnackBarModule,
     MatProgressBarModule,
+    MatSliderModule,
   ],
   providers: [
     CanActivateYear,
@@ -53,5 +57,6 @@ PlotlyViaCDNModule.setPlotlyBundle(null);
     ScriptsLoaderService,
     SolutionsCollectorService,
   ],
+  exports: [AnimatorComponent],
 })
 export class HelperModule {}

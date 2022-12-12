@@ -1,0 +1,14 @@
+<div class="accent-color">
+  <aoc-animator
+    [iterations]="iterations"
+    (currentIdxEvent)="currentIdx = $event"
+  ></aoc-animator>
+
+  <div class="grid">
+    <aoc-monkey-inspection-visualizer
+      *ngFor="let monkey of monkeys; let monkeyId = index"
+      [monkeyId]="monkeyId"
+      [monkeyInspection]="monkey"
+    ></aoc-monkey-inspection-visualizer>
+  </div>
+</div>

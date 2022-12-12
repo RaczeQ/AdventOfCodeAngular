@@ -1,0 +1,75 @@
+<div class="accent-color">
+  <div>
+    <button
+      mat-raised-button
+      color="accent"
+      [style.margin-right.em]="0.5"
+      [disabled]="visualizing"
+      (click)="startVisualization()"
+    >
+      Run animation
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      [style.margin-right.em]="0.5"
+      [disabled]="!visualizing"
+      (click)="pauseVisualization()"
+    >
+      Pause animation
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      [style.margin-right.em]="0.5"
+      [disabled]="visualizing || currentIdx == 0"
+      (click)="resetVisualization()"
+    >
+      Reset
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      [style.margin-right.em]="0.5"
+      [disabled]="visualizing || currentIdx == iterations - 1"
+      (click)="goToEnd()"
+    >
+      Jump to end
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      [style.margin-right.em]="0.5"
+      [disabled]="visualizing || currentIdx == 0"
+      (click)="prevStep()"
+    >
+      <
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      [style.margin-right.em]="0.5"
+      [disabled]="visualizing || currentIdx == iterations - 1"
+      (click)="nextStep()"
+    >
+      >
+    </button>
+  </div>
+  <div>
+    Animation speed: {{ interval }}ms
+    <span [style.margin-right.em]="1"></span>
+    <mat-slider
+      [max]="1000"
+      [min]="1"
+      [step]="10"
+      [discrete]="true"
+      aria-labelledby="example-name-label"
+      ><input matSliderThumb [(ngModel)]="interval" />
+    </mat-slider>
+  </div>
+  <div class="iteration">
+    Iterations: {{ currentIdx + 1 }} / {{ iterations }} ({{
+      (100 * currentIdx) / (iterations - 1) | number : "1.0-2"
+    }}%)
+  </div>
+</div>
