@@ -30,7 +30,6 @@ export class BigStringInteger {
     for (let i = n1 - 1; i >= 0; i--) {
       // Do school mathematics, compute sum of
       // current digits and carry
-      // console.log((str1.charCodeAt(i)-48),(str2.charCodeAt(i+diff)-48))
       let sum =
         str1.charCodeAt(i) - 48 + (str2.charCodeAt(i + diff) - 48) + carry;
       str += sum % 10;
