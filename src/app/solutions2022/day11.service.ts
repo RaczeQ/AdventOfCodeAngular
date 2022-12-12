@@ -66,11 +66,15 @@ function copyMonkeys(monkeys: Monkey[]): Monkey[] {
   });
 }
 
-function executeRound(monkeys: Monkey[], isPart1: boolean): Monkey[] {
+function executeRound(monkeys: Monkey[], isPart1: boolean): Monkey[][] {
+  var result: Monkey[][] = [];
   var newMonkeys = copyMonkeys(monkeys);
   newMonkeys.forEach((monkey) => {
     while (monkey.items.length > 0) {
       var item = monkey.items.shift()!;
+      if (isPart1) {
+        result.push(copyMonkeys(newMonkeys));
+      }
       var newItem: BigStringInteger;
       if (isPart1) {
         newItem = monkey.operation(item);
@@ -94,10 +98,17 @@ function executeRound(monkeys: Monkey[], isPart1: boolean): Monkey[] {
           : monkey.falseMonkeyIndex;
       newMonkeys[throwDestination].items.push(newItem);
       monkey.inspections++;
+      if (isPart1) {
+        result.push(copyMonkeys(newMonkeys));
+      }
     }
   });
 
-  return newMonkeys;
+  if (!isPart1) {
+    result.push(copyMonkeys(newMonkeys));
+  }
+
+  return result;
 }
 
 function executeRounds(
@@ -108,7 +119,9 @@ function executeRounds(
   var monkeys = input.split('\n\n').map(parseMonkey);
   var monkeysSnapshots = [monkeys];
   Array.range(0, numberOfRounds).forEach((idx) => {
-    monkeysSnapshots.push(executeRound(monkeysSnapshots[idx], isPart1));
+    monkeysSnapshots = monkeysSnapshots.concat(
+      executeRound(monkeysSnapshots[monkeysSnapshots.length - 1], isPart1)
+    );
   });
   return monkeysSnapshots;
 }
@@ -126,7 +139,7 @@ export class Day11Service
   override solvePart1(input: string): PuzzleResult {
     var numberOfRounds = 20;
     var monkeysSnapshots = executeRounds(input, numberOfRounds, true);
-    var result = monkeysSnapshots[numberOfRounds]
+    var result = monkeysSnapshots[monkeysSnapshots.length - 1]
       .map((monkey) => monkey.inspections)
       .sort((a, b) => b - a)
       .slice(0, 2)
@@ -142,7 +155,7 @@ export class Day11Service
   override solvePart2(input: string): PuzzleResult {
     var numberOfRounds = 10000;
     var monkeysSnapshots = executeRounds(input, numberOfRounds, false);
-    var result = monkeysSnapshots[numberOfRounds]
+    var result = monkeysSnapshots[monkeysSnapshots.length - 1]
       .map((monkey) => monkey.inspections)
       .sort((a, b) => b - a)
       .slice(0, 2)

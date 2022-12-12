@@ -22,8 +22,6 @@ export class MonkeysInspectionsVisualizerComponent
 
   ngOnInit(): void {
     this.monkeysSnapshots = this.data.monkeysSnapshots as Monkey[][];
-    this.iterations = this.monkeysSnapshots
-      .flatMap((monkeys) => monkeys.map((monkey) => monkey.items.length))
-      .sum();
+    this.iterations = this.monkeysSnapshots.length;
   }
 }

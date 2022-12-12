@@ -1,0 +1,16 @@
+<div class="accent-color" [style.text-align]="'center'">
+  <span [style.font-size.em]="2">
+    🐒 <span class="accent-glow">#{{ monkeyId }}</span> </span
+  ><br />
+  <span>
+    Inspections:
+    <span class="accent-glow">{{ monkeyInspection.inspections }}</span> </span
+  ><br />
+  <span>Items: {{ items }}</span
+  ><br />
+  <span
+    >Condition: x % {{ monkeyInspection.divisibleBy }} == 0 ?
+    {{ monkeyInspection.trueMonkeyIndex }} :
+    {{ monkeyInspection.falseMonkeyIndex }}</span
+  ><br />
+</div>
