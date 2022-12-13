@@ -1,0 +1,11 @@
+<div class="accent-color">
+  <div *ngFor="let packetNumbers of packetNumbersGroups; let i = index">
+    <div
+      *ngFor="let packetNumber of packetNumbers; let j = index"
+      [ngClass]="{ 'accent-glow': isHighlighted(i, j) }"
+    >
+      {{ packetNumber | json }}
+    </div>
+    <br *ngIf="i < packetNumbersGroups.length - 1" />
+  </div>
+</div>
