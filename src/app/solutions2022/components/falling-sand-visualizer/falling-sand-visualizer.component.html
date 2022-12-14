@@ -1,0 +1,9 @@
+<aoc-animator
+  [iterations]="sands.length"
+  (currentIdxEvent)="currentIdx = $event"
+></aoc-animator>
+
+<div class="grid-wrapper" [style.height.px]="this.squareWidth * imageHeight">
+  <img [src]="imageCanvas" />
+  <img [src]="rockCanvas" />
+</div>
