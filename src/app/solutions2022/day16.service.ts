@@ -72,7 +72,13 @@ export class Day16Service
   implements ISolutionService
 {
   constructor(solutionsCollectorService: SolutionsCollectorService) {
-    super(solutionsCollectorService, 2022, 16, 'Proboscidea Volcanium');
+    super(
+      solutionsCollectorService,
+      2022,
+      16,
+      'Proboscidea Volcanium',
+      'Real input can take up to 15 minutes to calculate for part 2. Additionally, web workers are used to parallelize the process and will use 100% CPU power.'
+    );
   }
   override async solvePart1(input: string): Promise<PuzzleResult> {
     var valves = parseValves(input);
