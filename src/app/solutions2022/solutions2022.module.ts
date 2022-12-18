@@ -16,6 +16,7 @@ import { MonkeysInspectionsVisualizerComponent } from './components/monkeys-insp
 import { MonkeyInspectionVisualizerComponent } from './components/monkeys-inspections-visualizer/monkey-inspection-visualizer/monkey-inspection-visualizer.component';
 import { PacketNumbersVisualizerComponent } from './components/packet-numbers-visualizer/packet-numbers-visualizer.component';
 import { FallingSandVisualizerComponent } from './components/falling-sand-visualizer/falling-sand-visualizer.component';
+import { PressureValvesVisualizerComponent } from './components/pressure-valves-visualizer/pressure-valves-visualizer.component';
 
 import { Day1Service } from './day1.service';
 import { Day2Service } from './day2.service';
@@ -32,6 +33,7 @@ import { Day12Service } from './day12.service';
 import { Day13Service } from './day13.service';
 import { Day14Service } from './day14.service';
 import { Day15Service } from './day15.service';
+import { Day16Service } from './day16.service';
 
 @NgModule({
   id: '2022',
@@ -46,6 +48,7 @@ import { Day15Service } from './day15.service';
     MonkeyInspectionVisualizerComponent,
     PacketNumbersVisualizerComponent,
     FallingSandVisualizerComponent,
+    PressureValvesVisualizerComponent,
   ],
   imports: [
     CommonModule,
@@ -74,6 +77,7 @@ import { Day15Service } from './day15.service';
         Day13Service,
         Day14Service,
         Day15Service,
+        Day16Service,
       ],
       useFactory: (solutionService: ISolutionService) => () => null,
     },

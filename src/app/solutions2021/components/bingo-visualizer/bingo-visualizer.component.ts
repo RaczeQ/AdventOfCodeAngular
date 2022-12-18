@@ -1,15 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseResultComponent } from 'src/app/helper/components/base-result.component';
-
-export function normalize(
-  val: number,
-  in_min: number,
-  in_max: number,
-  out_min: number,
-  out_max: number
-) {
-  return ((val - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
-}
+import { normalize } from 'src/app/helper/util-functions/normalize';
 
 @Component({
   selector: 'aoc-bingo-visualizer',
@@ -36,7 +27,9 @@ export class BingoVisualizerComponent
   }
 
   getNumberStyle(n: number): string {
-    var idx = this.numbers.slice(0, this.visualizeCounter).findIndex(num => num == n);
+    var idx = this.numbers
+      .slice(0, this.visualizeCounter)
+      .findIndex((num) => num == n);
     if (idx >= 0) {
       var value = normalize(idx, 0, this.numbers.length, 0.25, 1);
       return `rgba(250, 208, 44, ${value})`;
