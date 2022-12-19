@@ -1,0 +1,14 @@
+<aoc-animator
+  [iterations]="totalIterations"
+  (currentIdxEvent)="changeIdx($event)"
+></aoc-animator>
+<div class="accent-color">Current rock: {{ currentRock + 1 }}</div>
+<div class="accent-color">
+  Current move:
+  <span class="accent-glow" [style.font-weight]="'bold'">{{
+    jets[rocksPositions[currentRock][currentMove].jetIdx] === -1 ? "<" : ">"
+  }}</span>
+</div>
+<div class="grid-wrapper" [style.height.px]="squareWidth * (topRows + 1)">
+  <img [src]="rockCanvas" />
+</div>
