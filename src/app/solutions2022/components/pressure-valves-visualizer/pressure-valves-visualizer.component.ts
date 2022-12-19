@@ -3,11 +3,7 @@ import { BaseResultComponent } from 'src/app/helper/components/base-result.compo
 import { ScriptsLoaderService } from 'src/app/helper/services/scripts-loader.service';
 import { colorInterpolate } from 'src/app/helper/util-functions/color-interpolate';
 import { normalize } from 'src/app/helper/util-functions/normalize';
-import {
-  ValveOpenerMove,
-  ValveOpenerMoveWithPositions,
-  Valves,
-} from '../../helper/day16';
+import { ValveOpenerMoveWithPositions, Valves } from '../../helper/day16';
 
 declare let vis: any;
 
@@ -45,10 +41,6 @@ export class PressureValvesVisualizerComponent
         };
       })
     );
-    // console.log(pathPairs);
-    // console.log(moves);
-    // console.log(openedValves);
-    // console.log(fullPaths);
     var maxValue = Math.max(...Object.values(valves).map((v) => v.flowRate));
 
     this.scripts
