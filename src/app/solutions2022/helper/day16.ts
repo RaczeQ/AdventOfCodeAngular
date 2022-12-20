@@ -1,3 +1,4 @@
+import { GlobalCounter } from '../../helper/util-functions/global-counter';
 export interface TunnelConnection {
   [label: string]: {
     distance: number;
@@ -10,11 +11,6 @@ export interface Valves {
     flowRate: number;
     connections: TunnelConnection;
   };
-}
-
-interface GlobalCounter {
-  value: number;
-  higherValue: number;
 }
 
 export interface ValveOpenerMove {
