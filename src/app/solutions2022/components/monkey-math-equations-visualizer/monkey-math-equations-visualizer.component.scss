@@ -1,0 +1,22 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.network {
+  height: 800px;
+}
+
+.equations-container {
+  display: flex;
+  flex-direction: column;
+
+  ::ng-deep {
+    .eq-smaller-margin {
+      margin: 0.25em 0;
+    }
+  }
+  .equation {
+    margin: 1em 0;
+  }
+}
