@@ -214,6 +214,13 @@ function hasHuman(equation: EquationComponent) {
   return equation.left == 'humn' || equation.right == 'humn';
 }
 
+function copyEquation(equation: EquationComponent): EquationComponent {
+  var [eq, _] = parseEquation(
+    printEquation(equation as EquationComponent, false)
+  );
+  return eq;
+}
+
 function solveHumanNumber(
   rawLeftEquation: string,
   rawRightEquation: string
@@ -312,15 +319,11 @@ function solveHumanNumber(
     currentEquation = nextEquation;
   }
 
-  var [finalEquationSnapshot, _] = parseEquation(
-    printEquation(rightEquation as EquationComponent)
-  );
+  var finalEquationSnapshot = copyEquation(rightEquation as EquationComponent);
 
   var finalNumber = evaluateAllBranches(
     rightEquation as EquationComponent
   ) as number;
-
-  // return evaluateAllBranches(rightEquation as EquationComponent) as number;
 
   return {
     humanNumber: finalNumber,
@@ -379,7 +382,7 @@ export class Day21Service
       result: result,
       component: MonkeyMathEquationsVisualizerComponent,
       componentData: {
-        monkeys, //{ [monkeyName: string]: MathMonkey }
+        monkeys,
       },
     };
   }
