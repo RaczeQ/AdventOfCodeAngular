@@ -83,6 +83,7 @@ export class Day15Service
           yaxis: {
             title: 'Y',
             range: [height - 1 + 0.5, 0 - 0.5],
+            scaleanchor: 'x',
           },
           xaxis: {
             title: 'X',
@@ -149,6 +150,7 @@ export class Day15Service
           yaxis: {
             title: 'Y',
             range: [height - 1 + 0.5, 0 - 0.5],
+            scaleanchor: 'x',
           },
           xaxis: {
             title: 'X',

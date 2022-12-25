@@ -98,7 +98,11 @@ export class Day5Service
           },
         ],
         graphLayout: {
-          yaxis: { title: 'Y', range: [maxY + 0.5, minY - 0.5] },
+          yaxis: {
+            title: 'Y',
+            range: [maxY + 0.5, minY - 0.5],
+            scaleanchor: 'x',
+          },
           xaxis: { title: 'X', range: [minX - 0.5, maxX + 0.5] },
         },
       },
@@ -146,7 +150,11 @@ export class Day5Service
           },
         ],
         graphLayout: {
-          yaxis: { title: 'Y', range: [maxY + 0.5, minY - 0.5] },
+          yaxis: {
+            title: 'Y',
+            range: [maxY + 0.5, minY - 0.5],
+            scaleanchor: 'x',
+          },
           xaxis: { title: 'X', range: [minX - 0.5, maxX + 0.5] },
         },
       },

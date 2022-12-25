@@ -120,13 +120,11 @@ export class Day10Service
               yaxis: {
                 title: 'Y',
                 range: [6 + 0.5, 1 - 0.5],
+                scaleanchor: 'x',
               },
               xaxis: {
                 title: 'X',
                 automargin: true,
-              },
-              scene: {
-                aspectmode: 'data',
               },
             },
           },

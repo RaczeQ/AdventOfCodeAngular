@@ -90,7 +90,7 @@ export class Day13Service
           },
         ],
         graphLayout: {
-          yaxis: { title: 'Y', range: [maxY + 0.5, 0 - 0.5] },
+          yaxis: { title: 'Y', range: [maxY + 0.5, 0 - 0.5], scaleanchor: 'x' },
           xaxis: { title: 'X', range: [0 - 0.5, maxX + 0.5] },
         },
       },
@@ -147,6 +147,7 @@ export class Day13Service
               yaxis: {
                 title: 'Y',
                 range: [maxY + 0.5, 0 - 0.5],
+                scaleanchor: 'x',
               },
               xaxis: {
                 title: 'X',

@@ -74,6 +74,7 @@ export class Day9Service
           yaxis: {
             title: 'Y',
             range: [maxY + 0.5, 0 - 0.5],
+            scaleanchor: 'x',
           },
           xaxis: {
             title: 'X',
@@ -160,6 +161,7 @@ export class Day9Service
           yaxis: {
             title: 'Y',
             range: [maxY + 0.5, 0 - 0.5],
+            scaleanchor: 'x',
           },
           xaxis: {
             title: 'X',
