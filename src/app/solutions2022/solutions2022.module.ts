@@ -19,6 +19,8 @@ import { FallingSandVisualizerComponent } from './components/falling-sand-visual
 import { PressureValvesVisualizerComponent } from './components/pressure-valves-visualizer/pressure-valves-visualizer.component';
 import { FallingRocksVisualizerComponent } from './components/falling-rocks-visualizer/falling-rocks-visualizer.component';
 import { MonkeyMathEquationsVisualizerComponent } from './components/monkey-math-equations-visualizer/monkey-math-equations-visualizer.component';
+import { MonkeyMapCubeVisualizerComponent } from './components/monkey-map-cube-visualizer/monkey-map-cube-visualizer.component';
+import { ElvesMovesVisualizerComponent } from './components/elves-moves-visualizer/elves-moves-visualizer.component';
 
 import { Day1Service } from './day1.service';
 import { Day2Service } from './day2.service';
@@ -42,7 +44,7 @@ import { Day19Service } from './day19.service';
 import { Day20Service } from './day20.service';
 import { Day21Service } from './day21.service';
 import { Day22Service } from './day22.service';
-import { MonkeyMapCubeVisualizerComponent } from './components/monkey-map-cube-visualizer/monkey-map-cube-visualizer.component';
+import { Day23Service } from './day23.service';
 
 @NgModule({
   id: '2022',
@@ -61,6 +63,7 @@ import { MonkeyMapCubeVisualizerComponent } from './components/monkey-map-cube-v
     FallingRocksVisualizerComponent,
     MonkeyMathEquationsVisualizerComponent,
     MonkeyMapCubeVisualizerComponent,
+    ElvesMovesVisualizerComponent,
   ],
   imports: [
     CommonModule,
@@ -96,6 +99,7 @@ import { MonkeyMapCubeVisualizerComponent } from './components/monkey-map-cube-v
         Day20Service,
         Day21Service,
         Day22Service,
+        Day23Service,
       ],
       useFactory: (solutionService: ISolutionService) => () => null,
     },

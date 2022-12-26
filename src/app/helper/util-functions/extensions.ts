@@ -35,3 +35,16 @@ declare global {
 
 Array.range = (start, end) =>
   Array.from({ length: end - start }, (v, k) => k + start);
+
+declare global {
+  interface Array<T> {
+    findLast(
+      predicate: (value: T, index: number, obj: T[]) => unknown,
+      thisArg?: any
+    ): T | undefined;
+    findLastIndex(
+      predicate: (value: T, index: number, obj: T[]) => unknown,
+      thisArg?: any
+    ): number;
+  }
+}

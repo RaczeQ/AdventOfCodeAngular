@@ -1,0 +1,8 @@
+<aoc-animator
+  [iterations]="elves[0].positionsList.length"
+  (currentIdxEvent)="currentIdx = $event"
+></aoc-animator>
+
+<div class="grid-wrapper" [style.height.px]="squareWidth * imageHeight">
+  <img [src]="imageCanvas" />
+</div>
