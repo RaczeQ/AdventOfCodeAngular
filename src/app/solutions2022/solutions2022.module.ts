@@ -21,6 +21,7 @@ import { FallingRocksVisualizerComponent } from './components/falling-rocks-visu
 import { MonkeyMathEquationsVisualizerComponent } from './components/monkey-math-equations-visualizer/monkey-math-equations-visualizer.component';
 import { MonkeyMapCubeVisualizerComponent } from './components/monkey-map-cube-visualizer/monkey-map-cube-visualizer.component';
 import { ElvesMovesVisualizerComponent } from './components/elves-moves-visualizer/elves-moves-visualizer.component';
+import { BlizzardVisualizerComponent } from './components/blizzard-visualizer/blizzard-visualizer.component';
 
 import { Day1Service } from './day1.service';
 import { Day2Service } from './day2.service';
@@ -45,6 +46,7 @@ import { Day20Service } from './day20.service';
 import { Day21Service } from './day21.service';
 import { Day22Service } from './day22.service';
 import { Day23Service } from './day23.service';
+import { Day24Service } from './day24.service';
 
 @NgModule({
   id: '2022',
@@ -64,6 +66,7 @@ import { Day23Service } from './day23.service';
     MonkeyMathEquationsVisualizerComponent,
     MonkeyMapCubeVisualizerComponent,
     ElvesMovesVisualizerComponent,
+    BlizzardVisualizerComponent,
   ],
   imports: [
     CommonModule,
@@ -100,6 +103,7 @@ import { Day23Service } from './day23.service';
         Day21Service,
         Day22Service,
         Day23Service,
+        Day24Service,
       ],
       useFactory: (solutionService: ISolutionService) => () => null,
     },

@@ -1,0 +1,9 @@
+<aoc-animator
+  [iterations]="moves.length"
+  (currentIdxEvent)="currentIdx = $event"
+></aoc-animator>
+
+<div class="grid-wrapper" [style.height.px]="squareWidth * imageHeight">
+  <img [src]="imageCanvas" />
+  <img [src]="wallsCanvas" />
+</div>

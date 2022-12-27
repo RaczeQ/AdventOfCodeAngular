@@ -12,4 +12,7 @@ export class Queue<T> {
   dequeue(): T | undefined {
     return this._store.shift();
   }
+  clear(): void {
+    this._store = [];
+  }
 }

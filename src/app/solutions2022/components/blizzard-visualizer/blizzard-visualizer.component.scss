@@ -1,0 +1,13 @@
+:host {
+  display: block;
+  width: 100%;
+}
+.grid-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    position: absolute;
+  }
+}
