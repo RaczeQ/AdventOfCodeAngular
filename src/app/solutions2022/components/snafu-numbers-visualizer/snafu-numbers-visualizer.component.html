@@ -1,0 +1,16 @@
+<div class="grid-wrapper accent-color monospace">
+  <div class="grid">
+    <div
+      class="grid-cell"
+      *ngFor="let snafuNumber of snafuNumbers; let i = index"
+    >
+      <span class="accent-glow">{{ snafuNumber }}</span> =>
+      {{ parsedNumbers[i] }}
+    </div>
+  </div>
+
+  <div [style.margin-top.em]="2" [style.text-align]="'center'">
+    {{ finalNumber }} = {{ factoredSnafuNumber }} =
+    <span class="accent-glow">{{ finalSnafuNumber }}</span>
+  </div>
+</div>

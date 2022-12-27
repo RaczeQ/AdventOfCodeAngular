@@ -6,22 +6,23 @@ import { MatSliderModule } from '@angular/material/slider';
 import { HelperModule } from '../helper/helper.module';
 import { ISolutionService } from '../helper/services/isolution.service';
 
+import { BlizzardVisualizerComponent } from './components/blizzard-visualizer/blizzard-visualizer.component';
 import { CampSectionsVisualizerComponent } from './components/camp-sections-visualizer/camp-sections-visualizer.component';
-import { CargoVisualizerComponent } from './components/cargo-visualizer/cargo-visualizer.component';
 import { CargoStepVisualizerComponent } from './components/cargo-visualizer/cargo-step-visualizer/cargo-step-visualizer.component';
+import { CargoVisualizerComponent } from './components/cargo-visualizer/cargo-visualizer.component';
 import { DatastreamBufferVisualizerComponent } from './components/datastream-buffer-visualizer/datastream-buffer-visualizer.component';
 import { DeviceFileVisualizerComponent } from './components/device-file-visualizer/device-file-visualizer.component';
-import { RopeBridgeVisualizerComponent } from './components/rope-bridge-visualizer/rope-bridge-visualizer.component';
-import { MonkeysInspectionsVisualizerComponent } from './components/monkeys-inspections-visualizer/monkeys-inspections-visualizer.component';
-import { MonkeyInspectionVisualizerComponent } from './components/monkeys-inspections-visualizer/monkey-inspection-visualizer/monkey-inspection-visualizer.component';
-import { PacketNumbersVisualizerComponent } from './components/packet-numbers-visualizer/packet-numbers-visualizer.component';
-import { FallingSandVisualizerComponent } from './components/falling-sand-visualizer/falling-sand-visualizer.component';
-import { PressureValvesVisualizerComponent } from './components/pressure-valves-visualizer/pressure-valves-visualizer.component';
-import { FallingRocksVisualizerComponent } from './components/falling-rocks-visualizer/falling-rocks-visualizer.component';
-import { MonkeyMathEquationsVisualizerComponent } from './components/monkey-math-equations-visualizer/monkey-math-equations-visualizer.component';
-import { MonkeyMapCubeVisualizerComponent } from './components/monkey-map-cube-visualizer/monkey-map-cube-visualizer.component';
 import { ElvesMovesVisualizerComponent } from './components/elves-moves-visualizer/elves-moves-visualizer.component';
-import { BlizzardVisualizerComponent } from './components/blizzard-visualizer/blizzard-visualizer.component';
+import { FallingRocksVisualizerComponent } from './components/falling-rocks-visualizer/falling-rocks-visualizer.component';
+import { FallingSandVisualizerComponent } from './components/falling-sand-visualizer/falling-sand-visualizer.component';
+import { MonkeyInspectionVisualizerComponent } from './components/monkeys-inspections-visualizer/monkey-inspection-visualizer/monkey-inspection-visualizer.component';
+import { MonkeyMapCubeVisualizerComponent } from './components/monkey-map-cube-visualizer/monkey-map-cube-visualizer.component';
+import { MonkeyMathEquationsVisualizerComponent } from './components/monkey-math-equations-visualizer/monkey-math-equations-visualizer.component';
+import { MonkeysInspectionsVisualizerComponent } from './components/monkeys-inspections-visualizer/monkeys-inspections-visualizer.component';
+import { PacketNumbersVisualizerComponent } from './components/packet-numbers-visualizer/packet-numbers-visualizer.component';
+import { PressureValvesVisualizerComponent } from './components/pressure-valves-visualizer/pressure-valves-visualizer.component';
+import { RopeBridgeVisualizerComponent } from './components/rope-bridge-visualizer/rope-bridge-visualizer.component';
+import { SnafuNumbersVisualizerComponent } from './components/snafu-numbers-visualizer/snafu-numbers-visualizer.component';
 
 import { Day1Service } from './day1.service';
 import { Day2Service } from './day2.service';
@@ -47,6 +48,7 @@ import { Day21Service } from './day21.service';
 import { Day22Service } from './day22.service';
 import { Day23Service } from './day23.service';
 import { Day24Service } from './day24.service';
+import { Day25Service } from './day25.service';
 
 @NgModule({
   id: '2022',
@@ -67,6 +69,7 @@ import { Day24Service } from './day24.service';
     MonkeyMapCubeVisualizerComponent,
     ElvesMovesVisualizerComponent,
     BlizzardVisualizerComponent,
+    SnafuNumbersVisualizerComponent,
   ],
   imports: [
     CommonModule,
@@ -104,6 +107,7 @@ import { Day24Service } from './day24.service';
         Day22Service,
         Day23Service,
         Day24Service,
+        Day25Service,
       ],
       useFactory: (solutionService: ISolutionService) => () => null,
     },
